@@ -37,7 +37,7 @@ def register_celery(app):
     app.celery = make_celery(app)
 
 def register_celery_beat(app):
-    pass
+    from .tasks.schedule import fetch_lists
 
 def register_jinja2(app):
     pass

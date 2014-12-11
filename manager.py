@@ -35,5 +35,11 @@ def runtask(name=None):
     else:
         print("Usage: python manager.py runtask -n [celery | beat | all]")
 
+@manager.command
+def testfetchlists():
+    from taut.commands.fetch_lists import FetchLists
+
+    FetchLists(LIST_ID, SLUG).make()
+
 if __name__ == '__main__':
     manager.run()

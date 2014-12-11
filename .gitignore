@@ -5,3 +5,4 @@ venv
 storage/*.sqlite
 storage/celery-beat
 taut/configs/default.py
+storage/twitter-list-last-id.txt

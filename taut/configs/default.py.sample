@@ -1,6 +1,7 @@
 # coding: utf-8
 
 import os
+from celery.schedules import crontab
 
 DEBUG                      = True
 SESSION_COOKIE_NAME        = '_s'
@@ -19,4 +20,18 @@ CELERY_LOG_LEVEL             = 'INFO'
 CELERY_TIMEZONE              = 'Asia/Hong_Kong'
 CELERYBEAT_SCHEDULE_FILENAME = os.path.join(os.getcwd(), 'storage/celery-beat')
 CELERYBEAT_SCHEDULE          = {
+    'fetch-lists-g': {
+        'task': 'taut.tasks.schedule.fetch_lists',
+        'schedule': crontab(minute="*/5"), # every 5 minute
+        'args': ('LIST_ID', 'SLUG')
+    },
+}
+
+TWITTER_LIST_LAST_ID_FILENAME = os.path.join(os.getcwd(), 'storage/twitter-list-last-id.txt')
+
+TWITTER = {
+    'consumer_key'       : None,
+    'consumer_secret'    : None,
+    'access_token_key'   : None,
+    'access_token_secret': None
 }
