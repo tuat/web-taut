@@ -4,6 +4,7 @@ import os
 from flask import Flask
 from .models import db
 from .routes import index
+from .tasks import make_celery
 
 def create_app(config=None):
     app = Flask(__name__, template_folder='views')
@@ -33,7 +34,7 @@ def register_hook(app):
     pass
 
 def register_celery(app):
-    pass
+    app.celery = make_celery(app)
 
 def register_celery_beat(app):
     pass

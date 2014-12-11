@@ -10,3 +10,16 @@ deps:
 
 server:
 	python manager.py runserver
+
+redis:
+	redis-server /usr/local/etc/redis.conf
+
+task:
+	python manager.py runtask --name=all
+
+clean: clean-pyc
+
+clean-pyc:
+	@find . -name '*.pyc' -exec rm -f {} +
+	@find . -name '*.pyo' -exec rm -f {} +
+	@find . -name '*~' -exec rm -f {} +
