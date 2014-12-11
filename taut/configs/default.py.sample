@@ -1,0 +1,22 @@
+# coding: utf-8
+
+import os
+
+DEBUG                      = True
+SESSION_COOKIE_NAME        = '_s'
+PERMANENT_SESSION_LIFETIME = 3600 * 24 * 30
+SECRET_KEY                 = "Your_Secret_Key"
+
+SQLALCHEMY_DATABASE_URI    = 'sqlite:///%s' % os.path.join(os.getcwd(), 'storage', 'default.sqlite')
+
+BROKER_URL                   = 'redis://localhost:6379/0',
+CELERY_RESULT_BACKEND        = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT        = ['json', 'msgpack', 'yaml']
+CELERY_TASK_SERIALIZER       = 'json'
+CELERY_RESULT_SERIALIZER     = 'json'
+CELERY_LOG_LEVEL             = 'INFO'
+# CELERYD_LOG_FILE             = os.path.join(os.getcwd(), 'storage/celeryd.log')
+CELERY_TIMEZONE              = 'Asia/Hong_Kong'
+CELERYBEAT_SCHEDULE_FILENAME = os.path.join(os.getcwd(), 'storage/celery-beat')
+CELERYBEAT_SCHEDULE          = {
+}
