@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" charset="utf-8" />
+<meta name="Robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Taut</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='client/css/default.css') }}" />
+<link rel="shortcut icon" href="{{ url_for('static', filename='client/img/favicon.png') }}">
+<script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='client/js/default.js') }}/"></script>
+</head>
+<body>
+<div class="container">
+    {% if form and form.errors %}
+        {% for field_name, field_errors in form.errors | dictsort if field_errors %}
+            {% if loop.index <= 1 %}
+                {% for error in field_errors %}
+                    {% if loop.index <= 1 %}
+                        <div class="alert alert-danger">
+                            <strong>Error!</strong> {{ error }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    <strong>{{ category | capitalize }}!</strong> {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block container %}
+    {% endblock %}
+</div>
+</body>
+</html>

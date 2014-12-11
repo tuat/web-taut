@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
 import os
-from flask import Flask
+from flask import Flask, g
 from .models import db
 from .routes import index
+from .routes import admin
 from .tasks import make_celery
+from .helpers.account import load_current_user
 
 def create_app(config=None):
     app = Flask(__name__, template_folder='views')
@@ -31,7 +33,9 @@ def create_app(config=None):
     return app
 
 def register_hook(app):
-    pass
+    @app.before_request
+    def current_user():
+        g.user = load_current_user()
 
 def register_celery(app):
     app.celery = make_celery(app)
@@ -47,4 +51,5 @@ def register_database(app):
     db.app = app
 
 def register_route(app):
+    app.register_blueprint(admin.main.blueprint, url_prefix='/admin/main')
     app.register_blueprint(index.blueprint, url_prefix='')

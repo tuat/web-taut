@@ -36,6 +36,14 @@ def runtask(name=None):
         print("Usage: python manager.py runtask -n [celery | beat | all]")
 
 @manager.command
+def genpw(password):
+    """Genernate password"""
+
+    from flask.ext.bcrypt import Bcrypt
+
+    print(Bcrypt(app).generate_password_hash(password))
+
+@manager.command
 def testfetchlists():
     from taut.commands.fetch_lists import FetchLists
 
