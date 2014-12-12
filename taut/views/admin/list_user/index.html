@@ -24,7 +24,7 @@
                             <td>{{ list_user.id }}.</td>
                             <td><img src="{{ list_user.profile_image_url }}"></td>
                             <td>{{ list_user.name }}</td>
-                            <td>{{ list_user.screen_name }}</td>
+                            <td><a href="https://twitter.com/{{ list_user.screen_name }}" target="_blank">{{ list_user.screen_name }}</a></td>
                             <td>{{ list_user.create_at }}</td>
                         </tr>
                     {% endfor %}
