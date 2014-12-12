@@ -2,6 +2,7 @@
 
 import os
 from flask import Flask, g
+from flask.ext.babel import Babel
 from .models import db
 from .routes import index
 from .routes import admin
@@ -24,6 +25,7 @@ def create_app(config=None):
         app.config.from_pyfile(os.path.abspath(config))
 
     register_hook(app)
+    register_babel(app)
     register_celery(app)
     register_celery_beat(app)
     register_jinja2(app)
@@ -36,6 +38,9 @@ def register_hook(app):
     @app.before_request
     def current_user():
         g.user = load_current_user()
+
+def register_babel(app):
+    babel = Babel(app)
 
 def register_celery(app):
     app.celery = make_celery(app)
