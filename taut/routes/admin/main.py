@@ -18,4 +18,4 @@ def index():
 @blueprint.route('/home')
 @require_admin
 def home():
-    return "Admin Home"
+    return render_template('admin/main/home.html')

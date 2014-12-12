@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import hashlib
 from datetime import datetime
 from flask.ext.bcrypt import Bcrypt
 from .base import SessionMixin, db
@@ -25,3 +26,8 @@ class Account(db.Model, SessionMixin):
 
     def password_verify(self, password):
         return Bcrypt().check_password_hash(self.password, password)
+
+    def avatar(self, size=48):
+        md5email = hashlib.md5(self.email).hexdigest()
+        query = "{0}?s={1}{2}".format(md5email, size, db.app.config['GRAVATAR_EXTRA'])
+        return db.app.config['GRAVATAR_BASE_URL'] + query
