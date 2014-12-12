@@ -111,6 +111,7 @@ class FetchLists(BaseCommand):
                     else:
                         self.logger.info("---> new tweet : no")
 
-        f = open(twitter_list_last_id_filename, 'w+')
-        f.write(str(lists_last_id))
-        f.close()
+        if lists_last_id:
+            f = open(twitter_list_last_id_filename, 'w+')
+            f.write(str(lists_last_id))
+            f.close()
