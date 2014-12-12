@@ -1,7 +1,7 @@
 """create all table
 
 Revision ID: 32a9518ad88e
-Revises: 
+Revises:
 Create Date: 2014-12-11 17:38:17.222570
 
 """
@@ -45,6 +45,7 @@ def upgrade():
     sa.Column('id_str', sa.String(length=30), nullable=True),
     sa.Column('media_url', sa.String(length=180), nullable=True),
     sa.Column('type', sa.String(length=10), nullable=True),
+    sa.Column('status', sa.String(length=10), nullable=True),
     sa.Column('create_at', sa.DateTime(), nullable=True),
     sa.Column('update_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
