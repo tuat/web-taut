@@ -51,5 +51,6 @@ def register_database(app):
     db.app = app
 
 def register_route(app):
-    app.register_blueprint(admin.main.blueprint, url_prefix='/admin/main')
+    app.register_blueprint(admin.list_user.blueprint, url_prefix='/admin/list-user')
+    app.register_blueprint(admin.main.blueprint, url_prefix='/admin')
     app.register_blueprint(index.blueprint, url_prefix='')

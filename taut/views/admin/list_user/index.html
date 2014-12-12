@@ -1,0 +1,46 @@
+{% extends 'layout/backend/home.html' %}
+
+{% block container_home %}
+    <div class="content-header">
+        <h1>List <small>List Users</small></h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> List</a></li>
+            <li class="active">List Users</li>
+        </ol>
+    </div>
+    <div class="content">
+        <div class="box">
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Profile</th>
+                        <th>Name</th>
+                        <th>Screen Name</th>
+                        <th>Create at</th>
+                    </tr>
+                    {% for list_user in list_users.items %}
+                        <tr>
+                            <td>{{ list_user.id }}.</td>
+                            <td><img src="{{ list_user.profile_image_url }}"></td>
+                            <td>{{ list_user.name }}</td>
+                            <td>{{ list_user.screen_name }}</td>
+                            <td>{{ list_user.create_at }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="box-footer clearfix">
+                <ul class="pager">
+                    {% if list_users.has_prev %}
+                        <li class="previous"><a href="{{ url_for('admin_list_user.index', page=list_users.prev_num) }}">Previous</a></li>
+                    {% endif %}
+
+                    {% if list_users.has_next %}
+                        <li class="next"><a href="{{ url_for('admin_list_user.index', page=list_users.next_num) }}">Next</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

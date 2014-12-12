@@ -13,22 +13,21 @@
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>{{ counter.list_users }}</h3>
                         <p>List Users</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <a href="{{ url_for('admin_list_user.index') }}" class="small-box-footer">
                         More info <i class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
-            </div><!-- ./col -->
+            </div>
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>{{ counter.list_tweets }}</h3>
                         <p>List User Tweets</p>
                     </div>
                     <div class="icon">
@@ -38,12 +37,11 @@
                         More info <i class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
-            </div><!-- ./col -->
+            </div>
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3>{{ counter.list_medias }}</h3>
                         <p>List User Medias</p>
                     </div>
                     <div class="icon">
@@ -53,24 +51,21 @@
                         More info <i class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
-            </div><!-- ./col -->
+            </div>
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>
-                            65<sup style="font-size: 20px">M</sup>
-                        </h3>
-                        <p>Database size</p>
+                        <h3>{{ counter.accounts }}</h3>
+                        <p>Accounts</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
                     <a href="#" class="small-box-footer">
-                        More info <i class="fa fa-arrow-circle-right"></i>
+                        Admin accounts
                     </a>
                 </div>
-            </div><!-- ./col -->
-        </div><!-- /.row -->
+            </div>
+        </div>
     </div>
 {% endblock %}
