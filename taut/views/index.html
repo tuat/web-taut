@@ -1,0 +1,28 @@
+{% extends 'layout/frontend.html' %}
+
+{% block container %}
+    <div class="index">
+        {% for list_media in list_medias.items %}
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body thumbnail thumbnail-no-border">
+                        <a href="{{ list_media.media_url }}">
+                            <img src="{{ list_media.media_url | thumbor(200, 200) }}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="col-md-12">
+            <ul class="pager">
+                {% if list_medias.has_prev %}
+                    <li class="previous"><a href="{{ url_for('index.index', page=list_medias.prev_num) }}">Previous</a></li>
+                {% endif %}
+
+                {% if list_medias.has_next %}
+                    <li class="next"><a href="{{ url_for('index.index', page=list_medias.next_num) }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

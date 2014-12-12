@@ -1,3 +1,14 @@
 #admin-main-index {
     margin-top: 60px;
 }
+
+.footer {
+    color: #777;
+    padding: 20px 0 10px;
+}
+
+.thumbnail-no-border {
+    border: 0px;
+    padding: 5px;
+    margin-bottom: 0px;
+}

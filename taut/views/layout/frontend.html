@@ -1,0 +1,73 @@
+{% from 'share/macro.html' import navigation %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>{% block title %}{% block subtitle %}{% endblock %}{% if self.subtitle() %} - {% endif %}Taut{% endblock %}</title>
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='client/img/favicon.ico') }}">
+<link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='client/css/default.css') }}" rel="stylesheet">
+<script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='client/js/default.js') }}"></script>
+</head>
+<body>
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('index.index') }}">Taut</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                {% block navbar %}
+                    {{ navigation() }}
+                {% endblock %}
+
+                {% if g.user %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                {{ g.user }} <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="divider"></li>
+                                <li><a href="{{ url_for('user.signout') }}">Sign Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="nav navbar-nav navbar-right">
+
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div class="container">
+            {% include 'share/flash-message.html' %}
+
+            {% block container %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <small>
+                <span class="pull-left">&copy; Taut 2014</span>
+                <span class="pull-right">&nbsp;</span>
+            </small>
+        </div>
+    </div>
+</body>
+</html>
