@@ -13,6 +13,12 @@ def login_user(user, permanent=False):
 
         return user
 
+def logout_user():
+    if 'id' not in session:
+        return
+
+    session.pop('id')
+
 def load_current_user():
     if 'id' in session:
         user = Account.query.get(int(session['id']))

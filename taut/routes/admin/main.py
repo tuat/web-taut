@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import render_template, redirect, url_for
 from ...forms import SigninForm
-from ...helpers.account import login_user, require_admin
+from ...helpers.account import login_user, require_admin, logout_user
 
 blueprint = Blueprint('admin_main', __name__)
 
@@ -19,3 +19,9 @@ def index():
 @require_admin
 def home():
     return render_template('admin/main/home.html')
+
+@blueprint.route('/logout')
+@require_admin
+def logout():
+    logout_user()
+    return redirect(url_for('admin_main.index'))
