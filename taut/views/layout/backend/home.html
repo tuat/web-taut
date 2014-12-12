@@ -14,19 +14,32 @@
                     </div>
                 </div>
                 <ul class="sidebar-menu">
-                    <li class="active">
+                    <li>
                         <a href="{{ url_for('admin_main.home') }}">
                             <i class="fa fa-dashboard"></i> <span>Home</span>
                         </a>
+                    </li>
+                    <li>
                         <a href="{{ url_for('admin_list_user.index') }}">
                             <i class="fa fa-user"></i> <span>List Users</span>
                         </a>
+                    </li>
+                    <li>
                         <a href="{{ url_for('admin_list_tweet.index') }}">
                             <i class="fa fa-twitter"></i> <span>List User Tweets</span>
                         </a>
+                    </li>
+                    <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-bar-chart-o"></i> <span>List User Medias</span>
+                            <i class="fa fa-bar-chart-o"></i>
+                            <span>List User Medias</span>
+                            <i class="fa fa-angle-left pull-right"></i>
                         </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ url_for('admin_list_media.index', status='hide') }}"><i class="fa fa-angle-double-right"></i> Hide</a></li>
+                            <li><a href="{{ url_for('admin_list_media.index', status='show') }}"><i class="fa fa-angle-double-right"></i> Show</a></li>
+                            <li><a href="{{ url_for('admin_list_media.index', status='trash') }}"><i class="fa fa-angle-double-right"></i> Trash</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>

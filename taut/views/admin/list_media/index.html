@@ -1,0 +1,42 @@
+{% extends 'layout/backend/home.html' %}
+
+{% block container_home %}
+    <div class="content-header">
+        <h1>List <small>List Medias <strong>{{ status }}</strong></small></h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> List</a></li>
+            <li>List Medias</li>
+            <li class="active">{{ status | capitalize }}</li>
+        </ol>
+    </div>
+    <div class="content">
+        <div class="row">
+            {% for list_media in list_medias.items %}
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header text-center">
+                            <a href="http://twitter.com/{{ list_media.user.screen_name }}" target="_blank"><strong>{{ list_media.user.screen_name }}</strong></a>
+                        </div>
+                        <div class="box-body">
+                            <img src="{{ list_media.media_url | thumbor(188, 255) }}">
+                        </div>
+                        <div class="box-footer text-center">
+                            <a href="#" class="btn btn-primary btn-xs">Show</a>
+                            <a href="#" class="btn btn-danger btn-xs">Trash</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <ul class="pager">
+            {% if list_medias.has_prev %}
+                <li class="previous"><a href="{{ url_for('admin_list_media.index', page=list_medias.prev_num, status=status) }}">Previous</a></li>
+            {% endif %}
+
+            {% if list_medias.has_next %}
+                <li class="next"><a href="{{ url_for('admin_list_media.index', page=list_medias.next_num, status=status) }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}

@@ -17,6 +17,9 @@ redis:
 task:
 	python manager.py runtask --name=all
 
+thumb:
+	thumbor -p 8888 -c ./taut/configs/thumbor.py
+
 clean: clean-pyc
 
 clean-pyc:

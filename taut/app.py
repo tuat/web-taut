@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 import os
+import hmac
+from hashlib import sha1
+from base64 import urlsafe_b64encode
 from datetime import datetime
 from flask import Flask, g
 from flask.ext.babel import Babel, format_datetime
@@ -71,11 +74,23 @@ def register_jinja2(app):
     def dateformat(_datetime, format='yyyy-MM-dd H:mm'):
         return format_datetime(_datetime, format)
 
+    @app.template_filter('thumbor')
+    def thumbor(url, width, height, unsafe=False):
+        url_parts = "{0}x{1}/{2}".format(width, height, url)
+
+        if unsafe:
+            return "{0}/unsafe/{1}".format(app.config.get('THUMBOR_BASE_URL'), url_parts)
+        else:
+            sign_code = urlsafe_b64encode(hmac.new(app.config.get('THUMBOR_SECURITY_KEY'), url_parts, sha1).digest())
+
+            return "{0}/{1}/{2}".format(app.config.get('THUMBOR_BASE_URL'), sign_code, url_parts)
+
 def register_database(app):
     db.init_app(app)
     db.app = app
 
 def register_route(app):
+    app.register_blueprint(admin.list_media.blueprint, url_prefix='/admin/list-media')
     app.register_blueprint(admin.list_tweet.blueprint, url_prefix='/admin/list-tweet')
     app.register_blueprint(admin.list_user.blueprint, url_prefix='/admin/list-user')
     app.register_blueprint(admin.main.blueprint, url_prefix='/admin')
