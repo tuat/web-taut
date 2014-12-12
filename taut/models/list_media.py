@@ -23,3 +23,15 @@ class ListMedia(db.Model, SessionMixin):
 
     def __repr__(self):
         return '<ListMedia: %s>' % self.id
+
+    @property
+    def is_hide(self):
+        return self.status == "hide"
+
+    @property
+    def is_show(self):
+        return self.status == "show"
+
+    @property
+    def is_trash(self):
+        return self.status == "trash"

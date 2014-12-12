@@ -32,7 +32,11 @@
 </head>
 <body class="skin-blue">
     <div class="header">
-        <a href="{{ url_for('admin_main.index') }}" class="logo">Taut</a>
+        {% if g.user %}
+            <a href="{{ url_for('admin_main.home') }}" class="logo">Taut</a>
+        {% else %}
+            <a href="{{ url_for('admin_main.index') }}" class="logo">Taut</a>
+        {% endif %}
         <nav class="navbar navbar-static-top" role="navigation">
             <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle navigation</span>
@@ -65,33 +69,7 @@
             </div>
         </nav>
     </div>
-
-    {% if form and form.errors %}
-        {% for field_name, field_errors in form.errors | dictsort if field_errors %}
-            {% if loop.index <= 1 %}
-                {% for error in field_errors %}
-                    {% if loop.index <= 1 %}
-                        <div class="alert alert-danger">
-                            <strong>Error!</strong> {{ error }}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-
-    {% with messages = get_flashed_messages(with_categories = true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                    <strong>{{ category | capitalize }}!</strong> {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
     {% block container %}
     {% endblock %}
-    </div>
 </body>
 </html>

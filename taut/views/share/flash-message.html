@@ -1,0 +1,25 @@
+<div class="row">
+    {% if form and form.errors %}
+        {% for field_name, field_errors in form.errors | dictsort if field_errors %}
+            {% if loop.index <= 1 %}
+                {% for error in field_errors %}
+                    {% if loop.index <= 1 %}
+                        <div class="alert alert-danger">
+                            <strong>Error!</strong> {{ error }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    <strong>{{ category | capitalize }}!</strong> {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>

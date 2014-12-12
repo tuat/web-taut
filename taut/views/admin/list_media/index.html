@@ -21,9 +21,27 @@
                             <img src="{{ list_media.media_url | thumbor(188, 255) }}">
                         </div>
                         <div class="box-footer text-center">
-                            <a href="#" class="btn btn-primary btn-xs">Show</a>
-                            <a href="#" class="btn btn-danger btn-xs">Trash</a>
+                            {% if list_media.is_hide %}
+                                <a href="{{ url_for('admin_list_media.show', list_media_id=list_media.id, next=next_url) }}" class="btn btn-primary btn-xs">Show</a>
+                                <a href="{{ url_for('admin_list_media.trash', list_media_id=list_media.id, next=next_url) }}" class="btn btn-danger btn-xs">Trash</a>
+                            {% endif %}
+
+                            {% if list_media.is_show %}
+                                <a href="{{ url_for('admin_list_media.hide', list_media_id=list_media.id, next=next_url) }}" class="btn btn-success btn-xs">Hide</a>
+                                <a href="{{ url_for('admin_list_media.trash', list_media_id=list_media.id, next=next_url) }}" class="btn btn-danger btn-xs">Trash</a>
+                            {% endif %}
+
+                            {% if list_media.is_trash %}
+                                <a href="{{ url_for('admin_list_media.show', list_media_id=list_media.id, next=next_url) }}" class="btn btn-primary btn-xs">Show</a>
+                                <a href="{{ url_for('admin_list_media.hide', list_media_id=list_media.id, next=next_url) }}" class="btn btn-success btn-xs">Hide</a>
+                            {% endif %}
                         </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-body">No medias</div>
                     </div>
                 </div>
             {% endfor %}
