@@ -11,6 +11,3 @@ def index():
     list_users = ListUser.query.order_by(ListUser.create_at.desc()).paginate(page)
 
     return render_template('admin/list_user/index.html', list_users=list_users)
-    # list_users = ListUser.query.paginate(12)
-
-    # return render_template('admin/list_user/index.html', )
