@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import os
+from datetime import datetime
 from flask import Flask, g
-from flask.ext.babel import Babel
+from flask.ext.babel import Babel, format_datetime
 from .models import db
 from .routes import index
 from .routes import admin
@@ -49,13 +50,33 @@ def register_celery_beat(app):
     from .tasks.schedule import fetch_lists
 
 def register_jinja2(app):
-    pass
+    @app.template_filter('timeago')
+    def timeago(value):
+        now = datetime.utcnow()
+        delta = now - value
+
+        if delta.days > 365:
+            return '{0} years ago'.format(delta.days / 365)
+        if delta.days > 30:
+            return '{0} months ago'.format(delta.days / 30)
+        if delta.days > 0:
+            return '{0} days ago'.format(delta.days)
+        if delta.seconds > 3600:
+            return '{0} hours ago'.format(delta.seconds / 3600)
+        if delta.seconds > 60:
+            return '{0} minutes ago'.format(delta.seconds / 60)
+        return 'just now'
+
+    @app.template_filter('dateformat')
+    def dateformat(_datetime, format='yyyy-MM-dd H:mm'):
+        return format_datetime(_datetime, format)
 
 def register_database(app):
     db.init_app(app)
     db.app = app
 
 def register_route(app):
+    app.register_blueprint(admin.list_tweet.blueprint, url_prefix='/admin/list-tweet')
     app.register_blueprint(admin.list_user.blueprint, url_prefix='/admin/list-user')
     app.register_blueprint(admin.main.blueprint, url_prefix='/admin')
     app.register_blueprint(index.blueprint, url_prefix='')
