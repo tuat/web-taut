@@ -1,11 +1,13 @@
 from flask import Blueprint
 from flask import render_template, request, abort, flash, redirect, url_for
 from ...models import ListMedia
+from ...helpers.account import require_admin
 from ...helpers.value import force_integer, fill_with_users
 
 blueprint = Blueprint('admin_list_media', __name__)
 
 @blueprint.route('/index/<status>')
+@require_admin
 def index(status):
     if status not in ['hide', 'show', 'trash']:
         return abort(403)
@@ -19,6 +21,7 @@ def index(status):
         return render_template('admin/list_media/index.html', list_medias=list_medias, status=status, next_url=next_url)
 
 @blueprint.route('/hide/<int:list_media_id>')
+@require_admin
 def hide(list_media_id):
     next_url = request.args.get('next')
 
@@ -31,6 +34,7 @@ def hide(list_media_id):
     return redirect(next_url)
 
 @blueprint.route('/show/<int:list_media_id>')
+@require_admin
 def show(list_media_id):
     next_url = request.args.get('next')
 
@@ -43,6 +47,7 @@ def show(list_media_id):
     return redirect(next_url)
 
 @blueprint.route('/trash/<int:list_media_id>')
+@require_admin
 def trash(list_media_id):
     next_url = request.args.get('next')
 
