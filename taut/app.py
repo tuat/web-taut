@@ -76,7 +76,7 @@ def register_jinja2(app):
 
     @app.template_filter('thumbor')
     def thumbor(url, width, height, unsafe=False):
-        url_parts = "{0}x{1}/{2}".format(width, height, url)
+        url_parts = "{0}x{1}/{2}".format(width, height, url.replace("http://",""))
 
         if unsafe:
             return "{0}/unsafe/{1}".format(app.config.get('THUMBOR_BASE_URL'), url_parts)
