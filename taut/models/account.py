@@ -31,3 +31,10 @@ class Account(db.Model, SessionMixin):
         md5email = hashlib.md5(self.email).hexdigest()
         query = "{0}?s={1}{2}".format(md5email, size, db.app.config['GRAVATAR_EXTRA'])
         return db.app.config['GRAVATAR_BASE_URL'] + query
+
+    def update_password(self, new_password):
+        self.password = self.password_hash(new_password)
+
+    @staticmethod
+    def password_hash(password, rounds=None):
+        return Bcrypt().generate_password_hash(password, rounds=rounds)

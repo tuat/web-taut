@@ -8,7 +8,7 @@ from datetime import datetime
 from flask import Flask, g
 from flask.ext.babel import Babel, format_datetime
 from .models import db
-from .routes import index
+from .routes import index, settings
 from .routes import admin
 from .tasks import make_celery
 from .helpers.account import load_current_user
@@ -94,4 +94,5 @@ def register_route(app):
     app.register_blueprint(admin.list_tweet.blueprint, url_prefix='/admin/list-tweet')
     app.register_blueprint(admin.list_user.blueprint, url_prefix='/admin/list-user')
     app.register_blueprint(admin.main.blueprint, url_prefix='/admin')
+    app.register_blueprint(settings.blueprint, url_prefix='/settings')
     app.register_blueprint(index.blueprint, url_prefix='')
