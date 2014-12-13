@@ -2,7 +2,7 @@ from flask import Blueprint, g
 from flask import render_template, redirect, url_for, flash, request
 from ..models import ListMedia, Bookmark
 from ..helpers.account import require_user
-from ..helpers.value import force_integer
+from ..helpers.value import force_integer, fill_with_list_users
 
 blueprint = Blueprint('bookmark', __name__)
 
@@ -16,6 +16,7 @@ def index():
     # Find all medias by bookmarks.list_media_id
     list_media_ids = [item.list_media_id for item in bookmarks.items]
     list_medias    = ListMedia.query.filter(ListMedia.id.in_(list_media_ids)).all()
+    list_medias    = fill_with_list_users(list_medias)
 
     return render_template('bookmark/index.html', bookmarks=bookmarks, list_medias=list_medias)
 
