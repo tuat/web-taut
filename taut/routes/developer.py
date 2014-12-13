@@ -11,7 +11,9 @@ blueprint = Blueprint('developer', __name__)
 @blueprint.route('/')
 @require_user
 def index():
-    return render_template('developer/index.html')
+    developer = Developer.query.filter_by(account_id=g.user.id).first()
+
+    return render_template('developer/index.html', developer=developer)
 
 @blueprint.route('/request-api-key')
 @require_user
@@ -26,7 +28,7 @@ def request_api_key():
             msg = "{0}|{1}".format(g.user.username, g.user.create_at),
             digestmod = hashlib.sha256
         ).digest()
-        signature = base64.b64encode(digest)
+        signature = base64.urlsafe_b64encode(digest)
 
         Developer(
             account_id = g.user.id,

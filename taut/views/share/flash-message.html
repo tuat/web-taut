@@ -16,9 +16,15 @@
     {% with messages = get_flashed_messages(with_categories = true) %}
         {% if messages %}
             {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                    <strong>{{ category | capitalize }}!</strong> {{ message }}
-                </div>
+                {% if category == 'error' %}
+                    <div class="alert alert-danger">
+                            <strong>{{ category | capitalize }}!</strong> {{ message }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-{{ category }}">
+                            <strong>{{ category | capitalize }}!</strong> {{ message }}
+                    </div>
+                {% endif %}
             {% endfor %}
         {% endif %}
     {% endwith %}
