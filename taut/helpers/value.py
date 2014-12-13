@@ -1,5 +1,9 @@
 # coding: utf-8
 
+import hmac
+import base64
+import hashlib
+from datetime import datetime
 from ..models import ListUser
 
 def force_integer(value, default=1):
@@ -17,3 +21,12 @@ def fill_with_list_users(items):
         item.user = user_dict.get(item.list_user_id)
 
     return items
+
+def create_api_key(secret_key, user):
+    digest = hmac.new(
+        secret_key,
+        msg = "{0}|{1}|{2}".format(user.username, user.create_at, datetime.now()),
+        digestmod = hashlib.sha256
+    ).digest()
+
+    return base64.urlsafe_b64encode(digest)
