@@ -22,7 +22,7 @@ class Account(db.Model, SessionMixin):
         return self.media_url
 
     def __repr__(self):
-        return '<ListMedia: %s>' % self.id
+        return '<Account: %s>' % self.id
 
     def password_verify(self, password):
         return Bcrypt().check_password_hash(self.password, password)
