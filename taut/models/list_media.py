@@ -4,6 +4,7 @@ from datetime import datetime
 from sqlalchemy.sql import exists
 from .base import SessionMixin, db
 from .bookmark import Bookmark
+from ..helpers.value import thumb
 
 class ListMedia(db.Model, SessionMixin):
     id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -41,3 +42,15 @@ class ListMedia(db.Model, SessionMixin):
     @property
     def is_bookmarked(self):
         return db.session.query(exists().where(Bookmark.list_media_id == self.id)).scalar()
+
+    def to_json(self, list_user):
+        width  = 500
+        height = 500
+
+        return {
+            'id'       : self.id,
+            'media_url': thumb(self.media_url, width, height),
+            'width'    : width,
+            'height'   : height,
+            'user'     : list_user.to_json()
+        }

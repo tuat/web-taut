@@ -4,6 +4,7 @@ import hmac
 import base64
 import hashlib
 from datetime import datetime
+from flask import current_app
 from ..models import ListUser
 
 def force_integer(value, default=1):
@@ -30,3 +31,13 @@ def create_api_key(secret_key, user):
     ).digest()
 
     return base64.urlsafe_b64encode(digest)
+
+def thumb(url, width, height, unsafe=False):
+    url_parts = "{0}x{1}/{2}".format(width, height, url.replace("http://",""))
+
+    if unsafe:
+        return "{0}/unsafe/{1}".format(current_app.config.get('THUMBOR_BASE_URL'), url_parts)
+    else:
+        sign_code = base64.urlsafe_b64encode(hmac.new(current_app.config.get('THUMBOR_SECURITY_KEY'), url_parts, hashlib.sha1).digest())
+
+        return "{0}/{1}/{2}".format(current_app.config.get('THUMBOR_BASE_URL'), sign_code, url_parts)

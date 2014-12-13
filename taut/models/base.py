@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import datetime
 from flask.ext.sqlalchemy import SQLAlchemy
 
 class SessionMixin(object):

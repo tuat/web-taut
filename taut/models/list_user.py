@@ -20,3 +20,9 @@ class ListUser(db.Model, SessionMixin):
 
     def __repr__(self):
         return '<ListUser: %s>' % self.id
+
+    def to_json(self):
+        return {
+            'id'  : self.id,
+            'name': self.name
+        }
