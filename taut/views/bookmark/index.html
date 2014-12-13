@@ -1,0 +1,35 @@
+{% extends 'layout/frontend.html' %}
+
+{% block navbar %}
+    {{ navigation('bookmark') }}
+{% endblock %}
+
+
+{% block container %}
+    <div class="bookmark-index">
+        <div class="row">
+            {% for list_media in list_medias %}
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body thumbnail thumbnail-no-border">
+                            <a href="{{ url_for('media.detail', list_media_id=list_media.id) }}">
+                                <img src="{{ list_media.media_url | thumbor(300, 300) }}">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-12">
+            <ul class="pager">
+                {% if bookmarks.has_prev %}
+                    <li class="previous"><a href="{{ url_for('bookmark.index', page=bookmarks.prev_num) }}">Previous</a></li>
+                {% endif %}
+
+                {% if bookmarks.has_next %}
+                    <li class="next"><a href="{{ url_for('bookmark.index', page=bookmarks.next_num) }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

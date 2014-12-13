@@ -1,9 +1,23 @@
 from flask import Blueprint, g
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from ..models import ListMedia, Bookmark
 from ..helpers.account import require_user
+from ..helpers.value import force_integer
 
 blueprint = Blueprint('bookmark', __name__)
+
+@blueprint.route('/index')
+@require_user
+def index():
+    # Get bookmarks
+    page        = force_integer(request.args.get('page', 1), 0)
+    bookmarks   = Bookmark.query.filter_by(account_id=g.user.id).order_by(Bookmark.create_at.desc()).paginate(page)
+
+    # Find all medias by bookmarks.list_media_id
+    list_media_ids = [item.list_media_id for item in bookmarks.items]
+    list_medias    = ListMedia.query.filter(ListMedia.id.in_(list_media_ids)).all()
+
+    return render_template('bookmark/index.html', bookmarks=bookmarks, list_medias=list_medias)
 
 @blueprint.route('/create/<list_media_id>')
 @require_user
