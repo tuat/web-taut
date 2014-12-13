@@ -5,7 +5,6 @@ import base64
 import hashlib
 from datetime import datetime
 from flask import current_app
-from ..models import ListUser
 
 def force_integer(value, default=1):
     try:
@@ -14,12 +13,26 @@ def force_integer(value, default=1):
         return default
 
 def fill_with_list_users(items):
+    from ..models import ListUser
+
     user_ids  = [item.list_user_id for item in items]
     users     = ListUser.query.filter(ListUser.id.in_(user_ids)).all() if user_ids else {}
     user_dict = {user.id: user for user in users}
 
     for item in items:
         item.user = user_dict.get(item.list_user_id)
+
+    return items
+
+def fill_with_accounts(items):
+    from ..models import Account
+
+    account_ids  = [item.account_id for item in items]
+    accounts     = Account.query.filter(Account.id.in_(account_ids)).all() if account_ids else {}
+    account_dict = {account.id: account for account in accounts}
+
+    for item in items:
+        item.user = account_dict.get(item.account_id)
 
     return items
 

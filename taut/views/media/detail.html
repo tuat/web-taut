@@ -60,5 +60,62 @@
                 </div>
             </div>
         </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ comments | length }} comments
+            </div>
+            <div class="panel-body">
+                {% if comments %}
+                    {% for comment in comments %}
+                        {% if loop.index > 1 %}
+                            <hr>
+                        {% endif %}
+                        <div class="media" id="comment-{{ comment.id }}">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-rounded" src="{{ comment.user.avatar(48) }}">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    <a href="#">{{ comment.user.username }}</a>
+                                    <small>
+                                        {{ comment.create_at | timeago }}
+                                    </small>
+                                </h4>
+                                <p class="comment-content">
+                                    {{ comment.content }}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info">No comments yet.</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="container">
+                <div class="panel panel-default">
+                    {% if g.user %}
+                        <form class="form panel-body" action="{{ url_for('media.detail', list_media_id=list_media.id) }}" method="post">
+                            {{ form.csrf_token }}
+                            <div class="form-group">
+                                {{ form.content.label(class_='sr-only') }}
+                                {{ form.content(class_='form-control') }}
+                            </div>
+                            <div class="form-submit text-right">
+                                <button class="btn btn-success">Leave a Comment</button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <div class="panel-body">
+                            <div class="alert alert-info">Login is required</div>
+                            <a href="{{ url_for('index.login') }}" class="btn btn-success">Sign In</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
