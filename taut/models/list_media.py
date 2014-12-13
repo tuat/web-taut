@@ -1,7 +1,9 @@
 # coding: utf-8
 
 from datetime import datetime
+from sqlalchemy.sql import exists
 from .base import SessionMixin, db
+from .bookmark import Bookmark
 
 class ListMedia(db.Model, SessionMixin):
     id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -35,3 +37,7 @@ class ListMedia(db.Model, SessionMixin):
     @property
     def is_trash(self):
         return self.status == "trash"
+
+    @property
+    def is_bookmarked(self):
+        return db.session.query(exists().where(Bookmark.list_media_id == self.id)).scalar()

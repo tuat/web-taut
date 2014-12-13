@@ -19,6 +19,21 @@ def create(list_media_id):
             account_id    = g.user.id
         ).save()
 
-        flash('Media bookmarked', 'success')
+        flash('The media was bookmarked', 'success')
+
+    return redirect(url_for('media.detail', list_media_id=list_media_id))
+
+@blueprint.route('/remove/<list_media_id>')
+@require_user
+def remove(list_media_id):
+    list_media = ListMedia.query.get_or_404(list_media_id)
+    bookmark   = Bookmark.query.filter_by(list_media_id=list_media_id, account_id=g.user.id).first()
+
+    if not bookmark:
+        flash('You are not created bookmark on this media', 'error')
+    else:
+        bookmark.delete()
+
+        flash('The media was removed from bookmark', 'success')
 
     return redirect(url_for('media.detail', list_media_id=list_media_id))
