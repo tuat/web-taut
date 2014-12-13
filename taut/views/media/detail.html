@@ -1,0 +1,44 @@
+{% extends 'layout/frontend.html' %}
+
+{% block subtitle %}
+    {{ list_user.name }}
+{% endblock %}
+
+{% block container %}
+    <div class="media-detail">
+        <h3>{{ list_user.name }}</h3>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="thumbnail">
+                    <img src="{{ list_media.media_url | thumbor(500, 500) }}">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a href="{{ list_media.media_url }}" class="btn btn-info" download="{{ list_media.media_url }}">
+                            <div class="hidden-xs">
+                                <i class="glyphicon glyphicon-download-alt"></i> Download
+                            </div>
+                            <div class="visible-xs">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </div>
+                        </a>
+                        <a href="{{ list_media.media_url | thumbor(500, 500) }}" class="btn btn-info pull-right tips" data-placement="bottom" title="Preview images" data-photo-swipe="true" data-size="500x500">
+                            <i class="glyphicon glyphicon-eye-open"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for user_media in user_medias %}
+                        <div class="col-xs-6 col-sm-3 col-md-3">
+                            <a class="thumbnail" rel="group" href="{{ url_for('media.detail', list_media_id=user_media.id) }}">
+                                <img src="{{ user_media.media_url | thumbor(100, 118) }}" alt="{{ user_media.user.name }}" class="tips" data-placement="bottom" title="{{ user_media.user.name }}">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
