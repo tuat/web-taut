@@ -1,6 +1,6 @@
 from random import choice
 from flask import Blueprint
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, send_from_directory, current_app
 from ..models import ListMedia, db
 from ..forms import SigninForm, SignupForm
 from ..helpers.account import logout_user, login_user, require_user
@@ -45,3 +45,7 @@ def register():
         return redirect(url_for('index.signup'))
 
     return render_template('register.html', form=form)
+
+@blueprint.route('/robots.txt')
+def send_specific_file():
+    return send_from_directory(current_app.static_folder, request.path[1:])
