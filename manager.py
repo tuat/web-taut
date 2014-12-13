@@ -44,6 +44,13 @@ def genpw(password):
     print(Bcrypt(app).generate_password_hash(password))
 
 @manager.command
+def gensitemap():
+    """Generate sitemap"""
+    from taut.commands.sitemap import Sitemap
+
+    Sitemap().make(0, 10000)
+
+@manager.command
 def testfetchlists():
     from taut.commands.fetch_lists import FetchLists
 
