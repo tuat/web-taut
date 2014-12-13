@@ -4,3 +4,11 @@
         <li{% if current == 'bookmark' %} class="active"{% endif %}><a href="{{ url_for('bookmark.index') }}">Bookmark</a></li>
     </ul>
 {% endmacro %}
+
+{% macro social_like(message="Let's go to collect your media ...") %}
+    <div class="panel panel-default">
+        <div class="panel-body text-center">
+            <div class="social-button" data-weibo="TautApp" data-twitter="TautApp" data-facebook="TautApp" data-count="True" data-text="{{ message }}" data-url="{{ request.url_root }}"></div>
+        </div>
+    </div>
+{% endmacro %}

@@ -13,12 +13,8 @@
 <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='vendor/photoswipe/photoswipe.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='vendor/photoswipe/default-skin/default-skin.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='vendor/social/widget.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='client/css/default.css') }}" rel="stylesheet">
-<script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='vendor/photoswipe/photoswipe.min.js') }}"></script>
-<script src="{{ url_for('static', filename='vendor/photoswipe/photoswipe-ui-default.min.js') }}"></script>
-<script src="{{ url_for('static', filename='client/js/default.js') }}"></script>
 </head>
 <body>
     <div class="navbar navbar-default" role="navigation">
@@ -119,6 +115,13 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/photoswipe/photoswipe.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/photoswipe/photoswipe-ui-default.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/social/widget.js') }}"></script>
+    <script src="{{ url_for('static', filename='client/js/default.js') }}"></script>
 
     {% include "share/google-analytics.html" %}
 </body>

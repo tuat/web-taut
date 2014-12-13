@@ -1,29 +1,52 @@
 {% extends 'layout/frontend.html' %}
+{% from 'share/macro.html' import social_like %}
 
 {% block container %}
     <div class="index">
         <div class="row">
-            {% for list_media in list_medias.items %}
-                <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-body thumbnail thumbnail-no-border">
-                            <a href="{{ url_for('media.detail', list_media_id=list_media.id) }}">
-                                <img src="{{ list_media.media_url | thumbor(300, 300) }}">
-                            </a>
+            <div class="col-xs-12 col-sm-8 col-md-9">
+                {% for list_media in list_medias.items %}
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body thumbnail thumbnail-no-border">
+                                <a href="{{ url_for('media.detail', list_media_id=list_media.id) }}">
+                                    <img src="{{ list_media.media_url | thumbor(300, 300) }}">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="col-md-12">
+                    <ul class="pager">
+                        {% if list_medias.has_prev %}
+                            <li class="previous"><a href="{{ url_for('index.index', page=list_medias.prev_num) }}">Previous</a></li>
+                        {% endif %}
+
+                        {% if list_medias.has_next %}
+                            <li class="next"><a href="{{ url_for('index.index', page=list_medias.next_num) }}">Next</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body text-center">
+                        Total Medias: {{ total_medias }}
+                    </div>
+                </div>
+                {{ social_like() }}
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">Random media</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a class="thumbnail thumbnail-no-border" href="{{ url_for('media.detail', list_media_id=random_media.id) }}">
+                                    <img src="{{ random_media.media_url | thumbor(230, 300) }}" class="tips" data-placement="bottom">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-            <div class="col-md-12">
-                <ul class="pager">
-                    {% if list_medias.has_prev %}
-                        <li class="previous"><a href="{{ url_for('index.index', page=list_medias.prev_num) }}">Previous</a></li>
-                    {% endif %}
-
-                    {% if list_medias.has_next %}
-                        <li class="next"><a href="{{ url_for('index.index', page=list_medias.next_num) }}">Next</a></li>
-                    {% endif %}
-                </ul>
             </div>
         </div>
     </div>
