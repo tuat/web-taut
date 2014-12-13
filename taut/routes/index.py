@@ -1,6 +1,7 @@
 from flask import Blueprint
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from ..models import ListMedia
+from ..helpers.account import logout_user
 from ..helpers.value import force_integer, fill_with_users
 
 blueprint = Blueprint('index', __name__)
@@ -13,3 +14,8 @@ def index():
     list_medias.items = fill_with_users(list_medias.items)
 
     return render_template('index.html', list_medias=list_medias)
+
+@blueprint.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index.index'))
