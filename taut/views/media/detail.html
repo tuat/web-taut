@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ url_for('media.detail', list_media_id=list_media.id, _external=True) }}" />
 <meta property="og:image" content="{{ list_media.media_url | thumbor(300, 300) }}" />
-<meta property="og:description" content="{{ list_tweet.text | remove_url }}" />
+<meta property="og:description" content="{{ list_tweet.text | remove_url }} via TautApp" />
 <meta property="og:site_name" content="TautApp" />
 {% endblock %}
 
