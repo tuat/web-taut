@@ -4,6 +4,7 @@ import os
 from celery.schedules import crontab
 
 DEBUG                      = True
+SERVER_NAME                = "localhost"
 SESSION_COOKIE_NAME        = '_s'
 PERMANENT_SESSION_LIFETIME = 3600 * 24 * 30
 SECRET_KEY                 = "Your_Secret_Key"
