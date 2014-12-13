@@ -54,6 +54,7 @@
                 {% else %}
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="{{ url_for('index.login') }}">Sign In</a></li>
+                        <li><a href="{{ url_for('index.register') }}">Sign Up</a></li>
                     </ul>
                 {% endif %}
             </div>
@@ -61,9 +62,10 @@
     </div>
     <div id="wrapper">
         <div class="container">
-            <div class="col-md-12">
-                {% include 'share/flash-message.html' %}
-            </div>
+
+                <div class="col-md-12">
+                    {% include 'share/flash-message.html' %}
+                </div>
 
             {% block container %}
             {% endblock %}

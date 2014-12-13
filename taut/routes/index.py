@@ -1,7 +1,7 @@
 from flask import Blueprint
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from ..models import ListMedia
-from ..forms import SigninForm
+from ..forms import SigninForm, SignupForm
 from ..helpers.account import logout_user, login_user, require_user
 from ..helpers.value import force_integer, fill_with_list_users
 
@@ -31,3 +31,14 @@ def login():
         return redirect(url_for('index.index'))
     else:
         return render_template('login.html', form=form)
+
+@blueprint.route('/register', methods=['GET', 'POST'])
+def register():
+    form = SignupForm()
+
+    if form.validate_on_submit():
+        account = form.save()
+        flash('Thanks for your register. Your account has been created', 'success')
+        return redirect(url_for('index.signup'))
+
+    return render_template('register.html', form=form)

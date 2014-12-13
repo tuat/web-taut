@@ -1,0 +1,28 @@
+{% extends 'layout/frontend.html' %}
+
+{% block container %}
+    <div id="index-register">
+        <h2 class="form-signin-heading">Sign up</h2>
+        <hr>
+        <form method="post" action="{{ url_for('index.register') }}" role="form">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ form.username.label(class="control-label", for="username") }}
+                {{ form.username(class="form-control", placeholder="Enter username, English Characters Only.") }}
+            </div>
+            <div class="form-group">
+                {{ form.email.label(class="control-label", for="email") }}
+                {{ form.email(class="form-control", placeholder="Enter email") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="control-label", for="password") }}
+                {{ form.password(class="form-control", placeholder="Enter password") }}
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password.label(class="control-label", for="confirm_password") }}
+                {{ form.confirm_password(class="form-control", placeholder="Enter confirm password") }}
+            </div>
+            <button type="submit" class="btn btn-default">Sign up</button>
+        </form>
+    </div>
+{% endblock %}
