@@ -29,6 +29,11 @@ CELERYBEAT_SCHEDULE          = {
         'schedule': crontab(minute="*/5"), # every 5 minute
         'args': ('LIST_ID', 'SLUG')
     },
+    'create-sitemap-all': {
+        'task': 'taut.tasks.schedule.create_sitemap',
+        'schedule': crontab(minute=0, hour='*/3'), # every three hours
+        'args': (0, 10000)
+    },
 }
 
 TWITTER_LIST_LAST_ID_FILENAME = os.path.join(os.getcwd(), 'storage/twitter-list-last-id.txt')

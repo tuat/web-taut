@@ -2,7 +2,7 @@
 
 from celery import task
 from celery.utils.log import get_task_logger
-from ..commands import FetchLists
+from ..commands import FetchLists, Sitemap
 
 logger = get_task_logger(__name__)
 
@@ -11,3 +11,9 @@ def fetch_lists(list_id, slug):
     logger.info("called schedule.fetch_list")
 
     FetchLists(list_id, slug, logger).make()
+
+@task
+def create_sitemap(offset, limit):
+    logger.info("called schedule.create_sitemap, offset: {0}, limit: {1}".format(offset, limit))
+
+    Sitemap(logger).make(offset, limit)
