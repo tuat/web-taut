@@ -46,7 +46,7 @@
                     </ul>
                 {% else %}
                     <ul class="nav navbar-nav navbar-right">
-
+                        <li><a href="{{ url_for('index.login') }}">Sign In</a></li>
                     </ul>
                 {% endif %}
             </div>
@@ -63,6 +63,7 @@
 
     <div class="footer">
         <div class="container">
+            <hr>
             <small>
                 <span class="pull-left">&copy; Taut 2014</span>
                 <span class="pull-right">&nbsp;</span>

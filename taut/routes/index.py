@@ -1,7 +1,8 @@
 from flask import Blueprint
 from flask import render_template, request, redirect, url_for
 from ..models import ListMedia
-from ..helpers.account import logout_user
+from ..forms import SigninForm
+from ..helpers.account import logout_user, login_user
 from ..helpers.value import force_integer, fill_with_users
 
 blueprint = Blueprint('index', __name__)
@@ -19,3 +20,13 @@ def index():
 def logout():
     logout_user()
     return redirect(url_for('index.index'))
+
+@blueprint.route('/login', methods=['GET', 'POST'])
+def login():
+    form = SigninForm()
+
+    if form.validate_on_submit():
+        login_user(form.user, form.permanent.data)
+        return redirect(url_for('index.index'))
+    else:
+        return render_template('login.html', form=form)
