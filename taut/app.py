@@ -88,6 +88,7 @@ def register_database(app):
     db.app = app
 
 def register_route(app):
+    app.register_blueprint(admin.account.blueprint, url_prefix='/admin/account')
     app.register_blueprint(admin.list_media.blueprint, url_prefix='/admin/list-media')
     app.register_blueprint(admin.list_tweet.blueprint, url_prefix='/admin/list-tweet')
     app.register_blueprint(admin.list_user.blueprint, url_prefix='/admin/list-user')
