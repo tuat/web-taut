@@ -12,13 +12,13 @@
     <div class="content">
         <div class="row">
             {% for list_media in list_medias.items %}
-                <div class="col-md-3">
+                <div class="col-xs-6 col-md-3">
                     <div class="box">
                         <div class="box-header text-center">
                             <a href="http://twitter.com/{{ list_media.user.screen_name }}" target="_blank"><strong>{{ list_media.user.screen_name }}</strong></a>
                         </div>
                         <div class="box-body">
-                            <img src="{{ list_media.media_url | thumbor(188, 255) }}">
+                            <img src="{{ list_media.media_url | thumbor(300, 300) }}">
                         </div>
                         <div class="box-footer text-center">
                             {% if list_media.is_hide %}
