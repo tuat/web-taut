@@ -8,7 +8,7 @@ def force_integer(value, default=1):
     except:
         return default
 
-def fill_with_users(items):
+def fill_with_list_users(items):
     user_ids  = [item.list_user_id for item in items]
     users     = ListUser.query.filter(ListUser.id.in_(user_ids)).all() if user_ids else {}
     user_dict = {user.id: user for user in users}

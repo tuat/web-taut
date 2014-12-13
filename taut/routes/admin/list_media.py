@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import render_template, request, abort, flash, redirect, url_for
 from ...models import ListMedia
 from ...helpers.account import require_admin
-from ...helpers.value import force_integer, fill_with_users
+from ...helpers.value import force_integer, fill_with_list_users
 
 blueprint = Blueprint('admin_list_media', __name__)
 
@@ -16,7 +16,7 @@ def index(status):
         next_url    = request.url
         list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.create_at.desc()).paginate(page)
 
-        list_medias.items = fill_with_users(list_medias.items)
+        list_medias.items = fill_with_list_users(list_medias.items)
 
         return render_template('admin/list_media/index.html', list_medias=list_medias, status=status, next_url=next_url)
 
