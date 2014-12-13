@@ -78,6 +78,11 @@ def register_jinja2(app):
     def thumbor(url, width, height, unsafe=False):
         return thumb(url, width, height, unsafe)
 
+    @app.template_filter('remove_url')
+    def remove_url(text):
+        import re
+        return re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', text, flags=re.MULTILINE)
+
 def register_database(app):
     db.init_app(app)
     db.app = app
