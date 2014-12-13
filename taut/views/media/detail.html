@@ -16,6 +16,15 @@
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        <a href="{{ url_for('bookmark.create', list_media_id=list_media.id) }}" class="btn btn-info">
+                            <div class="hidden-xs">
+                                <i class="glyphicon glyphicon-paperclip"></i> Bookmark
+                            </div>
+                            <div class="visible-xs">
+                                <i class="glyphicon glyphicon-paperclip"></i>
+                            </div>
+                        </a>
+
                         <a href="{{ list_media.media_url }}" class="btn btn-info" download="{{ list_media.media_url }}">
                             <div class="hidden-xs">
                                 <i class="glyphicon glyphicon-download-alt"></i> Download
