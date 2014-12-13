@@ -22,7 +22,11 @@ def home():
     counter = dict(
         list_users  = ListUser.query.count(),
         list_tweets = ListTweet.query.count(),
-        list_medias = ListMedia.query.count(),
+        list_medias = dict(
+            show = ListMedia.query.filter_by(status='show').count(),
+            hide = ListMedia.query.filter_by(status='hide').count(),
+            trash = ListMedia.query.filter_by(status='trash').count(),
+        ),
         accounts    = Account.query.count()
     )
 
