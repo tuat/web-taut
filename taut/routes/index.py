@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import render_template, request, redirect, url_for
 from ..models import ListMedia
 from ..forms import SigninForm
-from ..helpers.account import logout_user, login_user
+from ..helpers.account import logout_user, login_user, require_user
 from ..helpers.value import force_integer, fill_with_users
 
 blueprint = Blueprint('index', __name__)
@@ -17,6 +17,7 @@ def index():
     return render_template('index.html', list_medias=list_medias)
 
 @blueprint.route('/logout')
+@require_user
 def logout():
     logout_user()
     return redirect(url_for('index.index'))

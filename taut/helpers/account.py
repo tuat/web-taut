@@ -34,16 +34,23 @@ def require_role(role):
     def _require_role(method):
         @functools.wraps(method)
         def wrapper(*args, **kwargs):
+            role_level = {
+                'banned': 0,
+                'user'  : 1,
+                'admin' : 2,
+            }
+
             if not g.user:
-                return redirect(url_for('admin_main.index'))
+                return redirect(url_for('index.login'))
             if role is None:
                 return method(*args, **kwargs)
             # if g.user.id == 1:
             #     return method(*args, **kwargs)
-            if g.user.role != role:
+            if role_level[g.user.role] < role_level[role]:
                 return abort(403)
             return method(*args, **kwargs)
         return wrapper
     return _require_role
 
 require_admin = require_role('admin')
+require_user  = require_role('user')

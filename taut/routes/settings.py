@@ -2,10 +2,12 @@ from flask import Blueprint, g
 from flask import render_template, request, redirect, url_for, flash
 from ..forms import ProfileForm, PasswordForm
 from ..models import Account
+from ..helpers.account import require_user
 
 blueprint = Blueprint('settings', __name__)
 
 @blueprint.route('/profile', methods=['GET', 'POST'])
+@require_user
 def profile():
     form = ProfileForm(obj=g.user)
 
@@ -21,6 +23,7 @@ def profile():
         return render_template('settings/profile.html', form=form)
 
 @blueprint.route('/password', methods=['GET', 'POST'])
+@require_user
 def password():
     form = PasswordForm(obj=g.user)
 
