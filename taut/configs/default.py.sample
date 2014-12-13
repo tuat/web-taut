@@ -45,3 +45,17 @@ GRAVATAR_EXTRA    = ''
 
 THUMBOR_BASE_URL     = 'http://localhost:8888'
 THUMBOR_SECURITY_KEY = '______YOUR_SECRET_KEY______'
+
+GOOGLE_ANALYTICS    = ''
+GOOGLE_ANALYTICS_DC = False
+
+ADDTHIS = {
+    'enable'   : True,
+    'facebook' : True,
+    'twitter'  : True,
+    'google'   : True,
+    'sinaweibo': True,
+    'plurk'    : True,
+    'pinterest': True,
+    'pubid'    : '',
+}

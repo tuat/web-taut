@@ -12,6 +12,7 @@
                 <div class="thumbnail">
                     <img src="{{ list_media.media_url | thumbor(500, 500) }}">
                 </div>
+                {% include "share/addthis.html" %}
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <div class="panel panel-default">
@@ -53,7 +54,7 @@
                     {% for user_media in user_medias %}
                         <div class="col-xs-6 col-sm-3 col-md-3">
                             <a class="thumbnail" rel="group" href="{{ url_for('media.detail', list_media_id=user_media.id) }}">
-                                <img src="{{ user_media.media_url | thumbor(100, 118) }}" alt="{{ user_media.user.name }}" class="tips" data-placement="bottom" title="{{ user_media.user.name }}">
+                                <img src="{{ user_media.media_url | thumbor(100, 146) }}" alt="{{ user_media.user.name }}" class="tips" data-placement="bottom" title="{{ user_media.user.name }}">
                             </a>
                         </div>
                     {% endfor %}

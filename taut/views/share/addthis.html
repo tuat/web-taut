@@ -1,0 +1,30 @@
+{% if config.ADDTHIS['enable'] %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+                {% if config.ADDTHIS['facebook'] %}
+                    <a class="addthis_button_facebook"></a>
+                {% endif %}
+                {% if config.ADDTHIS['twitter'] %}
+                    <a class="addthis_button_twitter"></a>
+                {% endif %}
+                {% if config.ADDTHIS['google'] %}
+                    <a class="addthis_button_google_plusone_share"></a>
+                {% endif %}
+                {% if config.ADDTHIS['sinaweibo'] %}
+                    <a class="addthis_button_sinaweibo"></a>
+                {% endif %}
+                {% if config.ADDTHIS['plurk'] %}
+                    <a class="addthis_button_plurk"></a>
+                {% endif %}
+                {% if config.ADDTHIS['pinterest'] %}
+                    <a class="addthis_button_pinterest_share"></a>
+                {% endif %}
+                <a class="addthis_button_compact"></a>
+                <a class="addthis_counter addthis_bubble_style hidden-xs"></a>
+            </div>
+            <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js{% if config.ADDTHIS['pubid'] %}#pubid=ra-{{ config.ADDTHIS['pubid'] }}{% endif %}"></script>
+        </div>
+    </div>
+{% endif %}
