@@ -14,7 +14,11 @@ def index(status):
     else:
         page        = force_integer(request.args.get('page', 1), 0)
         next_url    = request.url
-        list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.create_at.desc()).paginate(page)
+
+        if status == "hide":
+            list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.create_at.desc()).paginate(page)
+        else:
+            list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.update_at.desc()).paginate(page)
 
         list_medias.items = fill_with_list_users(list_medias.items)
 
