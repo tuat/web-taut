@@ -22,18 +22,18 @@
                         </div>
                         <div class="box-footer text-center">
                             {% if list_media.is_hide %}
-                                <a href="{{ url_for('admin_list_media.show', list_media_id=list_media.id, next=next_url) }}" class="btn btn-primary btn-xs">Show</a>
-                                <a href="{{ url_for('admin_list_media.trash', list_media_id=list_media.id, next=next_url) }}" class="btn btn-danger btn-xs">Trash</a>
+                                <a href="{{ url_for('admin_list_media.show', list_media_id=list_media.id, next=next_url) }}" class="btn btn-primary btn-xs admin-list-media">Show</a>
+                                <a href="{{ url_for('admin_list_media.trash', list_media_id=list_media.id, next=next_url) }}" class="btn btn-danger btn-xs admin-list-media">Trash</a>
                             {% endif %}
 
                             {% if list_media.is_show %}
-                                <a href="{{ url_for('admin_list_media.hide', list_media_id=list_media.id, next=next_url) }}" class="btn btn-success btn-xs">Hide</a>
-                                <a href="{{ url_for('admin_list_media.trash', list_media_id=list_media.id, next=next_url) }}" class="btn btn-danger btn-xs">Trash</a>
+                                <a href="{{ url_for('admin_list_media.hide', list_media_id=list_media.id, next=next_url) }}" class="btn btn-success btn-xs admin-list-media">Hide</a>
+                                <a href="{{ url_for('admin_list_media.trash', list_media_id=list_media.id, next=next_url) }}" class="btn btn-danger btn-xs admin-list-media">Trash</a>
                             {% endif %}
 
                             {% if list_media.is_trash %}
-                                <a href="{{ url_for('admin_list_media.show', list_media_id=list_media.id, next=next_url) }}" class="btn btn-primary btn-xs">Show</a>
-                                <a href="{{ url_for('admin_list_media.hide', list_media_id=list_media.id, next=next_url) }}" class="btn btn-success btn-xs">Hide</a>
+                                <a href="{{ url_for('admin_list_media.show', list_media_id=list_media.id, next=next_url) }}" class="btn btn-primary btn-xs admin-list-media">Show</a>
+                                <a href="{{ url_for('admin_list_media.hide', list_media_id=list_media.id, next=next_url) }}" class="btn btn-success btn-xs admin-list-media">Hide</a>
                             {% endif %}
                         </div>
                     </div>

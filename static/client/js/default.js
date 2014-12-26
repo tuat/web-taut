@@ -19,6 +19,22 @@
                 index: 0
             }).init();
         });
+
+        // AJAX on admin list medai page for set it status
+        $("a.admin-list-media").on('click', function(event) {
+            event.preventDefault();
+
+            var href = $(this).prop('href');
+            var self = this;
+
+            $.get(href).done(function(data) {
+                $(self).closest('div.box').parent().fadeOut(function() {
+                    $(this).remove();
+                });
+            }).fail(function(data) {
+                alert('Moving data failed');
+            });
+        });
     });
 
 })(jQuery);
