@@ -35,6 +35,13 @@
                 alert('Moving data failed');
             });
         });
+
+        // AJAX on admin list medai page for set all to trash
+        $("a.admin-list-media-trash-all").on('click', function(event) {
+            $(".content .row > div a.admin-list-media:odd").each(function() {
+                $(this).trigger('click');
+            });
+        });
     });
 
 })(jQuery);

@@ -56,5 +56,8 @@
                 <li class="next"><a href="{{ url_for('admin_list_media.index', page=list_medias.next_num, status=status) }}">Next</a></li>
             {% endif %}
         </ul>
+
+        <hr>
+        <a href="#" class="btn btn-danger admin-list-media-trash-all">Trash all</a>
     </div>
 {% endblock %}
