@@ -42,7 +42,22 @@
                 $(this).trigger('click');
             });
 
-            $(".next a")[0].click();
+            // Trigger next page monitor
+            var deferred = new jQuery.Deferred();
+            var promise  = deferred.promise();
+            var timer    = setInterval(function () {
+                len = $(".content .row > div a.admin-list-media").length;
+
+                if (len <= 0) {
+                    deferred.resolve();
+                }
+            }, 1000);
+
+            promise.done(function () {
+                clearInterval(timer);
+
+                $(".next a")[0].click();
+            });
         });
     });
 
