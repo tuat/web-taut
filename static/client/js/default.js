@@ -41,6 +41,8 @@
             $(".content .row > div a.admin-list-media:odd").each(function() {
                 $(this).trigger('click');
             });
+
+            $(".next a")[0].click();
         });
     });
 
