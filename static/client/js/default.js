@@ -59,6 +59,13 @@
                 $(".next a")[0].click();
             });
         });
+
+        // Remove broken image in index page
+        $("img[src*=twimg]").on('error', function() {
+            $(this).closest('.panel').parent().fadeOut('fast', function() {
+                $(this).remove();
+            });
+        });
     });
 
 })(jQuery);
