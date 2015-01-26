@@ -26,9 +26,9 @@ def ajax_index():
         next_url    = request.url
 
         if status == "hide":
-            list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.create_at.desc()).paginate(page)
+            list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.create_at.desc()).paginate(page, 100)
         else:
-            list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.update_at.desc()).paginate(page)
+            list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.update_at.desc()).paginate(page, 100)
 
         list_medias.items = fill_with_list_users(list_medias.items)
 
