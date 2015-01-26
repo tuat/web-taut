@@ -61,7 +61,8 @@ class ListMedia(db.Model, SessionMixin):
 
         return {
             'id'        : self.id,
-            'media_url' : thumb(self.media_url, width, height),
+            'media_url' : self.media_url,
+            'thumb_url' : thumb(self.media_url, width, height),
             'user'      : list_user.to_admin_json(),
             'is_hide'   : self.is_hide,
             'is_show'   : self.is_show,

@@ -29,7 +29,7 @@
                         <a href="http://twitter.com/{{ user.screen_name }}" target="_blank"><strong>{{ user.screen_name }}</strong></a>
                     </div>
                     <div class="box-body">
-                        <img src="{{ media_url }}">
+                        <a href="{{ media_url }}" target="_blank"><img src="{{ thumb_url }}"></a>
                     </div>
                     <div class="box-footer text-center">
                         {{#if is_hide }}
