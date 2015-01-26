@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import render_template, request, abort, flash, redirect, url_for
+from flask import render_template, request, abort, flash, redirect, url_for, jsonify
 from ...models import ListMedia
 from ...helpers.account import require_admin
 from ...helpers.value import force_integer, fill_with_list_users
@@ -9,6 +9,16 @@ blueprint = Blueprint('admin_list_media', __name__)
 @blueprint.route('/index/<status>')
 @require_admin
 def index(status):
+    if status not in ['hide', 'show', 'trash']:
+        return abort(403)
+    else:
+        return render_template('admin/list_media/index.html', status=status)
+
+@blueprint.route('/ajax/index')
+@require_admin
+def ajax_index():
+    status = request.args.get('status', 'hide')
+
     if status not in ['hide', 'show', 'trash']:
         return abort(403)
     else:
@@ -22,43 +32,43 @@ def index(status):
 
         list_medias.items = fill_with_list_users(list_medias.items)
 
-        return render_template('admin/list_media/index.html', list_medias=list_medias, status=status, next_url=next_url)
+        prev_page = url_for('admin_list_media.ajax_index', page=page-1, _external=True) if list_medias.has_prev else None
+        next_age  = url_for('admin_list_media.ajax_index', page=page+1, _external=True) if list_medias.has_next else None
 
-@blueprint.route('/hide/<int:list_media_id>')
+    return jsonify(
+        medias = [media.to_admin_json(media.user) for media in list_medias.items],
+        prev   = prev_page,
+        next   = next_age,
+        count  = list_medias.total
+    )
+
+@blueprint.route('/ajax/status-control')
 @require_admin
-def hide(list_media_id):
-    next_url = request.args.get('next')
+def ajax_status_control():
+    media_id = force_integer(request.args.get('id', 0), 0)
+    status   = request.args.get('status', 'hide')
 
-    list_media = ListMedia.query.get_or_404(list_media_id)
-    list_media.status = "hide"
-    list_media.save()
+    if status not in ['hide', 'show', 'trash']:
+        return abort(403)
+    else:
+        media = ListMedia.query.get(media_id)
+        media.status = status
+        media.save()
 
-    flash('The media was marked as hide', 'success')
+        if media:
+            return jsonify(status='success', message='Status changed');
+        else:
+            return jsonify(status='failed', message='Can not found media record');
 
-    return redirect(next_url)
-
-@blueprint.route('/show/<int:list_media_id>')
+@blueprint.route('/ajax/trash-all')
 @require_admin
-def show(list_media_id):
-    next_url = request.args.get('next')
+def ajax_trash_all():
+    media_ids = request.args.getlist('ids[]')
 
-    list_media = ListMedia.query.get_or_404(list_media_id)
-    list_media.status = "show"
-    list_media.save()
+    medias = ListMedia.query.filter(ListMedia.id.in_(media_ids)).all()
 
-    flash('The media was marked as show', 'success')
+    for media in medias:
+        media.status = 'trash'
+        media.save()
 
-    return redirect(next_url)
-
-@blueprint.route('/trash/<int:list_media_id>')
-@require_admin
-def trash(list_media_id):
-    next_url = request.args.get('next')
-
-    list_media = ListMedia.query.get_or_404(list_media_id)
-    list_media.status = "trash"
-    list_media.save()
-
-    flash('The media was marked as trash', 'success')
-
-    return redirect(next_url)
+    return jsonify(status='success', message='Trashed all')

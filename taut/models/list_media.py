@@ -54,3 +54,16 @@ class ListMedia(db.Model, SessionMixin):
             'height'   : height,
             'user'     : list_user.to_json()
         }
+
+    def to_admin_json(self, list_user):
+        width  = 300
+        height = 300
+
+        return {
+            'id'        : self.id,
+            'media_url' : thumb(self.media_url, width, height),
+            'user'      : list_user.to_admin_json(),
+            'is_hide'   : self.is_hide,
+            'is_show'   : self.is_show,
+            'is_trash'  : self.is_trash
+        }

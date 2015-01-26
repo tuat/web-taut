@@ -10,54 +10,57 @@
         </ol>
     </div>
     <div class="content">
-        <div class="row">
-            {% for list_media in list_medias.items %}
-                <div class="col-xs-6 col-md-3">
-                    <div class="box">
-                        <div class="box-header text-center">
-                            <a href="http://twitter.com/{{ list_media.user.screen_name }}" target="_blank"><strong>{{ list_media.user.screen_name }}</strong></a>
-                        </div>
-                        <div class="box-body">
-                            <img src="{{ list_media.media_url | thumbor(300, 300) }}">
-                        </div>
-                        <div class="box-footer text-center">
-                            {% if list_media.is_hide %}
-                                <a href="{{ url_for('admin_list_media.show', list_media_id=list_media.id, next=next_url) }}" class="btn btn-primary btn-xs admin-list-media">Show</a>
-                                <a href="{{ url_for('admin_list_media.trash', list_media_id=list_media.id, next=next_url) }}" class="btn btn-danger btn-xs admin-list-media">Trash</a>
-                            {% endif %}
-
-                            {% if list_media.is_show %}
-                                <a href="{{ url_for('admin_list_media.hide', list_media_id=list_media.id, next=next_url) }}" class="btn btn-success btn-xs admin-list-media">Hide</a>
-                                <a href="{{ url_for('admin_list_media.trash', list_media_id=list_media.id, next=next_url) }}" class="btn btn-danger btn-xs admin-list-media">Trash</a>
-                            {% endif %}
-
-                            {% if list_media.is_trash %}
-                                <a href="{{ url_for('admin_list_media.show', list_media_id=list_media.id, next=next_url) }}" class="btn btn-primary btn-xs admin-list-media">Show</a>
-                                <a href="{{ url_for('admin_list_media.hide', list_media_id=list_media.id, next=next_url) }}" class="btn btn-success btn-xs admin-list-media">Hide</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">No medias</div>
-                    </div>
-                </div>
-            {% endfor %}
+        <div class="row medias"
+            data-status="{{ status }}"
+            data-medias-href="{{ url_for('admin_list_media.ajax_index') }}"
+            data-status-control-href="{{ url_for('admin_list_media.ajax_status_control') }}"
+            data-trash-all-href="{{ url_for('admin_list_media.ajax_trash_all') }}">
         </div>
-
-        <ul class="pager">
-            {% if list_medias.has_prev %}
-                <li class="previous"><a href="{{ url_for('admin_list_media.index', page=list_medias.prev_num, status=status) }}">Previous</a></li>
-            {% endif %}
-
-            {% if list_medias.has_next %}
-                <li class="next"><a href="{{ url_for('admin_list_media.index', page=list_medias.next_num, status=status) }}">Next</a></li>
-            {% endif %}
-        </ul>
-
-        <hr>
-        <a href="#" class="btn btn-danger admin-list-media-trash-all">Trash all</a>
+        <ul class="pager"></ul>
+        <a href="#" class="btn btn-danger trash-all">Trash all</a>
     </div>
+
+    <script id="medias-template" type="text/x-handlebars-template">
+    {% raw %}
+        {{#each medias}}
+            <div class="col-xs-6 col-md-3">
+                <div class="box">
+                    <div class="box-header text-center">
+                        <a href="http://twitter.com/{{ user.name }}" target="_blank"><strong>{{ user.name }}</strong></a>
+                    </div>
+                    <div class="box-body">
+                        <img src="{{ media_url }}">
+                    </div>
+                    <div class="box-footer text-center">
+                        {{#if is_hide }}
+                            <a href="javascript:void(0)" data-id="{{ id }}" data-status="show" class="btn btn-primary btn-xs status-control">Show</a>
+                            <a href="javascript:void(0)" data-id="{{ id }}" data-status="trash" class="btn btn-danger btn-xs status-control">Trash</a>
+                        {{/if}}
+
+                        {{#if is_show }}
+                            <a href="javascript:void(0)" data-id="{{ id }}" data-status="hide" class="btn btn-success btn-xs status-control">Hide</a>
+                            <a href="javascript:void(0)" data-id="{{ id }}" data-status="trash" class="btn btn-danger btn-xs status-control">Trash</a>
+                        {{/if}}
+
+                        {{#if is_trash }}
+                            <a href="javascript:void(0)" data-id="{{ id }}" data-status="show" class="btn btn-primary btn-xs status-control">Show</a>
+                            <a href="javascript:void(0)" data-id="{{ id }}" data-status="hide" class="btn btn-success btn-xs status-control">Hide</a>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    {% endraw %}
+    </script>
+    <script id="pager-template" type="text/x-handlebars-template">
+    {% raw %}
+        {{#if prev }}
+            <li class="previous"><a href="{{ prev }}">Previous</a></li>
+        {{/if}}
+
+        {{#if next }}
+            <li class="next"><a href="{{ next }}">Next</a></li>
+        {{/if}}
+    {% endraw %}
+    </script>
 {% endblock %}
