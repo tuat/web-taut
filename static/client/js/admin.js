@@ -51,7 +51,7 @@ var fetchMedias = function(url) {
             ids.push($(this).data('id'));
         });
 
-        $.getJSON($(".medias").data('trashAllHref'), {
+        $.post($(".medias").data('trashAllHref'), {
             ids: ids
         }, function(data) {
             if (data.status == "success") {
@@ -59,7 +59,7 @@ var fetchMedias = function(url) {
             }else{
                 alert(data.message);
             }
-        })
+        }, "json");
     });
 
     $(function() {

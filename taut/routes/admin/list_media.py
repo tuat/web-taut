@@ -60,10 +60,10 @@ def ajax_status_control():
         else:
             return jsonify(status='failed', message='Can not found media record');
 
-@blueprint.route('/ajax/trash-all')
+@blueprint.route('/ajax/trash-all', methods=['POST'])
 @require_admin
 def ajax_trash_all():
-    media_ids = request.args.getlist('ids[]')
+    media_ids = request.form.getlist('ids[]')
 
     medias = ListMedia.query.filter(ListMedia.id.in_(media_ids)).all()
 
