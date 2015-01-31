@@ -46,4 +46,4 @@ class CheckNotFound(BaseCommand):
             self.logger.debug("--> Error - {0}".format(media.media_url))
             self.not_found_ids.append(media.id)
 
-        sleep(0.001)
+        sleep(0.005)
