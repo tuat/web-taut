@@ -9,7 +9,7 @@ blueprint = Blueprint('admin_list_media', __name__)
 @blueprint.route('/index/<status>')
 @require_admin
 def index(status):
-    if status not in ['hide', 'show', 'trash']:
+    if status not in ['hide', 'show', 'trash', 'lost']:
         return abort(403)
     else:
         return render_template('admin/list_media/index.html', status=status)
@@ -19,16 +19,13 @@ def index(status):
 def ajax_index():
     status = request.args.get('status', 'hide')
 
-    if status not in ['hide', 'show', 'trash']:
+    if status not in ['hide', 'show', 'trash', 'lost']:
         return abort(403)
     else:
         page        = force_integer(request.args.get('page', 1), 0)
         next_url    = request.url
 
-        if status == "hide":
-            list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.create_at.desc()).paginate(page, 100)
-        else:
-            list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.update_at.desc()).paginate(page, 100)
+        list_medias = ListMedia.query.filter_by(status=status).order_by(ListMedia.update_at.desc()).paginate(page, 100)
 
         list_medias.items = fill_with_list_users(list_medias.items)
 
@@ -48,7 +45,7 @@ def ajax_status_control():
     media_id = force_integer(request.args.get('id', 0), 0)
     status   = request.args.get('status', 'hide')
 
-    if status not in ['hide', 'show', 'trash']:
+    if status not in ['hide', 'show', 'trash', 'lost']:
         return abort(403)
     else:
         media = ListMedia.query.get(media_id)

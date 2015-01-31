@@ -26,6 +26,7 @@ def home():
             show = ListMedia.query.filter_by(status='show').count(),
             hide = ListMedia.query.filter_by(status='hide').count(),
             trash = ListMedia.query.filter_by(status='trash').count(),
+            lost = ListMedia.query.filter_by(status='lost').count(),
         ),
         accounts    = Account.query.count()
     )

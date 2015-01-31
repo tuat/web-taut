@@ -40,6 +40,10 @@ class ListMedia(db.Model, SessionMixin):
         return self.status == "trash"
 
     @property
+    def is_lost(self):
+        return self.status == "lost"
+
+    @property
     def is_bookmarked(self):
         return db.session.query(exists().where(Bookmark.list_media_id == self.id)).scalar()
 
@@ -66,5 +70,6 @@ class ListMedia(db.Model, SessionMixin):
             'user'      : list_user.to_admin_json(),
             'is_hide'   : self.is_hide,
             'is_show'   : self.is_show,
-            'is_trash'  : self.is_trash
+            'is_trash'  : self.is_trash,
+            'is_lost'   : self.is_lost
         }

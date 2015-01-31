@@ -81,6 +81,20 @@
                 </div>
             </div>
             <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-maroon">
+                    <div class="inner">
+                        <h3>{{ counter.list_medias.lost }}</h3>
+                        <p>List User Medias (Lost)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-clock"></i>
+                    </div>
+                    <a href="{{ url_for('admin_list_media.index', status='lost') }}" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-purple">
                     <div class="inner">
                         <h3>{{ counter.accounts }}</h3>
