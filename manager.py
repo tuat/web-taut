@@ -56,5 +56,11 @@ def testfetchlists():
 
     FetchLists(LIST_ID, SLUG).make()
 
+@manager.command
+def testchecknotfound():
+    from taut.commands.check_not_found import CheckNotFound
+
+    CheckNotFound().make()
+
 if __name__ == '__main__':
     manager.run()
