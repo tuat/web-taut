@@ -11,6 +11,12 @@ var fetchMedias = function(url) {
         $("html, body").animate({
             scrollTop: 0
         }, "fast");
+
+        $("img.lazy").lazyload({
+            threshold : 200,
+            effect : "fadeIn",
+            failure_limit: 3
+        });
     });
 };
 
