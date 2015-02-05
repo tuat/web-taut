@@ -3,9 +3,16 @@ var renderTemplate = function(selector, context) {
 };
 
 var fetchMedias = function(url) {
+    var $trashAll = $(".trash-all"),
+        olvValue = $trashAll.text();
+
+    $trashAll.text("Loading...");
+
     $.getJSON(url, {
         status: $(".medias").data('status')
     },function(data) {
+        $trashAll.text(olvValue);
+
         $(".medias").html(renderTemplate("#medias-template", data));
         $(".pager").html(renderTemplate("#pager-template", data));
         $("html, body").animate({
