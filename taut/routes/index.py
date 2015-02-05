@@ -8,7 +8,7 @@ from flask import render_template, request, redirect, url_for, flash, send_from_
 from ..models import ListMedia, db
 from ..forms import SigninForm, SignupForm
 from ..helpers.account import logout_user, login_user, require_user
-from ..helpers.value import force_integer, fill_with_list_users
+from ..helpers.value import force_integer, fill_with_list_users, human_time
 
 blueprint = Blueprint('index', __name__)
 
@@ -18,10 +18,7 @@ def index():
     list_medias   = ListMedia.query.filter_by(status='show').order_by(ListMedia.create_at.desc()).paginate(page)
     total_medias  = ListMedia.query.filter_by(status='show').count()
     random_media  = ListMedia.query.filter_by(status='show').order_by(db.func.random()).offset(0).limit(20).first()
-    latest_update = datetime.fromtimestamp(
-        os.path.getmtime(current_app.config.get('TWITTER_LIST_LAST_ID_FILENAME')),
-        tz=timezone(current_app.config.get('BABEL_DEFAULT_TIMEZONE'))
-    ).strftime('%Y-%m-%d %H:%M')
+    latest_update = human_time(list_medias.items[0].create_at)
 
     list_medias.items = fill_with_list_users(list_medias.items)
 

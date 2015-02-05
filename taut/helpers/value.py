@@ -54,3 +54,20 @@ def thumb(url, width, height, unsafe=False):
         sign_code = base64.urlsafe_b64encode(hmac.new(current_app.config.get('THUMBOR_SECURITY_KEY'), url_parts, hashlib.sha1).digest())
 
         return "{0}/{1}/{2}".format(current_app.config.get('THUMBOR_BASE_URL'), sign_code, url_parts)
+
+def human_time(value):
+    now = datetime.utcnow()
+    delta = now - value
+
+    if delta.days > 365:
+        return '{0} years ago'.format(delta.days / 365)
+    if delta.days > 30:
+        return '{0} months ago'.format(delta.days / 30)
+    if delta.days > 0:
+        return '{0} days ago'.format(delta.days)
+    if delta.seconds > 3600:
+        return '{0} hours ago'.format(delta.seconds / 3600)
+    if delta.seconds > 60:
+        return '{0} minutes ago'.format(delta.seconds / 60)
+
+    return 'just now'
