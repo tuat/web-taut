@@ -4,14 +4,14 @@ var renderTemplate = function(selector, context) {
 
 var fetchMedias = function(url) {
     var $trashAll = $(".trash-all"),
-        olvValue = $trashAll.text();
+        oldValue = $trashAll.text();
 
     $trashAll.text("Loading...");
 
     $.getJSON(url, {
         status: $(".medias").data('status')
     },function(data) {
-        $trashAll.text(olvValue);
+        $trashAll.text(oldValue);
 
         $(".medias").html(renderTemplate("#medias-template", data));
         $(".pager").html(renderTemplate("#pager-template", data));
@@ -59,16 +59,20 @@ var fetchMedias = function(url) {
     $(document).on('click', 'a.trash-all', function(event) {
         event.preventDefault();
 
+        $(this).addClass('btn-warning');
+
         var ids = [];
         $("a.status-control[data-id]").each(function() {
             ids.push($(this).data('id'));
         });
 
+        var self = this;
         $.post($(".medias").data('trashAllHref'), {
             ids: ids
         }, function(data) {
             if (data.status == "success") {
                 fetchMedias($(".medias").data('mediasHref'));
+                $(self).removeClass('btn-warning');
             }else{
                 alert(data.message);
             }
