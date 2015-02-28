@@ -30,7 +30,7 @@ var fetchMedias = function(url) {
 (function($) {
 
     // Bind pager event in list-media
-    $(document).on('click', ".pager-list-media > .previous a, .next a", function(event) {
+    $(document).on('click', ".pager-list-media > .previous a, .pager-list-media > .next a", function(event) {
         event.preventDefault();
 
         fetchMedias($(this).prop('href'));
