@@ -25,7 +25,7 @@
                 {% endfor %}
             </div>
             <div class="box-footer clearfix">
-                <ul class="pager">
+                <ul class="pager pager-list-tweet">
                     {% if list_tweets.has_prev %}
                         <li class="previous"><a href="{{ url_for('admin_list_tweet.index', page=list_tweets.prev_num) }}">Previous</a></li>
                     {% endif %}

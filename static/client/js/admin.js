@@ -14,7 +14,7 @@ var fetchMedias = function(url) {
         $trashAll.text(oldValue);
 
         $(".medias").html(renderTemplate("#medias-template", data));
-        $(".pager").html(renderTemplate("#pager-template", data));
+        $(".pager-list-media").html(renderTemplate("#pager-template", data));
         $("html, body").animate({
             scrollTop: 0
         }, "fast");
@@ -30,7 +30,7 @@ var fetchMedias = function(url) {
 (function($) {
 
     // Bind pager event in list-media
-    $(document).on('click', ".pager > .previous a, .next a", function(event) {
+    $(document).on('click', ".pager-list-media > .previous a, .next a", function(event) {
         event.preventDefault();
 
         fetchMedias($(this).prop('href'));

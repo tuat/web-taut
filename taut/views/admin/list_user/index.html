@@ -31,7 +31,7 @@
                 </table>
             </div>
             <div class="box-footer clearfix">
-                <ul class="pager">
+                <ul class="pager pager-list-user">
                     {% if list_users.has_prev %}
                         <li class="previous"><a href="{{ url_for('admin_list_user.index', page=list_users.prev_num) }}">Previous</a></li>
                     {% endif %}
