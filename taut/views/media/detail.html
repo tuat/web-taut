@@ -24,7 +24,7 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <div class="thumbnail">
-                    <img src="{{ list_media.media_url | thumbor(500, 500) }}" alt="{{ list_media.user.name }}">
+                    <img src="{{ list_media.media_url | thumbor(500, 500) }}" alt="{{ list_user.name }}">
                 </div>
                 {% include "share/addthis.html" %}
             </div>
