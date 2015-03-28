@@ -69,6 +69,10 @@ def register_jinja2(app):
         import re
         return re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', text, flags=re.MULTILINE)
 
+    @app.template_filter('remove_newline')
+    def remove_newline(text):
+        return ''.join(text.splitlines()).rstrip('\r\n')
+
 def register_database(app):
     db.init_app(app)
     db.app = app
