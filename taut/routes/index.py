@@ -47,7 +47,7 @@ def register():
     if form.validate_on_submit():
         account = form.save()
         flash('Thanks for your register. Your account has been created', 'success')
-        return redirect(url_for('index.signup'))
+        return redirect(url_for('index.login'))
 
     return render_template('register.html', form=form)
 
