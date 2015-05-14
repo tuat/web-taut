@@ -18,6 +18,9 @@ class Account(db.Model, SessionMixin):
         for k, v in kwargs.items():
             setattr(self, k, v)
 
+        if 'password' in kwargs:
+            self.password = self.password_hash(kwargs.pop('password'))
+
     def __str__(self):
         return self.media_url
 
