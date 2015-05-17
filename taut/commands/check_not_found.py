@@ -37,7 +37,7 @@ class CheckNotFound(BaseCommand):
 
     def check(self, media):
         try:
-            r = requests.head(media.media_url)
+            r = requests.head(media.media_url, timeout=3)
 
             if r.status_code != 200:
                 self.logger.debug("--> [{0}] - {1}".format(r.status_code, media.media_url))
