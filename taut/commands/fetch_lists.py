@@ -1,6 +1,7 @@
 # coding: utf-8
 
 import os
+from time import sleep
 from TwitterAPI import TwitterAPI
 from flask import current_app
 from .base import BaseCommand
@@ -110,6 +111,8 @@ class FetchLists(BaseCommand):
                                 self.logger.info("---> new media : no")
                     else:
                         self.logger.info("---> new tweet : no")
+
+            sleep(1)
 
         if lists_last_id:
             f = open(twitter_list_last_id_filename, 'w+')
