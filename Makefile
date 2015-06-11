@@ -11,6 +11,9 @@ deps:
 server:
 	python manager.py runserver
 
+database:
+	alembic upgrade head
+
 redis:
 	redis-server /usr/local/etc/redis.conf
 
