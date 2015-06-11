@@ -37,18 +37,21 @@
                 </div>
 
                 {{ social_like() }}
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center">Random media</div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <a class="thumbnail thumbnail-no-border" href="{{ url_for('media.detail', list_media_id=random_media.id) }}">
-                                    <img src="{{ random_media.media_url | thumbor(230, 300) }}" class="tips" data-placement="bottom">
-                                </a>
+
+                {% if random_media %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center">Random media</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a class="thumbnail thumbnail-no-border" href="{{ url_for('media.detail', list_media_id=random_media.id) }}">
+                                        <img src="{{ random_media.media_url | thumbor(230, 300) }}" class="tips" data-placement="bottom">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>
