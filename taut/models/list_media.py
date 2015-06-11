@@ -47,7 +47,7 @@ class ListMedia(db.Model, SessionMixin):
     def is_bookmarked(self):
         return db.session.query(exists().where(Bookmark.list_media_id == self.id)).scalar()
 
-    def to_json(self, list_user):
+    def to_json(self, list_user, list_tweet):
         width  = 500
         height = 500
 
@@ -56,7 +56,8 @@ class ListMedia(db.Model, SessionMixin):
             'media_url': thumb(self.media_url, width, height),
             'width'    : width,
             'height'   : height,
-            'user'     : list_user.to_json()
+            'user'     : list_user.to_json(),
+            'tweet'    : list_tweet.to_json()
         }
 
     def to_admin_json(self, list_user):

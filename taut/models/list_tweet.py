@@ -20,3 +20,8 @@ class ListTweet(db.Model, SessionMixin):
 
     def __repr__(self):
         return '<ListTweet: %s>' % self.id
+
+    def to_json(self):
+        return {
+            'text': self.text
+        }
