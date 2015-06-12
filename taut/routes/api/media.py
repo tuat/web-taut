@@ -22,5 +22,5 @@ def index(list_media_id):
     return jsonify(
         image    = list_media.to_json(list_user, list_tweet),
         medias   = [media.to_json(list_user, list_tweet) for media in user_medias],
-        comments = [comment.to_json() for comment in comments]
+        comments = [comment.to_json(comment.user) for comment in comments]
     )

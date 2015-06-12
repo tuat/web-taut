@@ -21,9 +21,17 @@ class Comment(db.Model, SessionMixin):
     def __repr__(self):
         return '<Comment: %s>' % self.id
 
-    def to_json(self):
-        return {
+    def to_json(self, user=None):
+        default_dict = {
             'id'        : self.id,
-            'account_id': self.account_id,
             'content'   : self.content
         }
+
+        if user is None:
+            default_dict['user'] = {
+                'id': self.account_id
+            }
+        else:
+            default_dict['user'] = user.to_json()
+
+        return default_dict
