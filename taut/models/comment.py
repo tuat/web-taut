@@ -20,3 +20,10 @@ class Comment(db.Model, SessionMixin):
 
     def __repr__(self):
         return '<Comment: %s>' % self.id
+
+    def to_json(self):
+        return {
+            'id'        : self.id,
+            'account_id': self.account_id,
+            'content'   : self.content
+        }
