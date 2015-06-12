@@ -3,6 +3,7 @@ from flask import render_template, request, url_for, jsonify
 from ...models import ListMedia
 from ...helpers.value import force_integer, fill_with_list_users, fill_with_list_tweets
 from ...helpers.api import require_token, json_error
+from ...helpers.account import logout_user, require_user
 
 blueprint = Blueprint('api_main', __name__)
 
@@ -23,4 +24,13 @@ def index():
         prev  = prev_page,
         next  = next_age,
         count = list_medias.total
+    )
+
+@blueprint.route('/logout')
+@require_token
+@require_user
+def logout():
+    logout_user()
+    return jsonify(
+        status = 200
     )
