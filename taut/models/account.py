@@ -41,3 +41,11 @@ class Account(db.Model, SessionMixin):
     @staticmethod
     def password_hash(password, rounds=None):
         return Bcrypt().generate_password_hash(password, rounds=rounds)
+
+    def to_json(self):
+        return {
+            'id'       : self.id,
+            'username' : self.username,
+            'email'    : self.email,
+            'role'     : self.role
+        }

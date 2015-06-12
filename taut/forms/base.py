@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from flask.ext.wtf import Form
+from flask_wtf import Form
 
 class BaseForm(Form):
     def __init__(self, *args, **kwargs):

@@ -1,9 +1,10 @@
 from flask import Blueprint
 from flask import render_template, request, url_for, jsonify
 from ...models import ListMedia
+from ...forms import SigninForm
 from ...helpers.value import force_integer, fill_with_list_users, fill_with_list_tweets
 from ...helpers.api import require_token, json_error
-from ...helpers.account import logout_user, require_user
+from ...helpers.account import logout_user, require_user, login_user
 
 blueprint = Blueprint('api_main', __name__)
 
@@ -34,3 +35,20 @@ def logout():
     return jsonify(
         status = 200
     )
+
+@blueprint.route('/login', methods=['POST'])
+@require_token
+def login():
+    form = SigninForm(csrf_enabled=False)
+
+    if form.validate_on_submit():
+        user = login_user(form.user, form.permanent.data)
+        return jsonify(user.to_json())
+    else:
+        if form and form.errors:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    return jsonify(
+                        error = error
+                    )
+                    break;
