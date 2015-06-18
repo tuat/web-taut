@@ -2,7 +2,7 @@
 
 from celery import task
 from celery.utils.log import get_task_logger
-from ..commands import FetchLists, Sitemap, CheckNotFound
+from ..commands import FetchLists, Sitemap, CheckNotFound, UpdateAvatar
 
 logger = get_task_logger(__name__)
 
@@ -23,3 +23,9 @@ def check_not_found():
     logger.info("called schedule.check_not_found")
 
     CheckNotFound().make()
+
+@task
+def update_avatar():
+    logger.info("called schedule.update_avatar")
+
+    UpdateAvatar(logger).make()
