@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 {% block ogmeta %}{% endblock %}
 <meta name="description" content="Let's go to collect your media ...">
-<title>{% block title %}{% block subtitle %}{% endblock %}{% if self.subtitle() %} - {% endif %}Taut{% endblock %}</title>
+<title>{% block title %}{% block subtitle %}{% endblock %}{% if self.subtitle() %} - {% endif %}Tautr{% endblock %}</title>
 <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='client/img/favicon.ico') }}">
 <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -27,7 +27,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('index.index') }}">Taut</a>
+                <a class="navbar-brand" href="{{ url_for('index.index') }}">Tautr</a>
             </div>
             <div class="collapse navbar-collapse">
                 {% block navbar %}
