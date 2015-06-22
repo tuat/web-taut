@@ -40,6 +40,11 @@ CELERYBEAT_SCHEDULE          = {
         'schedule': crontab(minute=0, hour='*/6'), # every six hours
         'args': None
     },
+    'update-avatar': {
+        'task': 'taut.tasks.schedule.update_avatar',
+        'schedule': crontab(minute=0, hour=0), # every daily
+        'args': None
+    },
 }
 
 TWITTER_LIST_LAST_ID_FILENAME = os.path.join(os.getcwd(), 'storage/twitter-list-last-id.txt')

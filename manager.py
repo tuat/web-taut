@@ -62,5 +62,11 @@ def testchecknotfound():
 
     CheckNotFound().make()
 
+@manager.command
+def testupdateavatar():
+    from taut.commands.update_avatar import UpdateAvatar
+
+    UpdateAvatar().make()
+
 if __name__ == '__main__':
     manager.run()

@@ -18,7 +18,11 @@ def index():
     list_medias   = ListMedia.query.filter_by(status='show').order_by(ListMedia.create_at.desc()).paginate(page)
     total_medias  = ListMedia.query.filter_by(status='show').count()
     random_media  = ListMedia.query.filter_by(status='show').order_by(db.func.random()).offset(0).limit(20).first()
-    latest_update = human_time(list_medias.items[0].create_at)
+
+    if list_medias.items:
+        latest_update = human_time(list_medias.items[0].create_at)
+    else:
+        latest_update = None
 
     list_medias.items = fill_with_list_users(list_medias.items)
 

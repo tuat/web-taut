@@ -31,6 +31,11 @@ vim taut/configs/thumbor.py
 
     SECURITY_KEY="same as THUMBOR_SECURITY_KEY"
 
+# Migrate Database
+
+    source venv/bin/activate
+    alembic upgrade head
+
 # Problem
 
 Fix curl-config not found

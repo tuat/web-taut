@@ -24,6 +24,18 @@ def fill_with_list_users(items):
 
     return items
 
+def fill_with_list_tweets(items):
+    from ..models import ListTweet
+
+    tweet_ids = [item.list_tweet_id for item in items]
+    tweets    = ListTweet.query.filter(ListTweet.id.in_(tweet_ids)).all() if tweet_ids else {}
+    tweet_dic = {tweet.id: tweet for tweet in tweets}
+
+    for item in items:
+        item.tweet = tweet_dic.get(item.list_tweet_id)
+
+    return items
+
 def fill_with_accounts(items):
     from ..models import Account
 

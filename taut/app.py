@@ -83,6 +83,7 @@ def register_route(app):
     app.register_blueprint(admin.list_tweet.blueprint, url_prefix='/admin/list-tweet')
     app.register_blueprint(admin.list_user.blueprint, url_prefix='/admin/list-user')
     app.register_blueprint(admin.main.blueprint, url_prefix='/admin')
+    app.register_blueprint(api.media.blueprint, url_prefix='/api/media')
     app.register_blueprint(api.main.blueprint, url_prefix='/api')
     app.register_blueprint(developer.blueprint, url_prefix='/developer')
     app.register_blueprint(bookmark.blueprint, url_prefix='/bookmark')

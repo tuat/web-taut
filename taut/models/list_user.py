@@ -23,8 +23,9 @@ class ListUser(db.Model, SessionMixin):
 
     def to_json(self):
         return {
-            'id'  : self.id,
-            'name': self.name
+            'id'         : self.id,
+            'screen_name': self.screen_name,
+            'name'       : self.name
         }
 
     def to_admin_json(self):
