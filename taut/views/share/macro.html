@@ -14,14 +14,21 @@
 {% endmacro %}
 
 {% macro facebook_fan_page() %}
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId={{ config.FACEBOOK_FAN_PAGE['app_id'] }}";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+    {% if config.FACEBOOK_FAN_PAGE['enable'] %}
+        <div class="panel panel-default visible-lg-block">
+            <div class="panel-heading text-center">Fan Pages</div>
+            <div class="panel-body">
+                <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId={{ config.FACEBOOK_FAN_PAGE['app_id'] }}";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
 
-    <div class="fb-page" data-href="{{ config.FACEBOOK_FAN_PAGE['url'] }}" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true" data-show-posts="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="{{ config.FACEBOOK_FAN_PAGE['url'] }}"><a href="{{ config.FACEBOOK_FAN_PAGE['url'] }}">Tautr</a></blockquote></div></div>
+                <div class="fb-page" data-href="{{ config.FACEBOOK_FAN_PAGE['url'] }}" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true" data-show-posts="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="{{ config.FACEBOOK_FAN_PAGE['url'] }}"><a href="{{ config.FACEBOOK_FAN_PAGE['url'] }}">Tautr</a></blockquote></div></div>
+            </div>
+        </div>
+    {% endif %}
 {% endmacro %}
