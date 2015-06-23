@@ -6,11 +6,11 @@ Sync the tweets in specified twitter lists and output to the custom API interfac
 
 ## Clone the repo into
 
-    git clone https://github.com/zeuxisoo/web-taut.git tautapp.com
+    git clone https://github.com/zeuxisoo/web-taut.git taut
 
 ## Enter app directory
 
-    cd tautapp.com
+    cd taut
 
 ## Create config file
 
