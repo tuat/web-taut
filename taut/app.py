@@ -2,8 +2,10 @@
 
 import os
 import hmac
+import rollbar
+import rollbar.contrib.flask
 from hashlib import sha1
-from flask import Flask, g
+from flask import Flask, g, got_request_exception
 from flask.ext.babel import Babel, format_datetime
 from .models import db
 from .routes import index, settings, media, bookmark, developer
@@ -38,6 +40,17 @@ def create_app(config=None):
     return app
 
 def register_hook(app):
+    @app.before_first_request
+    def init_rollbar():
+        if app.config.ROLLBAR['enable']:
+            rollbar.init(
+                app.config.ROLLBAR['access_token'],
+                'production',
+                root=os.path.dirname(os.path.realpath(__file__)),
+                allow_logging_basic_config=False
+            )
+            got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+
     @app.before_request
     def current_user():
         g.user = load_current_user()

@@ -90,3 +90,8 @@ GOOGLE_ADSENSE = {
 }
 
 STATUS_IN_SIDEBAR = False
+
+ROLLBAR = {
+    'enable'      : False,
+    'access_token': ''
+}

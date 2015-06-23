@@ -12,6 +12,6 @@ celery==3.1.17
 redis==2.10.3
 thumbor==4.7.1
 python-dateutil==2.3
-
+rollbar==0.9.11
 # jinja2 >= 2.8
 -e git+https://github.com/mitsuhiko/jinja2.git#egg=Jinja-dev
