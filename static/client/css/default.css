@@ -1,9 +1,9 @@
 body {
-    background: #e2e2e2;
+    background: #F7F7F7;
 }
 
 .navbar-default {
-    background-color: #32669A;
+    background-color: #8687BE;
 }
 
 .navbar-default .navbar-brand,
@@ -13,26 +13,26 @@ body {
 
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-    color: #E8E8E8;
+    color: #D3DEFC;
 }
 
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
-    color: #E8E8E8;
+    color: #D3DEFC;
 }
 
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:hover,
 .navbar-default .navbar-nav>.active>a:focus {
     color: #FFF;
-    background-color: #32559A;
+    background-color: #9094C5;
 }
 
 .navbar-default .navbar-nav>.open>a,
 .navbar-default .navbar-nav>.open>a:hover,
 .navbar-default .navbar-nav>.open>a:focus {
     color: #FFF;
-    background-color: #32559A;
+    background-color: #9094C5;
 }
 
 .footer {
