@@ -29,12 +29,14 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-body text-center">
-                        <p>Total : {{ total_medias }}</p>
-                        <p>Update At: {{ latest_update }}</p>
+                {% if config.STATUS_IN_SIDEBAR %}
+                    <div class="panel panel-default">
+                        <div class="panel-body text-center">
+                            <p>Total : {{ total_medias }}</p>
+                            <p>Update At: {{ latest_update }}</p>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
 
                 {{ social_like() }}
 

@@ -88,3 +88,5 @@ GOOGLE_ADSENSE = {
     'slidebar' : dict(enable=False, slot=''),
     'footer'   : dict(enable=False, slot='')
 }
+
+STATUS_IN_SIDEBAR = False
