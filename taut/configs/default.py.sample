@@ -75,3 +75,10 @@ ADDTHIS = {
     'pinterest': True,
     'pubid'    : '',
 }
+
+
+FACEBOOK_FAN_PAGE = {
+    'enable': False,
+    'app_id': '',
+    'url'   : ''
+}

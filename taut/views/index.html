@@ -1,5 +1,5 @@
 {% extends 'layout/frontend.html' %}
-{% from 'share/macro.html' import social_like %}
+{% from 'share/macro.html' import social_like, facebook_fan_page %}
 
 {% block container %}
     <div class="index">
@@ -49,6 +49,15 @@
                                     </a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if config.FACEBOOK_FAN_PAGE['enable'] %}
+                    <div class="panel panel-default visible-lg-block">
+                        <div class="panel-heading text-center">Fan Pages</div>
+                        <div class="panel-body">
+                            {{ facebook_fan_page() }}
                         </div>
                     </div>
                 {% endif %}
