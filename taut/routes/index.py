@@ -15,7 +15,7 @@ blueprint = Blueprint('index', __name__)
 @blueprint.route('/')
 def index():
     page          = force_integer(request.args.get('page', 1), 0)
-    list_medias   = ListMedia.query.filter_by(status='show').order_by(ListMedia.create_at.desc()).paginate(page)
+    list_medias   = ListMedia.query.filter_by(status='show').order_by(ListMedia.create_at.desc()).paginate(page, 24)
     total_medias  = ListMedia.query.filter_by(status='show').count()
     random_media  = ListMedia.query.filter_by(status='show').order_by(db.func.random()).offset(0).limit(20).first()
 
