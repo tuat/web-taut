@@ -82,3 +82,9 @@ FACEBOOK_FAN_PAGE = {
     'app_id': '',
     'url'   : ''
 }
+
+GOOGLE_ADSENSE = {
+    'client'   : 'ca-pub-XXXXX',
+    'slidebar' : dict(enable=False, slot=''),
+    'footer'   : dict(enable=False, slot='')
+}

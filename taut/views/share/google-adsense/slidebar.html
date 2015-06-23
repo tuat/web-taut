@@ -1,0 +1,11 @@
+{% if config['GOOGLE_ADSENSE']['slidebar']['enable'] %}
+    <div class="panel panel-default">
+        <div class="panel-body text-center">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle" style="display:inline-block;width:200px;height:200px" data-ad-client="{{ config['GOOGLE_ADSENSE']['client'] }}" data-ad-slot="{{ config['GOOGLE_ADSENSE']['slidebar']['slot'] }}"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+{% endif %}
