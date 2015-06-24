@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 from flask_script import Manager, Server
+from flask.ext.assets import ManageAssets
 from taut.app import create_app
 
 app = create_app()
 
 manager = Manager(app)
 manager.add_command('runserver', Server())
+manager.add_command("assets", ManageAssets())
 
 @manager.command
 def createdb():

@@ -10,12 +10,15 @@
 <meta name="description" content="Let's go to collect your media ...">
 <title>{% block title %}{% block subtitle %}{% endblock %}{% if self.subtitle() %} - {% endif %}Tautr{% endblock %}</title>
 <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='client/img/favicon.png') }}">
-<link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-<link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ url_for('static', filename='vendor/photoswipe/photoswipe.css') }}" rel="stylesheet">
-<link href="{{ url_for('static', filename='vendor/photoswipe/default-skin/default-skin.css') }}" rel="stylesheet">
-<link href="{{ url_for('static', filename='vendor/social/widget.css') }}" rel="stylesheet">
-<link href="{{ url_for('static', filename='client/css/default.css') }}" rel="stylesheet">
+{% assets filters="yui_css", output="assets/app.min.css",
+    "vendor/font-awesome/css/font-awesome.min.css",
+    "vendor/bootstrap/css/bootstrap.min.css",
+    "vendor/photoswipe/photoswipe.css",
+    "vendor/photoswipe/default-skin/default-skin.css",
+    "vendor/social/widget.css",
+    "client/css/default.css" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+{% endassets %}
 </head>
 <body>
     <div class="navbar navbar-default" role="navigation">
@@ -117,12 +120,15 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendor/photoswipe/photoswipe.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendor/photoswipe/photoswipe-ui-default.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendor/social/widget.js') }}"></script>
-    <script src="{{ url_for('static', filename='client/js/default.js') }}"></script>
+    {% assets filters="closure_js", output="assets/app.min.js",
+        "vendor/jquery/jquery.min.js",
+        "vendor/bootstrap/js/bootstrap.min.js",
+        "vendor/photoswipe/photoswipe.min.js",
+        "vendor/photoswipe/photoswipe-ui-default.min.js",
+        "vendor/social/widget.js",
+        "client/js/default.js" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
 
     {% include "share/google-analytics.html" %}
     {% include "share/mixpanel.html" %}

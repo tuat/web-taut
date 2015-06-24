@@ -8,3 +8,5 @@ taut/configs/default.py
 taut/configs/thumbor.py
 storage/twitter-list-last-id.txt
 static/sitemap.xml
+static/.webassets-cache/
+static/assets/

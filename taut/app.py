@@ -7,6 +7,7 @@ import rollbar.contrib.flask
 from hashlib import sha1
 from flask import Flask, g, got_request_exception
 from flask.ext.babel import Babel, format_datetime
+from flask.ext.assets import Environment, Bundle
 from .models import db
 from .routes import index, settings, media, bookmark, developer
 from .routes import admin, api
@@ -31,6 +32,7 @@ def create_app(config=None):
 
     register_hook(app)
     register_babel(app)
+    register_assets(app)
     register_celery(app)
     register_celery_beat(app)
     register_jinja2(app)
@@ -57,6 +59,10 @@ def register_hook(app):
 
 def register_babel(app):
     babel = Babel(app)
+
+def register_assets(app):
+    assets = Environment()
+    assets.init_app(app)
 
 def register_celery(app):
     app.celery = make_celery(app)
