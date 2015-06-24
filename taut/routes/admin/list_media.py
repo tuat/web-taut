@@ -26,7 +26,9 @@ def search():
         media_id = media_id if media_id else ""
 
         media = ListMedia.query.get(media_id)
-        media = fill_with_list_users([media])[0]
+
+        if media:
+            media = fill_with_list_users([media])[0]
 
         return render_template('admin/list_media/search.html', media_id=media_id, media=media)
 
