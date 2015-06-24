@@ -42,9 +42,9 @@ def create_app(config=None):
 def register_hook(app):
     @app.before_first_request
     def init_rollbar():
-        if app.config.ROLLBAR['enable']:
+        if app.config['ROLLBAR']['enable']:
             rollbar.init(
-                app.config.ROLLBAR['access_token'],
+                app.config['ROLLBAR']['access_token'],
                 'production',
                 root=os.path.dirname(os.path.realpath(__file__)),
                 allow_logging_basic_config=False
