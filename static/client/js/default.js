@@ -26,6 +26,34 @@
                 $(this).remove();
             });
         });
+
+        //
+        if (window.mixpanel !== undefined) {
+            $("a").on('click', function(event) {
+                var page   = $(this).data('mixpanelPage'),
+                    action = $(this).data('mixpanelAction')
+                    link   = $(this).prop('href');
+
+                switch(page) {
+                    case 'home':
+                        mixpanel.track('Home', {
+                            "page"  : page,
+                            "action": action,
+                            "link"  : $(this).prop('href'),
+                            "text"  : $(this).find('img').prop('alt')
+                        });
+                        break;
+                    case 'media':
+                        mixpanel.track('Media', {
+                            "page"  : page,
+                            "action": action,
+                            "link"  : $(this).prop('href'),
+                            "text"  : $(this).find('img').prop('alt')
+                        });
+                        break;
+                }
+            });
+        }
     });
 
 })(jQuery);

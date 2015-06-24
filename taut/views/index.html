@@ -17,7 +17,7 @@
                     <div class="col-md-3">
                         <div class="panel panel-default">
                             <div class="panel-body thumbnail thumbnail-no-border">
-                                <a href="{{ url_for('media.detail', list_media_id=list_media.id) }}">
+                                <a href="{{ url_for('media.detail', list_media_id=list_media.id) }}" data-mixpanel-page="home" data-mixpanel-action="view-media-detail">
                                     <img src="{{ list_media.media_url | thumbor(300, 300) }}" alt="{{ list_media.user.name }}">
                                 </a>
                             </div>
