@@ -95,3 +95,8 @@ ROLLBAR = {
     'enable'      : False,
     'access_token': ''
 }
+
+MIXPANEL = {
+    'enable'      : False,
+    'access_token': ''
+}
