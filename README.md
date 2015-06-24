@@ -46,3 +46,7 @@ Fix decoder jpeg not available
 
     apt-get install libjpeg-dev
     pip install -I pillow
+
+Fix assets tag not found
+
+    apt-get install openjdk-7-jre
