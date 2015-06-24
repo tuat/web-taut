@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, g
 from flask import render_template, redirect, url_for
 from ...forms import SigninForm
 from ...models import ListUser, ListTweet, ListMedia, Account
@@ -8,13 +8,16 @@ blueprint = Blueprint('admin_main', __name__)
 
 @blueprint.route('/', methods=['GET', 'POST'])
 def index():
-    form = SigninForm()
-
-    if form.validate_on_submit():
-        login_user(form.user, form.permanent.data)
+    if g.user:
         return redirect(url_for('admin_main.home'))
     else:
-        return render_template('admin/main/index.html', form=form)
+        form = SigninForm()
+
+        if form.validate_on_submit():
+            login_user(form.user, form.permanent.data)
+            return redirect(url_for('admin_main.home'))
+        else:
+            return render_template('admin/main/index.html', form=form)
 
 @blueprint.route('/home')
 @require_admin
