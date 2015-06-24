@@ -14,6 +14,22 @@ def index(status):
     else:
         return render_template('admin/list_media/index.html', status=status)
 
+@blueprint.route('/search', methods=['GET', 'POST'])
+@require_admin
+def search():
+    if request.method == 'POST':
+        media_id = request.form['media_id']
+
+        return redirect(url_for('admin_list_media.search', media_id=media_id))
+    else:
+        media_id = request.args.get('media_id')
+        media_id = media_id if media_id else ""
+
+        media = ListMedia.query.get(media_id)
+        media = fill_with_list_users([media])[0]
+
+        return render_template('admin/list_media/search.html', media_id=media_id, media=media)
+
 @blueprint.route('/ajax/index')
 @require_admin
 def ajax_index():
@@ -69,3 +85,4 @@ def ajax_trash_all():
         media.save()
 
     return jsonify(status='success', message='Trashed all')
+
