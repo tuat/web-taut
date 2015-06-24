@@ -47,15 +47,15 @@ def ajax_index():
 
         list_medias.items = fill_with_list_users(list_medias.items)
 
-        prev_page = url_for('admin_list_media.ajax_index', page=page-1, _external=True) if list_medias.has_prev else None
-        next_age  = url_for('admin_list_media.ajax_index', page=page+1, _external=True) if list_medias.has_next else None
+        prev_page  = url_for('admin_list_media.ajax_index', page=page-1) if list_medias.has_prev else None
+        next_page  = url_for('admin_list_media.ajax_index', page=page+1) if list_medias.has_next else None
 
-    return jsonify(
-        medias = [media.to_admin_json(media.user) for media in list_medias.items],
-        prev   = prev_page,
-        next   = next_age,
-        count  = list_medias.total
-    )
+        return jsonify(
+            medias = [media.to_admin_json(media.user) for media in list_medias.items],
+            prev   = prev_page,
+            next   = next_page,
+            count  = list_medias.total
+        )
 
 @blueprint.route('/ajax/status-control')
 @require_admin
