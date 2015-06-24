@@ -32,7 +32,7 @@
                         <a href="http://twitter.com/{{ media.user.screen_name }}" target="_blank"><strong>{{ media.user.screen_name }}</strong></a>
                     </div>
                     <div class="box-body text-center">
-                        <a href="{{ media.media_url }}" target="_blank"><img class="lazy" src="/static/vendor/adminlte/img/ajax-loader1.gif" data-original="{{ media.media_url | thumbor(300, 300) }}"></a>
+                        <a href="{{ media.media_url }}" target="_blank"><img src="{{ media.media_url | thumbor(300, 300) }}"></a>
                     </div>
                     <div class="box-footer text-center">
                         <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="show" class="btn btn-primary btn-xs status-control"{% if media.status == 'show' %} disabled="disabled"{% endif %}>Show</a>
