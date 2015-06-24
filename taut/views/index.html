@@ -1,6 +1,14 @@
 {% extends 'layout/frontend.html' %}
 {% from 'share/macro.html' import social_like, facebook_fan_page %}
 
+{% block ogmeta %}
+<meta property="og:url" content="{{ url_for('index.index', _external=True) }}">
+<meta property="og:title" content="Tautr - Daily | BEAUTY | GIRLS">
+<meta property="og:site_name" content="Tautr - Daily | BEAUTY | GIRLS">
+<meta property="og:description" content="Tautr - Let's go to collect your media ...">
+<meta property="og:type" content="website">
+{% endblock %}
+
 {% block container %}
     <div class="index">
         <div class="row">
