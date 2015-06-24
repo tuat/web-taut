@@ -79,6 +79,12 @@ var fetchMedias = function(url) {
         }, "json");
     });
 
+    $(document).on('click', 'a.page-control', function(event) {
+        event.preventDefault();
+
+        window.open('/media/detail/' + $(this).data('id'));
+    });
+
     $(function() {
         fetchMedias($(".medias").data('mediasHref'));
     });

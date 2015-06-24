@@ -38,6 +38,8 @@
                         <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="show" class="btn btn-primary btn-xs status-control"{% if media.status == 'show' %} disabled="disabled"{% endif %}>Show</a>
                         <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="hide" class="btn btn-success btn-xs status-control"{% if media.status == 'hide' %} disabled="disabled"{% endif %}>Hide</a>
                         <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="trash" class="btn btn-danger btn-xs status-control"{% if media.status == 'trash' %} disabled="disabled"{% endif %}>Trash</a>
+
+                        <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="page" class="btn btn-info btn-xs page-control">Page</a>
                     </div>
                 </div>
             </div>
