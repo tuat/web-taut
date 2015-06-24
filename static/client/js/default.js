@@ -1,6 +1,9 @@
 (function($) {
 
     $(function() {
+        // Bootstrap tooltips
+        $('[data-toggle="tooltip"]').tooltip();
+
         // Preview
         $("a[data-photo-swipe]").on('click', function(event) {
             event.preventDefault();
@@ -27,7 +30,7 @@
             });
         });
 
-        //
+        // Mixpanel tracker
         if (window.mixpanel !== undefined) {
             $("a").on('click', function(event) {
                 var page   = $(this).data('mixpanelPage'),
