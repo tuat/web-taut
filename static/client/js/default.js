@@ -68,7 +68,7 @@
                 mixpanel.track('Page', {
                     "page"  : page,
                     "action": action,
-                    "link"  : window.location.href,
+                    "link"  : window.location.pathname,
                     "text"  : document.title
                 });
             }
