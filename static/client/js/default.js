@@ -32,6 +32,7 @@
 
         // Mixpanel tracker
         if (window.mixpanel !== undefined) {
+            // Click event
             $("a").on('click', function(event) {
                 var page   = $(this).data('mixpanelPage'),
                     action = $(this).data('mixpanelAction')
@@ -56,6 +57,21 @@
                         break;
                 }
             });
+
+            // Page loaded
+            var loadedDiv = $("div[data-mixpanel-action=loaded]");
+
+            if (loadedDiv) {
+                var page = loadedDiv.data('mixpanelPage'),
+                    action = loadedDiv.data('mixpanelAction');
+
+                mixpanel.track('Page', {
+                    "page"  : page,
+                    "action": action,
+                    "link"  : window.location.href,
+                    "text"  : document.title
+                });
+            }
         }
     });
 
