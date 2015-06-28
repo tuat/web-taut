@@ -14,6 +14,7 @@ class ListMedia(db.Model, SessionMixin):
     media_url     = db.Column(db.String(180))
     type          = db.Column(db.String(10))
     status        = db.Column(db.String(10), default="hide")
+    hash_id       = db.Column(db.String(64))
     create_at     = db.Column(db.DateTime, default=datetime.utcnow)
     update_at     = db.Column(db.DateTime, onupdate=datetime.utcnow)
 

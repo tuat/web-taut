@@ -46,6 +46,7 @@ def upgrade():
     sa.Column('media_url', sa.String(length=180), nullable=True),
     sa.Column('type', sa.String(length=10), nullable=True),
     sa.Column('status', sa.String(length=10), nullable=True),
+    sa.Column('hash_id', sa.String(length=64), nullable=True),
     sa.Column('create_at', sa.DateTime(), nullable=True),
     sa.Column('update_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
