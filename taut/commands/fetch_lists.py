@@ -6,6 +6,7 @@ from TwitterAPI import TwitterAPI
 from flask import current_app
 from .base import BaseCommand
 from ..models import ListUser, ListTweet, ListMedia
+from ..helpers.value import create_media_hash_id
 
 class FetchLists(BaseCommand):
 
@@ -106,6 +107,14 @@ class FetchLists(BaseCommand):
                                 list_media.id_str        = media_id_str
                                 list_media.media_url     = media_url
                                 list_media.type          = media['type']
+                                list_media.save()
+
+                                # Update hash id
+                                list_media_hash_id = create_media_hash_id(list_media)
+
+                                self.logger.info("---> media hash id : {0} -> {1}".format(list_media.id, list_media_hash_id))
+
+                                list_media.hash_id = list_media_hash_id
                                 list_media.save()
                             else:
                                 self.logger.info("---> new media : no")

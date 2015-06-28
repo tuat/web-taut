@@ -4,6 +4,7 @@ import hmac
 import base64
 import hashlib
 from datetime import datetime
+from hashids import Hashids
 from flask import current_app
 
 def force_integer(value, default=1):
@@ -83,3 +84,9 @@ def human_time(value):
         return '{0} minutes ago'.format(delta.seconds / 60)
 
     return 'just now'
+
+def create_media_hash_id(media):
+    hash_salt = current_app.config['MEDIA_HASH_ID_SALT'] if current_app.config['MEDIA_HASH_ID_SALT'] else ""
+    hash_ids  = Hashids(salt=hash_salt)
+
+    return hash_ids.encode(media.id)

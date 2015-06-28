@@ -101,3 +101,5 @@ MIXPANEL = {
     'enable'      : False,
     'access_token': ''
 }
+
+MEDIA_HASH_ID_SALT = 'Your_Media_Hash_Id_Salt'

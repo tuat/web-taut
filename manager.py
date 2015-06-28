@@ -54,6 +54,7 @@ def gensitemap():
 
 @manager.command
 def testcommands(name=None):
+    """Test commands"""
     if name == 'fetchlists':
         from taut.commands.fetch_lists import FetchLists
         FetchLists(LIST_ID, SLUG).make()
@@ -65,6 +66,13 @@ def testcommands(name=None):
         UpdateAvatar().make()
     else:
         print("Usage: python manager.py testcommands -n [fetchlists | checknotfound | updateavatar]")
+
+@manager.command
+def genhashid2media():
+    """Generate hash id to list media"""
+    from taut.commands.hash_id_to_media import HashIdToMedia
+
+    HashIdToMedia().make()
 
 if __name__ == '__main__':
     manager.run()
