@@ -5,7 +5,7 @@ from datetime import datetime
 from dateutil import tz
 from flask import g, current_app, url_for, render_template
 from ..models import ListMedia
-from ..helpers.value import thumb
+from ..helpers.value import thumb, url_for_media_detail
 from .base import BaseCommand
 
 class Sitemap(BaseCommand):
@@ -22,7 +22,7 @@ class Sitemap(BaseCommand):
 
         for list_media in list_medias:
             pages.append({
-                'url'      : url_for('media.detail', list_media_id=list_media.id, _external=True),
+                'url'      : url_for_media_detail(list_media, _external=True),
                 'image'    : thumb(list_media.media_url, 500, 500),
                 'create_at': list_media.create_at.replace(tzinfo=tz.tzlocal()).isoformat(),
             })

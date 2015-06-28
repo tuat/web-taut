@@ -5,7 +5,7 @@ import hmac
 import rollbar
 import rollbar.contrib.flask
 from hashlib import sha1
-from flask import Flask, g, got_request_exception, url_for
+from flask import Flask, g, got_request_exception
 from flask.ext.babel import Babel, format_datetime
 from flask.ext.assets import Environment, Bundle
 from .models import db
@@ -13,7 +13,7 @@ from .routes import index, settings, media, bookmark, developer
 from .routes import admin, api
 from .tasks import make_celery
 from .helpers.account import load_current_user
-from .helpers.value import thumb, human_time
+from .helpers.value import thumb, human_time, url_for_media_detail
 
 def create_app(config=None):
     app = Flask(__name__, template_folder='views')
@@ -94,12 +94,6 @@ def register_jinja2(app):
 
     @app.context_processor
     def utility_processor():
-        def url_for_media_detail(media, **kwargs):
-            if app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL'):
-                return url_for('media.detail', list_media_id=media.hash_id, **kwargs)
-            else:
-                return url_for('media.detail', list_media_id=media.id, **kwargs)
-
         return dict(url_for_media_detail=url_for_media_detail)
 
 def register_database(app):

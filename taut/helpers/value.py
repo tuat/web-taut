@@ -5,7 +5,7 @@ import base64
 import hashlib
 from datetime import datetime
 from hashids import Hashids
-from flask import current_app
+from flask import current_app, url_for
 
 def force_integer(value, default=1):
     try:
@@ -90,3 +90,9 @@ def create_media_hash_id(media):
     hash_ids  = Hashids(salt=hash_salt)
 
     return hash_ids.encode(media.id)
+
+def url_for_media_detail(media, **kwargs):
+    if current_app.config['USE_MEDIA_DETAIL_HASH_ID_IN_URL']:
+        return url_for('media.detail', list_media_id=media.hash_id, **kwargs)
+    else:
+        return url_for('media.detail', list_media_id=media.id, **kwargs)
