@@ -21,11 +21,12 @@ class Sitemap(BaseCommand):
         pages = []
 
         for list_media in list_medias:
-            pages.append({
-                'url'      : url_for_media_detail(list_media, _external=True),
-                'image'    : thumb(list_media.media_url, 500, 500),
-                'create_at': list_media.create_at.replace(tzinfo=tz.tzlocal()).isoformat(),
-            })
+            if list_media.hash_id:
+                pages.append({
+                    'url'      : url_for_media_detail(list_media, _external=True),
+                    'image'    : thumb(list_media.media_url, 500, 500),
+                    'create_at': list_media.create_at.replace(tzinfo=tz.tzlocal()).isoformat(),
+                })
 
         sitemap   = render_template('sitemap.xml', pages=pages)
         save_path = path.join(current_app.static_folder, 'sitemap.xml')
