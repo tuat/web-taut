@@ -53,7 +53,8 @@ class ListMedia(db.Model, SessionMixin):
         height = 500
 
         return {
-            'id'       : self.id,
+            'id'       : self.hash_id,
+            'hash_id'  : self.hash_id,
             'media_url': thumb(self.media_url, width, height),
             'width'    : width,
             'height'   : height,
@@ -67,6 +68,7 @@ class ListMedia(db.Model, SessionMixin):
 
         return {
             'id'        : self.id,
+            'hash_id'   : self.hash_id,
             'media_url' : self.media_url,
             'thumb_url' : thumb(self.media_url, width, height),
             'user'      : list_user.to_admin_json(),
