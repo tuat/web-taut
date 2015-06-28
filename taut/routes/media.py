@@ -1,6 +1,6 @@
 from flask import Blueprint, g
 from flask import render_template, redirect, url_for, flash
-from ..models import ListMedia, ListTweet, ListUser, Comment
+from ..models import ListMedia, ListTweet, ListUser, Comment, db
 from ..forms import CommentForm
 from ..helpers.value import fill_with_list_users, fill_with_accounts
 from ..helpers.account import require_user
@@ -21,7 +21,13 @@ def detail(list_media_id):
 
         return save_form()
     else:
-        list_media = ListMedia.query.get_or_404(list_media_id)
+        list_media = ListMedia.query.filter(
+            db.or_(
+                ListMedia.id == list_media_id,
+                ListMedia.hash_id == list_media_id
+            )
+        ).first_or_404()
+
         list_user  = ListUser.query.get_or_404(list_media.list_user_id)
         list_tweet = ListTweet.query.filter_by(id=list_media.list_tweet_id).first()
 

@@ -5,7 +5,7 @@
 {% block ogmeta %}
 <meta property="og:title" content="{{ list_user.name }}">
 <meta property="og:type" content="website">
-<meta property="og:url" content="{{ url_for('media.detail', list_media_id=list_media.id, _external=True) }}" />
+<meta property="og:url" content="{{ url_for_media_detail(list_media, _external=True) }}" />
 <meta property="og:image" content="{{ list_media.media_url | thumbor(300, 300) }}" />
 <meta property="og:description" content="{{ list_tweet.text | remove_url | remove_newline }} via Tautr" />
 <meta property="og:site_name" content="Tautr" />
@@ -69,7 +69,7 @@
                 <div class="row">
                     {% for user_media in user_medias %}
                         <div class="col-xs-6 col-sm-3 col-md-3">
-                            <a class="thumbnail" rel="group" href="{{ url_for('media.detail', list_media_id=user_media.id) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
+                            <a class="thumbnail" rel="group" href="{{ url_for_media_detail(user_media) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
                                 <img src="{{ user_media.media_url | thumbor(100, 146) }}" alt="{{ user_media.user.name }}" class="tips" data-placement="bottom" title="{{ user_media.user.name }}">
                             </a>
                         </div>
