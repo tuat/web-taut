@@ -14,7 +14,14 @@ def detail(list_media_id):
     if form.validate_on_submit():
         @require_user
         def save_form():
-            comment = form.save(list_media_id, g.user)
+            list_media = ListMedia.query.filter(
+                db.or_(
+                    ListMedia.id == list_media_id,
+                    ListMedia.hash_id == list_media_id
+                )
+            ).first_or_404()
+
+            comment = form.save(list_media.id, g.user)
             flash('Your comment created', 'success')
 
             return redirect("{0}#comment-{1}".format(url_for('media.detail', list_media_id=list_media_id), comment.id))
@@ -34,7 +41,7 @@ def detail(list_media_id):
         user_medias = ListMedia.query.filter_by(list_user_id=list_media.list_user_id, status='show').order_by(ListMedia.create_at.desc()).offset(0).limit(12).all()
         user_medias = fill_with_list_users(user_medias)
 
-        comments = Comment.query.filter_by(list_media_id=list_media_id).order_by(Comment.create_at.asc()).all()
+        comments = Comment.query.filter_by(list_media_id=list_media.id).order_by(Comment.create_at.asc()).all()
         comments = fill_with_accounts(comments)
 
         return render_template('media/detail.html', list_media=list_media, list_user=list_user, list_tweet=list_tweet, user_medias=user_medias, form=form, comments=comments)

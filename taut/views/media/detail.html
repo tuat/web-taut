@@ -115,7 +115,7 @@
             <div class="container">
                 <div class="panel panel-default">
                     {% if g.user %}
-                        <form class="form panel-body" action="{{ url_for('media.detail', list_media_id=list_media.id) }}" method="post">
+                        <form class="form panel-body" action="{{ url_for_media_detail(list_media) }}" method="post">
                             {{ form.csrf_token }}
                             <div class="form-group">
                                 {{ form.content.label(class_='sr-only') }}
