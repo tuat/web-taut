@@ -53,22 +53,18 @@ def gensitemap():
     Sitemap().make(0, 10000)
 
 @manager.command
-def testfetchlists():
-    from taut.commands.fetch_lists import FetchLists
-
-    FetchLists(LIST_ID, SLUG).make()
-
-@manager.command
-def testchecknotfound():
-    from taut.commands.check_not_found import CheckNotFound
-
-    CheckNotFound().make()
-
-@manager.command
-def testupdateavatar():
-    from taut.commands.update_avatar import UpdateAvatar
-
-    UpdateAvatar().make()
+def testcommands(name=None):
+    if name == 'fetchlists':
+        from taut.commands.fetch_lists import FetchLists
+        FetchLists(LIST_ID, SLUG).make()
+    elif name == 'checknotfound':
+        from taut.commands.check_not_found import CheckNotFound
+        CheckNotFound().make()
+    elif name == 'updateavatar':
+        from taut.commands.update_avatar import UpdateAvatar
+        UpdateAvatar().make()
+    else:
+        print("Usage: python manager.py testcommands -n [fetchlists | checknotfound | updateavatar]")
 
 if __name__ == '__main__':
     manager.run()
