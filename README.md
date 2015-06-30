@@ -17,6 +17,10 @@ Sync the tweets in specified twitter lists and output to the custom API interfac
     mv taut/configs/default.py.sample taut/configs/default.py
     mv taut/configs/thumbor.py.sample taut/configs/thumbor.py
 
+## Move program file
+
+    cp thumbor/loaders/twimg.py venv/lib/python2.7/site-packages/thumbor/loaders/twimg.py
+
 ## Edit config file
 
 vim taut/configs/default.py

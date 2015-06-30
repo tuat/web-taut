@@ -27,6 +27,7 @@ event-celery-bin:
 	celery events -A taut.tasks.schedule.celery
 
 thumb:
+	cp thumbor/loaders/twimg.py venv/lib/python2.7/site-packages/thumbor/loaders/twimg.py
 	thumbor -p 8888 -c ./taut/configs/thumbor.py
 
 clean: clean-pyc

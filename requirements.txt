@@ -14,7 +14,7 @@ hashids==1.1.0
 TwitterAPI==2.2.8
 celery==3.1.17
 redis==2.10.3
-thumbor==4.7.1
+thumbor==5.0.3
 python-dateutil==2.3
 rollbar==0.9.11
 blinker==1.3
