@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from sqlalchemy.sql import exists
+from sqlalchemy.ext.hybrid import hybrid_method
 from .base import SessionMixin, db
 from .bookmark import Bookmark
 from ..helpers.value import thumb
@@ -44,9 +45,12 @@ class ListMedia(db.Model, SessionMixin):
     def is_lost(self):
         return self.status == "lost"
 
-    @property
-    def is_bookmarked(self):
-        return db.session.query(exists().where(Bookmark.list_media_id == self.id)).scalar()
+    @hybrid_method
+    def is_bookmarked(self, user):
+        return db.session.query(db.session.query(Bookmark).filter(
+            Bookmark.list_media_id == self.id,
+            Bookmark.account_id == user.id
+        ).exists()).scalar()
 
     def to_json(self, list_user, list_tweet):
         width  = 500

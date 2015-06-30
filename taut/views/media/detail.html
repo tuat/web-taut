@@ -33,7 +33,7 @@
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        {% if list_media.is_bookmarked %}
+                        {% if list_media.is_bookmarked(g.user) %}
                             <a href="{{ url_for('bookmark.remove', list_media_id=list_media.id) }}" class="btn btn-danger">
                                 <div class="hidden-xs">
                                     <i class="glyphicon glyphicon-paperclip"></i> Bookmarked
