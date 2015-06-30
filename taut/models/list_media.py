@@ -47,10 +47,13 @@ class ListMedia(db.Model, SessionMixin):
 
     @hybrid_method
     def is_bookmarked(self, user):
-        return db.session.query(db.session.query(Bookmark).filter(
-            Bookmark.list_media_id == self.id,
-            Bookmark.account_id == user.id
-        ).exists()).scalar()
+        if user:
+            return db.session.query(db.session.query(Bookmark).filter(
+                Bookmark.list_media_id == self.id,
+                Bookmark.account_id == user.id
+            ).exists()).scalar()
+        else:
+            return False
 
     def to_json(self, list_user, list_tweet):
         width  = 500
