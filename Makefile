@@ -20,6 +20,9 @@ redis:
 task:
 	python manager.py runtask --name=all
 
+task-celery-bin:
+	celery worker -E -l INFO -A manager.celery -B
+
 thumb:
 	thumbor -p 8888 -c ./taut/configs/thumbor.py
 

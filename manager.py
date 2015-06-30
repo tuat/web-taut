@@ -5,6 +5,7 @@ from flask.ext.assets import ManageAssets
 from taut.app import create_app
 
 app = create_app()
+celery = app.celery
 
 manager = Manager(app)
 manager.add_command('runserver', Server())

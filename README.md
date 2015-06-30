@@ -36,6 +36,16 @@ vim taut/configs/thumbor.py
     source venv/bin/activate
     alembic upgrade head
 
+# Start task server and run scheudled tasks
+
+Run from the `manager.py` commands
+
+    make task
+
+Run from the celery cli bin
+
+    make task-celery-bin
+
 # Problem
 
 Fix curl-config not found
