@@ -1,5 +1,6 @@
 import os
 
+LOADER  = "thumbor.loaders.twimg"
 STORAGE = "thumbor.storages.no_storage"
 
 MIXED_STORAGE_FILE_STORAGE = "thumbor.storages.no_storage"
