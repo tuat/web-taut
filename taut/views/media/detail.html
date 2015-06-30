@@ -53,7 +53,7 @@
                             </a>
                         {% endif %}
 
-                        <a href="{{ list_media.media_url }}" class="btn btn-info" download="{{ list_media.media_url }}">
+                        <a href="{{ list_media.media_url | thumbor(500, 500) }}" class="btn btn-info" download="{{ list_media.media_url }}">
                             <div class="hidden-xs">
                                 <i class="glyphicon glyphicon-download-alt"></i> Download
                             </div>
