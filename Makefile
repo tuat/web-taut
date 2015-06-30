@@ -23,6 +23,9 @@ task:
 task-celery-bin:
 	celery worker -E -l INFO -A manager.celery -B
 
+event-celery-bin:
+	celery events -A manager.celery
+
 thumb:
 	thumbor -p 8888 -c ./taut/configs/thumbor.py
 
