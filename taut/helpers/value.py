@@ -59,7 +59,12 @@ def create_api_key(secret_key, user):
     return base64.urlsafe_b64encode(digest)
 
 def thumb(url, width, height, unsafe=False):
-    url_parts = "{0}x{1}/{2}".format(width, height, url.replace("http://pbs.twimg.com/media/",""))
+    if current_app.config['USE_ORIGNAL_IMAGE_URL']:
+        url = url.replace("http://","")
+    else:
+        url = url.replace("http://pbs.twimg.com/media/","")
+
+    url_parts = "{0}x{1}/{2}".format(width, height, url)
 
     if unsafe:
         return "{0}/unsafe/{1}".format(current_app.config.get('THUMBOR_BASE_URL'), url_parts)

@@ -1,6 +1,9 @@
 import os
 
-LOADER  = "thumbor.loaders.twimg"
+# Support hide the image original url in image link
+# - if enable, the default settings must set USE_ORIGNAL_IMAGE_URL to True
+# LOADER  = "thumbor.loaders.twimg"
+
 STORAGE = "thumbor.storages.no_storage"
 
 MIXED_STORAGE_FILE_STORAGE = "thumbor.storages.no_storage"
