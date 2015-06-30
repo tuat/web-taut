@@ -11,7 +11,6 @@ from flask.ext.assets import Environment, Bundle
 from .models import db
 from .routes import index, settings, media, bookmark, developer
 from .routes import admin, api
-from .tasks import make_celery
 from .helpers.account import load_current_user
 from .helpers.value import thumb, human_time, url_for_media_detail
 
@@ -33,8 +32,6 @@ def create_app(config=None):
     register_hook(app)
     register_babel(app)
     register_assets(app)
-    register_celery(app)
-    register_celery_beat(app)
     register_jinja2(app)
     register_database(app)
     register_route(app)
@@ -63,12 +60,6 @@ def register_babel(app):
 def register_assets(app):
     assets = Environment()
     assets.init_app(app)
-
-def register_celery(app):
-    app.celery = make_celery(app)
-
-def register_celery_beat(app):
-    from .tasks.schedule import fetch_lists
 
 def register_jinja2(app):
     @app.template_filter('timeago')

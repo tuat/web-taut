@@ -21,10 +21,10 @@ task:
 	python manager.py runtask --name=all
 
 task-celery-bin:
-	celery worker -E -l INFO -A manager.celery -B
+	celery worker -E -l INFO -A taut.tasks.schedule.celery -B
 
 event-celery-bin:
-	celery events -A manager.celery
+	celery events -A taut.tasks.schedule.celery
 
 thumb:
 	thumbor -p 8888 -c ./taut/configs/thumbor.py
