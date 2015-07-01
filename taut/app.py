@@ -6,7 +6,7 @@ import hmac
 import rollbar
 import rollbar.contrib.flask
 from hashlib import sha1
-from werkzeug.contrib.cache import SimpleCache
+from werkzeug.contrib.cache import FileSystemCache
 from flask import Flask, g, got_request_exception
 from flask.ext.babel import Babel, format_datetime
 from flask.ext.assets import Environment, Bundle
@@ -95,7 +95,7 @@ def register_database(app):
     db.app = app
 
 def register_cache(app):
-    app.cache = SimpleCache()
+    app.cache = FileSystemCache(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'storage/random_medias'))
 
 def register_route(app):
     app.register_blueprint(admin.account.blueprint, url_prefix='/admin/account')
