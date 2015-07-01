@@ -41,7 +41,10 @@ def detail(list_media_id):
         user_medias = ListMedia.query.filter_by(list_user_id=list_media.list_user_id, status='show').order_by(ListMedia.create_at.desc()).offset(0).limit(12).all()
         user_medias = fill_with_list_users(user_medias)
 
+        random_medias = ListMedia.query.filter_by(status='show').order_by(db.func.random()).offset(0).limit(20).all()[0:6]
+        random_medias = fill_with_list_users(random_medias)
+
         comments = Comment.query.filter_by(list_media_id=list_media.id).order_by(Comment.create_at.asc()).all()
         comments = fill_with_accounts(comments)
 
-        return render_template('media/detail.html', list_media=list_media, list_user=list_user, list_tweet=list_tweet, user_medias=user_medias, form=form, comments=comments)
+        return render_template('media/detail.html', list_media=list_media, list_user=list_user, list_tweet=list_tweet, user_medias=user_medias, form=form, random_medias=random_medias, comments=comments)

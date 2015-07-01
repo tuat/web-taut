@@ -78,6 +78,21 @@
             </div>
         </div>
 
+        <div class="panel panel-default visible-lg-block">
+            <div class="panel-heading">
+                Random Medias
+            </div>
+            <div class="panel-body">
+                {% for random_media in random_medias %}
+                    <div class="col-xs-6 col-sm-2 col-md-2">
+                        <a class="thumbnail" rel="group" href="{{ url_for_media_detail(random_media) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
+                            <img src="{{ random_media.media_url | thumbor(140, 140) }}" alt="{{ random_media.user.name }}" class="tips" data-placement="bottom" title="{{ random_media.user.name }}">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 {{ comments | length }} comments
