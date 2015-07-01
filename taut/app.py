@@ -1,10 +1,12 @@
 #!/usr/bin/env python
+# coding: utf-8
 
 import os
 import hmac
 import rollbar
 import rollbar.contrib.flask
 from hashlib import sha1
+from werkzeug.contrib.cache import SimpleCache
 from flask import Flask, g, got_request_exception
 from flask.ext.babel import Babel, format_datetime
 from flask.ext.assets import Environment, Bundle
@@ -34,6 +36,7 @@ def create_app(config=None):
     register_assets(app)
     register_jinja2(app)
     register_database(app)
+    register_cache(app)
     register_route(app)
 
     return app
@@ -90,6 +93,9 @@ def register_jinja2(app):
 def register_database(app):
     db.init_app(app)
     db.app = app
+
+def register_cache(app):
+    app.cache = SimpleCache()
 
 def register_route(app):
     app.register_blueprint(admin.account.blueprint, url_prefix='/admin/account')

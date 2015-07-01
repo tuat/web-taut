@@ -1,5 +1,5 @@
 from flask import Blueprint, g
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, current_app
 from ..models import ListMedia, ListTweet, ListUser, Comment, db
 from ..forms import CommentForm
 from ..helpers.value import fill_with_list_users, fill_with_accounts
@@ -41,8 +41,13 @@ def detail(list_media_id):
         user_medias = ListMedia.query.filter_by(list_user_id=list_media.list_user_id, status='show').order_by(ListMedia.create_at.desc()).offset(0).limit(12).all()
         user_medias = fill_with_list_users(user_medias)
 
-        random_medias = ListMedia.query.filter_by(status='show').order_by(db.func.random()).offset(0).limit(20).all()[0:6]
-        random_medias = fill_with_list_users(random_medias)
+        random_medias = current_app.cache.get('media_detail_random_medias')
+
+        if random_medias is None:
+            random_medias = ListMedia.query.filter_by(status='show').order_by(db.func.random()).offset(0).limit(20).all()[0:6]
+            random_medias = fill_with_list_users(random_medias)
+
+            current_app.cache.set('media_detail_random_medias', random_medias, timeout=2*60) # 2 second
 
         comments = Comment.query.filter_by(list_media_id=list_media.id).order_by(Comment.create_at.asc()).all()
         comments = fill_with_accounts(comments)
