@@ -123,12 +123,13 @@
 
     {% assets filters="closure_js", output="assets/app.min.js",
         "vendor/jquery/jquery.min.js",
+        "vendor/jquery-turbolinks/jquery.turbolinks.min.js",
+        "vendor/jquery-turbolinks/turbolinks.js",
         "vendor/bootstrap/js/bootstrap.min.js",
         "vendor/photoswipe/photoswipe.min.js",
         "vendor/photoswipe/photoswipe-ui-default.min.js",
         "vendor/social/widget.js",
         "vendor/nprogress/nprogress.js",
-        "vendor/turbolinks/turbolinks.js",
         "client/js/default.js" %}
         <script src="{{ ASSET_URL }}"></script>
     {% endassets %}
