@@ -1,7 +1,7 @@
 from flask import Blueprint, g
 from flask import render_template, request, redirect, url_for, flash
 from ..forms import ProfileForm, PasswordForm
-from ..models import Account
+from ..models import Account, AccountConnection
 from ..helpers.account import require_user
 
 blueprint = Blueprint('settings', __name__)
@@ -39,7 +39,14 @@ def password():
     else:
         return render_template('settings/password.html', form=form)
 
-@blueprint.route('/connection')
+@blueprint.route('/connection', methods=['GET', 'POST'])
 @require_user
 def connection():
-    return render_template('settings/connection.html')
+    account_connections = AccountConnection.query.filter(
+        AccountConnection.user_id == g.user.id,
+        AccountConnection.access_token != ''
+    ).all()
+
+    connected_providers = [account_connection.provider_name for account_connection in account_connections]
+
+    return render_template('settings/connection.html', connected_providers=connected_providers)

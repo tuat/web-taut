@@ -11,7 +11,7 @@
                             <label for="dropbox" class="col-sm-2 control-label">Dropbox</label>
                             <div class="col-sm-10">
                                 <div class="form-control-static">
-                                    {% if False %}
+                                    {% if 'dropbox' in connected_providers %}
                                         <a href="#" class="btn btn-danger btn-xs">Disconnect</a>
                                     {% else %}
                                         <a href="#" class="btn btn-info btn-xs">Connect</a>

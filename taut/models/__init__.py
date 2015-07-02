@@ -6,3 +6,4 @@ from .account import Account
 from .bookmark import Bookmark
 from .developer import Developer
 from .comment import Comment
+from .account_connection import AccountConnection
