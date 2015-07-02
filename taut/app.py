@@ -10,8 +10,9 @@ from werkzeug.contrib.cache import FileSystemCache
 from flask import Flask, g, got_request_exception
 from flask.ext.babel import Babel, format_datetime
 from flask.ext.assets import Environment, Bundle
+from flask.ext.oauthlib.client import OAuth
 from .models import db
-from .routes import index, settings, media, bookmark, developer
+from .routes import index, settings, media, bookmark, developer, oauth
 from .routes import admin, api
 from .helpers.account import load_current_user
 from .helpers.value import thumb, human_time, url_for_media_detail
@@ -34,6 +35,7 @@ def create_app(config=None):
     register_hook(app)
     register_babel(app)
     register_assets(app)
+    register_oauth(app)
     register_jinja2(app)
     register_database(app)
     register_cache(app)
@@ -63,6 +65,15 @@ def register_babel(app):
 def register_assets(app):
     assets = Environment()
     assets.init_app(app)
+
+def register_oauth(app):
+    oauth   = OAuth(app)
+    dropbox = oauth.remote_app('dropbox', app_key='DROPBOX')
+
+    app.oauth = oauth
+    app.oauth.providers = {
+        'dropbox': dropbox
+    }
 
 def register_jinja2(app):
     @app.template_filter('timeago')
@@ -105,6 +116,7 @@ def register_route(app):
     app.register_blueprint(admin.main.blueprint, url_prefix='/admin')
     app.register_blueprint(api.media.blueprint, url_prefix='/api/media')
     app.register_blueprint(api.main.blueprint, url_prefix='/api')
+    app.register_blueprint(oauth.blueprint, url_prefix='/oauth')
     app.register_blueprint(developer.blueprint, url_prefix='/developer')
     app.register_blueprint(bookmark.blueprint, url_prefix='/bookmark')
     app.register_blueprint(media.blueprint, url_prefix='/media')
