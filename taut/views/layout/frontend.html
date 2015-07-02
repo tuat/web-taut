@@ -16,7 +16,6 @@
     "vendor/photoswipe/photoswipe.css",
     "vendor/photoswipe/default-skin/default-skin.css",
     "vendor/social/widget.css",
-    "vendor/nprogress/nprogress.css",
     "client/css/default.css" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
 {% endassets %}
@@ -123,13 +122,10 @@
 
     {% assets filters="closure_js", output="assets/app.min.js",
         "vendor/jquery/jquery.min.js",
-        "vendor/jquery-turbolinks/jquery.turbolinks.min.js",
-        "vendor/jquery-turbolinks/turbolinks.js",
         "vendor/bootstrap/js/bootstrap.min.js",
         "vendor/photoswipe/photoswipe.min.js",
         "vendor/photoswipe/photoswipe-ui-default.min.js",
         "vendor/social/widget.js",
-        "vendor/nprogress/nprogress.js",
         "client/js/default.js" %}
         <script src="{{ ASSET_URL }}"></script>
     {% endassets %}
