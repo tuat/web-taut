@@ -10,6 +10,7 @@ from werkzeug.contrib.cache import FileSystemCache
 from flask import Flask, g, got_request_exception
 from flask.ext.babel import Babel, format_datetime
 from flask.ext.assets import Environment, Bundle
+from flask.ext.turbolinks import turbolinks
 from .models import db
 from .routes import index, settings, media, bookmark, developer
 from .routes import admin, api
@@ -31,6 +32,7 @@ def create_app(config=None):
     elif config:
         app.config.from_pyfile(os.path.abspath(config))
 
+    register_turbolinks(app)
     register_hook(app)
     register_babel(app)
     register_assets(app)
@@ -40,6 +42,9 @@ def create_app(config=None):
     register_route(app)
 
     return app
+
+def register_turbolinks(app):
+    turbolinks(app)
 
 def register_hook(app):
     @app.before_first_request
