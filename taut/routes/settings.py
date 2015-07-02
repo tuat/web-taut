@@ -38,3 +38,8 @@ def password():
         return redirect(url_for('index.logout'))
     else:
         return render_template('settings/password.html', form=form)
+
+@blueprint.route('/connection')
+@require_user
+def connection():
+    return render_template('settings/connection.html')
