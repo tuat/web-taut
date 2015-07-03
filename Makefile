@@ -17,11 +17,11 @@ database:
 redis:
 	redis-server /usr/local/etc/redis.conf
 
-task:
-	python manager.py runtask --name=all
+schedule:
+	celery worker -E -l INFO -A taut.tasks.schedule -B
 
-task-celery-bin:
-	celery worker -E -l INFO -A taut.tasks.schedule.celery -B
+task:
+	celery worker -E -l INFO -A taut.tasks.dropbox
 
 event-celery-bin:
 	celery events -A taut.tasks.schedule.celery

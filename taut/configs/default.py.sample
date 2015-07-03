@@ -121,3 +121,5 @@ MEDIA_HASH_ID_SALT = 'Your_Media_Hash_Id_Salt'
 # Show or hide the image original url in image link
 # - must enable the thumbor loader to "thumbor.loaders.twimg" in config file
 USE_ORIGNAL_IMAGE_URL = True
+
+IMAGE_DOWNLOAD_PATH = os.path.join(os.getcwd(), 'storage/dropbox')

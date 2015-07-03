@@ -61,6 +61,16 @@
                                 <i class="glyphicon glyphicon-download-alt"></i>
                             </div>
                         </a>
+
+                        <a href="{{ url_for('dropbox.create', list_media_id=list_media.id) }}" class="btn btn-info">
+                            <div class="hidden-xs">
+                                <i class="glyphicon glyphicon-hdd"></i> Dropbox
+                            </div>
+                            <div class="visible-xs">
+                                <i class="glyphicon glyphicon-hdd"></i>
+                            </div>
+                        </a>
+
                         <a href="{{ list_media.media_url | thumbor(500, 500) }}" class="btn btn-info pull-right tips" data-placement="bottom" title="Preview images" data-photo-swipe="true" data-size="500x500">
                             <i class="glyphicon glyphicon-eye-open"></i>
                         </a>

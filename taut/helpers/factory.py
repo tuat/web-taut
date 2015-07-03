@@ -1,49 +1,18 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 import os
-import hmac
 import rollbar
 import rollbar.contrib.flask
-from hashlib import sha1
 from werkzeug.contrib.cache import FileSystemCache
-from flask import Flask, g, got_request_exception
+from flask import g, got_request_exception
 from flask.ext.babel import Babel, format_datetime
-from flask.ext.assets import Environment, Bundle
+from flask.ext.assets import Environment
 from flask.ext.oauthlib.client import OAuth
-from .models import db
+from ..models import db
+from ..routes import index, settings, media, bookmark, developer, oauth, sync_dropbox
+from ..routes import admin, api
 from .helpers.account import load_current_user
 from .helpers.value import thumb, human_time, url_for_media_detail
 
-def create_app(config=None, enable_route=True):
-    app = Flask(__name__, template_folder='views')
-    app.static_folder = os.path.abspath('static')
-
-    app.config.from_pyfile('configs/default.py')
-
-    production_config = os.path.join(os.path.dirname(__file__), 'configs/production.py')
-    if os.path.exists(production_config):
-        app.config.from_pyfile(production_config)
-
-    if isinstance(config, dict):
-        app.config.update(config)
-    elif config:
-        app.config.from_pyfile(os.path.abspath(config))
-
-    register_hook(app)
-    register_babel(app)
-    register_assets(app)
-    register_oauth(app)
-    register_jinja2(app)
-    register_database(app)
-    register_cache(app)
-
-    if enable_route is True:
-        register_route(app)
-
-    return app
-
-def register_hook(app):
+def register_flask_hook(app):
     @app.before_first_request
     def init_rollbar():
         if app.config['ROLLBAR']['enable']:
@@ -59,14 +28,14 @@ def register_hook(app):
     def current_user():
         g.user = load_current_user()
 
-def register_babel(app):
+def register_flask_babel(app):
     babel = Babel(app)
 
-def register_assets(app):
+def register_flask_assets(app):
     assets = Environment()
     assets.init_app(app)
 
-def register_oauth(app):
+def register_flask_oauth(app):
     oauth   = OAuth(app)
     dropbox = oauth.remote_app('dropbox', app_key='DROPBOX')
 
@@ -75,7 +44,7 @@ def register_oauth(app):
         'dropbox': dropbox
     }
 
-def register_jinja2(app):
+def register_flask_jinja2(app):
     @app.template_filter('timeago')
     def timeago(value):
         return human_time(value)
@@ -101,17 +70,14 @@ def register_jinja2(app):
     def utility_processor():
         return dict(url_for_media_detail=url_for_media_detail)
 
-def register_database(app):
+def register_flask_database(app):
     db.init_app(app)
     db.app = app
 
-def register_cache(app):
+def register_flask_cache(app):
     app.cache = FileSystemCache(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'storage/random_medias'))
 
-def register_route(app):
-    from .routes import index, settings, media, bookmark, developer, oauth, dropbox
-    from .routes import admin, api
-
+def register_flask_route(app):
     app.register_blueprint(admin.account.blueprint, url_prefix='/admin/account')
     app.register_blueprint(admin.list_media.blueprint, url_prefix='/admin/list-media')
     app.register_blueprint(admin.list_tweet.blueprint, url_prefix='/admin/list-tweet')
@@ -119,7 +85,7 @@ def register_route(app):
     app.register_blueprint(admin.main.blueprint, url_prefix='/admin')
     app.register_blueprint(api.media.blueprint, url_prefix='/api/media')
     app.register_blueprint(api.main.blueprint, url_prefix='/api')
-    app.register_blueprint(dropbox.blueprint, url_prefix='/dropbox')
+    app.register_blueprint(sync_dropbox.blueprint, url_prefix='/dropbox')
     app.register_blueprint(oauth.blueprint, url_prefix='/oauth')
     app.register_blueprint(developer.blueprint, url_prefix='/developer')
     app.register_blueprint(bookmark.blueprint, url_prefix='/bookmark')

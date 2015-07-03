@@ -3,8 +3,8 @@
 from ..app import create_app
 from celery import Celery
 
-def create_celery_app(app=None):
-    app = app or create_app()
+def create_celery_app(app=None, enable_route=True):
+    app = app or create_app(enable_route=enable_route)
 
     celery = Celery()
     celery.conf.update(app.config)
