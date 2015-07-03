@@ -5,6 +5,7 @@ venv
 storage/*.sqlite
 storage/celery-beat
 storage/random_medias/*
+storage/dropbox/*
 taut/configs/default.py
 taut/configs/thumbor.py
 storage/twitter-list-last-id.txt

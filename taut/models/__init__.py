@@ -7,3 +7,4 @@ from .bookmark import Bookmark
 from .developer import Developer
 from .comment import Comment
 from .account_connection import AccountConnection
+from .dropbox_log import DropboxLog

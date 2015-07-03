@@ -7,7 +7,7 @@ from dropbox import client
 from celery.utils.log import get_task_logger
 from .base import create_celery_app
 from ..helpers.dropbox import download_image
-from ..models import AccountConnection
+from ..models import AccountConnection, DropboxLog
 
 celery = create_celery_app(enable_route=False)
 logger = get_task_logger(__name__)
@@ -37,3 +37,9 @@ def sync_media_image(user_id, list_media_id, list_user_screen_name):
         logger.info("==> Saved")
     else:
         logger.info("==> Failed")
+
+    DropboxLog(
+        user_id       = user_id,
+        list_media_id = list_media_id,
+        status        = status,
+    ).save()
