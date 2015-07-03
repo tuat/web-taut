@@ -25,6 +25,10 @@ CELERY_LOG_LEVEL             = 'INFO'
 # CELERYD_LOG_FILE             = os.path.join(os.getcwd(), 'storage/celeryd.log')
 CELERY_TIMEZONE              = 'Asia/Hong_Kong'
 CELERYBEAT_SCHEDULE_FILENAME = os.path.join(os.getcwd(), 'storage/celery-beat')
+CELERY_IMPORTS               = (
+    'taut.tasks.schedule',
+    'taut.tasks.dropbox'
+)
 CELERYBEAT_SCHEDULE          = {
     'fetch-lists-g': {
         'task': 'taut.tasks.schedule.fetch_lists',
