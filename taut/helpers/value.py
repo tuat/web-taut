@@ -13,6 +13,18 @@ def force_integer(value, default=1):
     except:
         return default
 
+def fill_with_list_medias(items):
+    from ..models import ListMedia
+
+    media_ids  = [item.list_media_id for item in items]
+    medias     = ListMedia.query.filter(ListMedia.id.in_(media_ids)).all() if media_ids else {}
+    media_dict = {media.id: media for media in medias}
+
+    for item in items:
+        item.media = media_dict.get(item.list_media_id)
+
+    return items
+
 def fill_with_list_users(items):
     from ..models import ListUser
 

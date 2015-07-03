@@ -1,8 +1,9 @@
 from flask import Blueprint, g
 from flask import render_template, request, redirect, url_for, flash
 from ..forms import ProfileForm, PasswordForm
-from ..models import Account, AccountConnection
+from ..models import Account, AccountConnection, DropboxLog
 from ..helpers.account import require_user
+from ..helpers.value import fill_with_list_users, fill_with_list_medias
 
 blueprint = Blueprint('settings', __name__)
 
@@ -50,3 +51,12 @@ def connection():
     connected_providers = [account_connection.provider_name for account_connection in account_connections]
 
     return render_template('settings/connection.html', connected_providers=connected_providers)
+
+@blueprint.route('/dropbox_log')
+@require_user
+def dropbox_log():
+    dropbox_logs = DropboxLog.query.filter_by(list_user_id=g.user.id).order_by(DropboxLog.create_at.desc()).offset(0).limit(10).all()
+    dropbox_logs = fill_with_list_users(dropbox_logs)
+    dropbox_logs = fill_with_list_medias(dropbox_logs)
+
+    return render_template('settings/dropbox_log.html', dropbox_logs=dropbox_logs)

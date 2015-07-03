@@ -5,7 +5,7 @@ from datetime import datetime
 
 class DropboxLog(db.Model, SessionMixin):
     id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id       = db.Column(db.Integer, index=True)
+    list_user_id  = db.Column(db.Integer, index=True)
     list_media_id = db.Column(db.Integer, index=True)
     status        = db.Column(db.Enum('success', 'failed'), nullable=False, default='success')
     create_at     = db.Column(db.DateTime, default=datetime.utcnow)
