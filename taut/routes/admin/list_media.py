@@ -23,15 +23,18 @@ def search():
         return redirect(url_for('admin_list_media.search', media_id=media_id))
     else:
         media_id = request.args.get('media_id')
-        media_id = media_id if media_id else ""
 
-        media = ListMedia.query.filter(
-            (ListMedia.id == media_id) |
-            (ListMedia.hash_id == media_id)
-        ).first()
+        if media_id:
+            media = ListMedia.query.filter(
+                (ListMedia.id == media_id) |
+                (ListMedia.hash_id == media_id) |
+                (ListMedia.media_url.like("%{0}%".format(media_id)))
+            ).first()
 
-        if media:
             media = fill_with_list_users([media])[0]
+        else:
+            media_id = ""
+            media    = ""
 
         return render_template('admin/list_media/search.html', media_id=media_id, media=media)
 
