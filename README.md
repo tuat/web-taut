@@ -64,3 +64,14 @@ Fix decoder jpeg not available
 Fix assets tag not found
 
     apt-get install openjdk-7-jre
+
+# Issue
+
+Case 1
+
+    # Problem
+    UserWarning: Error importing pyasn1, subjectAltName check for SSL peer verification will be disabled.  Import error is: No module named pyasn1.type
+
+    # Fix
+    apt-get install libffi-dev libssl-dev
+    pip install pyopenssl ndg-httpsclient pyasn1
