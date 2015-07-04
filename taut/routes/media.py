@@ -47,7 +47,7 @@ def detail(list_media_id):
             random_medias = ListMedia.query.filter_by(status='show').order_by(db.func.random()).offset(0).limit(20).all()[0:6]
             random_medias = fill_with_list_users(random_medias)
 
-            current_app.cache.set('media_detail_random_medias', random_medias, timeout=5*60) # 5 second
+            current_app.cache.set('media_detail_random_medias', random_medias, timeout=5*60) # 5 minutes
 
         comments = Comment.query.filter_by(list_media_id=list_media.id).order_by(Comment.create_at.asc()).all()
         comments = fill_with_accounts(comments)
