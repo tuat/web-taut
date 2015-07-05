@@ -28,10 +28,12 @@ class FetchLists(BaseCommand):
     def make(self):
         params = {
             "list_id": self.list_id,
-            "slug": self.slug,
+            "slug"   : self.slug,
         }
 
+        # Get since id for compare
         twitter_list_last_id_filename = current_app.config.get('TWITTER_LIST_LAST_ID_FILENAME')
+
         if (os.path.exists(twitter_list_last_id_filename)):
             since_id = open(twitter_list_last_id_filename).read().strip()
 
@@ -40,6 +42,7 @@ class FetchLists(BaseCommand):
 
                 self.logger.info("last id: {0}".format(since_id))
 
+        # Make request to get latest feeds
         lists_statuses = self.api.request("lists/statuses", params)
         lists_last_id  = None
 
@@ -109,6 +112,8 @@ class FetchLists(BaseCommand):
                                 list_media.type          = media['type']
                                 list_media.save()
 
+                                sleep(1)
+
                                 # Update hash id
                                 list_media_hash_id = create_media_hash_id(list_media)
 
@@ -121,7 +126,7 @@ class FetchLists(BaseCommand):
                     else:
                         self.logger.info("---> new tweet : no")
 
-            sleep(1)
+            sleep(2)
 
         if lists_last_id:
             f = open(twitter_list_last_id_filename, 'w+')
