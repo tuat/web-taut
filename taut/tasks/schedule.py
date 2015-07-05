@@ -2,7 +2,7 @@
 
 from celery.utils.log import get_task_logger
 from .base import create_celery_app
-from ..commands import FetchLists, Sitemap, CheckNotFound, UpdateAvatar
+from ..commands import FetchLists, Sitemap, CheckNotFound, UpdateProfile
 
 celery = create_celery_app()
 logger = get_task_logger(__name__)
@@ -29,4 +29,4 @@ def check_not_found():
 def update_avatar():
     logger.info("called schedule.update_avatar")
 
-    UpdateAvatar(logger).make()
+    UpdateProfile(logger).make()
