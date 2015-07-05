@@ -5,7 +5,7 @@ from TwitterAPI import TwitterAPI
 from .base import BaseCommand
 from ..models import ListUser, db
 
-class UpdateAvatar(BaseCommand):
+class UpdateProfile(BaseCommand):
 
     def __init__(self, logger=None):
         self.logger = self.get_logger() if logger is None else logger
@@ -28,12 +28,15 @@ class UpdateAvatar(BaseCommand):
         twitter_users = self.api.request("users/lookup", parameters)
 
         for twitter_user in twitter_users:
+
+            name              = twitter_user['name']
             screen_name       = twitter_user['screen_name']
             profile_image_url = twitter_user['profile_image_url']
 
             self.logger.info("{0} - {1}".format(screen_name, profile_image_url))
 
-            user = ListUser.query.filter_by(screen_name=screen_name).first()
+            user                   = ListUser.query.filter_by(screen_name=screen_name).first()
+            user.name              = name
             user.profile_image_url = profile_image_url
 
             db.session.add(user)
