@@ -33,11 +33,11 @@ def gensitemap():
     Sitemap().make(0, 10000)
 
 @manager.command
-def testcommands(name=None):
+def testcommands(name=None, list_id=None, slug=None):
     """Test commands"""
     if name == 'fetchlists':
         from taut.commands.fetch_lists import FetchLists
-        FetchLists(LIST_ID, SLUG).make()
+        FetchLists(list_id, slug).make()
     elif name == 'checknotfound':
         from taut.commands.check_not_found import CheckNotFound
         CheckNotFound().make()
