@@ -157,7 +157,7 @@ class FetchLists(BaseCommand):
                 media_url        = list_media['media_url']
                 media_type       = list_media['media_type']
 
-                if media_id_str in new_media_id_strs and media_url in new_media_urls:
+                if media_id_str in new_media_id_strs or media_url in new_media_urls:
                     list_media               = ListMedia()
                     list_media.list_user_id  = user_mapper[user_screen_name].id
                     list_media.list_tweet_id = tweet_mapper[id_str].id
