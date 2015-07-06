@@ -31,7 +31,8 @@ def search():
                 (ListMedia.media_url.like("%{0}%".format(media_id)))
             ).first()
 
-            media = fill_with_list_users([media])[0]
+            if media:
+                media = fill_with_list_users([media])[0]
         else:
             media_id = ""
             media    = ""
