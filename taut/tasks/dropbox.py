@@ -18,7 +18,7 @@ def sync_media_image(user_id, list_media_id, list_user_screen_name):
 
     saved_file         = download_image(list_media_id, list_user_screen_name)
     account_connection = AccountConnection.query.filter_by(user_id=user_id, provider_name='dropbox').first()
-    status             = 'faield'
+    status             = 'failed'
 
     logger.info("==> saved_file: {0}".format(saved_file))
     logger.info("==> account_connection: {0}".format('PASS' if account_connection.access_token != '' else 'Failed'))
