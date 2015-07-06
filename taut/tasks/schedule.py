@@ -26,7 +26,7 @@ def check_not_found():
     CheckNotFound().make()
 
 @celery.task
-def update_avatar():
-    logger.info("called schedule.update_avatar")
+def update_profile():
+    logger.info("called schedule.update_profile")
 
     UpdateProfile(logger).make()
