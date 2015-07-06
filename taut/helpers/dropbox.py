@@ -17,7 +17,7 @@ def get_filename(url):
     url_parts = urlparse(url)
     filename, file_ext = splitext(basename(url_parts.path))
 
-    return "{0}.{1}".format(filename, file_ext)
+    return "{0}{1}".format(filename, file_ext)
 
 def download_image(list_meida_id, list_user_screen_name):
     row = ListMedia.query.get(list_meida_id)
