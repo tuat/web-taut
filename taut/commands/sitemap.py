@@ -22,7 +22,7 @@ class Sitemap(BaseCommand):
         pages = []
 
         for list_media in list_medias:
-            if list_media.hash_id:
+            if list_media.hash_id and list_media.status == 'show':
                 try:
                     pages.append({
                         'url'      : url_for_media_detail(list_media, _external=True),
