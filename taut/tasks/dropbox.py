@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import
 import os
-from dropbox import client
+from dropbox import client, rest
 # from celery import task
 from celery.utils.log import get_task_logger
 from .base import create_celery_app
@@ -26,15 +26,20 @@ def sync_media_image(user_id, list_media_id, list_user_screen_name):
     if saved_file and account_connection and account_connection.access_token != '':
         dropbox_client = client.DropboxClient(account_connection.access_token)
 
-        dropbox_client.put_file(
-            '/{0}/{1}'.format(list_user_screen_name, os.path.basename(saved_file)),
-            open(saved_file),
-            overwrite=True
-        )
+        try:
+            dropbox_client.put_file(
+                '/{0}/{1}'.format(list_user_screen_name, os.path.basename(saved_file)),
+                open(saved_file),
+                overwrite=True
+            )
 
-        status = 'success'
+            status = 'success'
 
-        logger.info("==> Saved")
+            logger.info("==> Saved")
+        except rest.ErrorResponse, e:
+            logger.info("==> Dropbox Exception")
+
+            print(str(e))
     else:
         logger.info("==> Failed")
 
