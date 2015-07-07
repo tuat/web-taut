@@ -128,12 +128,6 @@ class FetchLists(BaseCommand):
         if not media_id_strs and not media_urls:
             self.logger.info("---> the new users table is empty, skipped")
         else:
-            exists_medias        = ListMedia.query.filter(ListMedia.id_str.in_(media_id_strs) | ListMedia.media_url.in_(media_urls)).all()
-            exists_media_id_strs = set([media.id_str for media in exists_medias])
-            exists_media_urls    = set([media.media_url for media in exists_medias])
-            new_media_id_strs    = [media_id_str for media_id_str in media_id_strs if media_id_str not in exists_media_id_strs]
-            new_media_urls       = [media_url for media_url in media_urls if media_url not in exists_media_urls]
-
             # Find out related tweet by id str
             tweet_id_strs = [id_str for id_str, list_media in list_medias.items()]
             list_tweets   = ListTweet.query.filter(ListTweet.id_str.in_(tweet_id_strs)).all()
@@ -157,19 +151,16 @@ class FetchLists(BaseCommand):
                 media_url        = list_media['media_url']
                 media_type       = list_media['media_type']
 
-                if media_id_str in new_media_id_strs or media_url in new_media_urls:
-                    list_media               = ListMedia()
-                    list_media.list_user_id  = user_mapper[user_screen_name].id
-                    list_media.list_tweet_id = tweet_mapper[id_str].id
-                    list_media.id_str        = media_id_str
-                    list_media.media_url     = media_url
-                    list_media.type          = media_type
+                list_media               = ListMedia()
+                list_media.list_user_id  = user_mapper[user_screen_name].id
+                list_media.list_tweet_id = tweet_mapper[id_str].id
+                list_media.id_str        = media_id_str
+                list_media.media_url     = media_url
+                list_media.type          = media_type
 
-                    db.session.add(list_media)
+                db.session.add(list_media)
 
-                    self.logger.info("--> media id str: {0}, added".format(media_id_str))
-                else:
-                    self.logger.info("--> media id str: {0}, skipped".format(media_id_str))
+                self.logger.info("--> media id str: {0}, added".format(media_id_str))
 
             db.session.commit()
 
