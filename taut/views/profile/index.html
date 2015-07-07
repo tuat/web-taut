@@ -1,0 +1,65 @@
+{% extends 'layout/frontend.html' %}
+
+{% block subtitle %}{{ list_user.name | remove_url | remove_newline }} - {{ list_user.screen_name }}{% endblock %}
+
+{% block ogmeta %}
+<meta property="og:title" content="{{ list_user.name }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ url_for('profile.index', screen_name=list_user.screen_name, _external=True) }}" />
+<meta property="og:image" content="{{ list_user.profile_image_url | replace('_normal', '') }}" />
+<meta property="og:description" content="{{ list_user.name | remove_url | remove_newline }} - {{ list_user.screen_name }} via Tautr" />
+<meta property="og:site_name" content="Tautr" />
+{% endblock %}
+
+{% block container %}
+    <div class="profile-index" data-mixpanel-page="Profile-Index" data-mixpanel-action="loaded">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="{{ list_user.profile_image_url | replace('http://', 'https://') }}" alt="{{ list_user.name }}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ list_user.name }}</h4>
+                        <div class="text-muted">@{{ list_user.screen_name }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Latest Tweets</div>
+            <ul class="list-group">
+                {% for list_tweet in list_tweets %}
+                    <li class="list-group-item">
+                        {{ list_tweet.text | remove_url | remove_newline }}
+                        <small class="text-muted">{{ list_tweet.create_at | timeago }}</small>
+                    </li>
+                {% else %}
+                    <li class="list-group-item">
+                        <span class="text-info">No any latest tweets :(</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Latest Medias</div>
+            <div class="panel-body">
+                {% for list_media in list_medias %}
+                    <div class="col-xs-6 col-sm-2 col-md-2">
+                        <a class="thumbnail" rel="group" href="{{ url_for_media_detail(list_media) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
+                            <img src="{{ list_media.media_url | thumbor(150, 150) }}" alt="{{ list_media.user.name }}" class="tips" data-placement="bottom" title="{{ list_media.user.name }}">
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="text-info">
+                        No any latest medias :(
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
