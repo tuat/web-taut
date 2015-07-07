@@ -76,7 +76,7 @@ class FetchLists(BaseCommand):
                 else:
                     self.logger.info("---> screen_name: {0}, skipped".format(screen_name))
 
-            db.session.commit()
+            # db.session.commit()
 
     def add_new_tweets(self, list_tweets):
         self.logger.info("Add new tweets")
@@ -116,20 +116,26 @@ class FetchLists(BaseCommand):
                 else:
                     self.logger.info("--> id_str: {0}, skipped".format(id_str))
 
-            db.session.commit()
+            # db.session.commit()
 
     def add_new_medias(self, list_medias):
         self.logger.info("Add new medias")
 
         # Find out new media by media id str and url
-        media_id_strs = [media['media_id_str'] for id_str, media in list_medias.items()]
-        media_urls    = [media['media_url'] for id_str, media in list_medias.items()]
+        media_id_strs = [media_id_str for media_id_str, media in list_medias.items()]
+        media_urls    = [media['media_url'] for media_id_str, media in list_medias.items()]
 
         if not media_id_strs and not media_urls:
             self.logger.info("---> the new users table is empty, skipped")
         else:
+            exists_medias        = ListMedia.query.filter(ListMedia.id_str.in_(media_id_strs) | ListMedia.media_url.in_(media_urls)).all()
+            exists_media_id_strs = set([media.id_str for media in exists_medias])
+            exists_media_urls    = set([media.media_url for media in exists_medias])
+            new_media_id_strs    = [media_id_str for media_id_str in media_id_strs if media_id_str not in exists_media_id_strs]
+            new_media_urls       = [media_url for media_url in media_urls if media_url not in exists_media_urls]
+
             # Find out related tweet by id str
-            tweet_id_strs = [id_str for id_str, list_media in list_medias.items()]
+            tweet_id_strs = [list_media['tweet_id_str'] for media_id_str, list_media in list_medias.items()]
             list_tweets   = ListTweet.query.filter(ListTweet.id_str.in_(tweet_id_strs)).all()
             tweet_mapper  = {}
 
@@ -145,24 +151,28 @@ class FetchLists(BaseCommand):
                 user_mapper[list_user.screen_name] = list_user
 
             # Add new media to database
-            for id_str, list_media in list_medias.items():
+            for media_id_str_, list_media in list_medias.items():
+                tweet_id_str     = list_media['tweet_id_str']
                 user_screen_name = list_media['user_screen_name']
                 media_id_str     = list_media['media_id_str']
                 media_url        = list_media['media_url']
                 media_type       = list_media['media_type']
 
-                list_media               = ListMedia()
-                list_media.list_user_id  = user_mapper[user_screen_name].id
-                list_media.list_tweet_id = tweet_mapper[id_str].id
-                list_media.id_str        = media_id_str
-                list_media.media_url     = media_url
-                list_media.type          = media_type
+                if media_id_str in new_media_id_strs or media_url in new_media_urls:
+                    list_media               = ListMedia()
+                    list_media.list_user_id  = user_mapper[user_screen_name].id
+                    list_media.list_tweet_id = tweet_mapper[tweet_id_str].id
+                    list_media.id_str        = media_id_str
+                    list_media.media_url     = media_url
+                    list_media.type          = media_type
 
-                db.session.add(list_media)
+                    db.session.add(list_media)
 
-                self.logger.info("--> media id str: {0}, added".format(media_id_str))
+                    self.logger.info("--> media id str: {0}, added".format(media_id_str))
+                else:
+                    self.logger.info("--> media id str: {0}, skipped".format(media_id_str))
 
-            db.session.commit()
+            # db.session.commit()
 
     def update_new_media_hash_ids(self):
         self.logger.info("Update new media hash ids")
@@ -176,7 +186,7 @@ class FetchLists(BaseCommand):
 
             db.session.add(list_media)
 
-        db.session.commit()
+        # db.session.commit()
 
     def make(self):
         # Set default query string table
@@ -251,7 +261,8 @@ class FetchLists(BaseCommand):
                             media_type   = media['type']
 
                             # Add current media information into medias table to find out which is new media
-                            list_medias[id_str] = dict(
+                            list_medias[media_id_str] = dict(
+                                tweet_id_str     = id_str,
                                 user_screen_name = user_screen_name,
                                 media_id_str     = media_id_str,
                                 media_url        = media_url,
