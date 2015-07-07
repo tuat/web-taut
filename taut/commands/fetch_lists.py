@@ -2,6 +2,7 @@
 
 from os import path
 from time import sleep
+from requests import ConnectionError
 from TwitterAPI import TwitterAPI
 from flask import current_app
 from .base import BaseCommand
@@ -207,84 +208,88 @@ class FetchLists(BaseCommand):
             default_query_strings['since_id'] = since_id
 
             # Make request to get latest feeds
-            lists_statuses = self.twitter_api.request("lists/statuses", default_query_strings)
-            lists_last_id  = None
+            try:
+                lists_statuses = self.twitter_api.request("lists/statuses", default_query_strings)
+                lists_last_id  = None
 
-            list_users  = {}
-            list_tweets = {}
-            list_medias = {}
+                list_users  = {}
+                list_tweets = {}
+                list_medias = {}
 
-            # Lookup all list statuses
-            self.logger.info("Read list statues")
+                # Lookup all list statuses
+                self.logger.info("Read list statues")
 
-            for item in lists_statuses:
-                self.logger.info("# item: {0}".format(item['id']))
+                for item in lists_statuses:
+                    self.logger.info("# item: {0}".format(item['id']))
 
-                # Initial last id
-                if not lists_last_id:
-                    lists_last_id = item['id']
+                    # Initial last id
+                    if not lists_last_id:
+                        lists_last_id = item['id']
 
-                # Find extended entities in list item
-                if 'extended_entities' in item:
-                    self.logger.info("---> extended_entities : yes")
+                    # Find extended entities in list item
+                    if 'extended_entities' in item:
+                        self.logger.info("---> extended_entities : yes")
 
-                    extended_entities = item['extended_entities']
+                        extended_entities = item['extended_entities']
 
-                    # Find medas in extended entity
-                    if 'media' in extended_entities:
-                        self.logger.info("---> media : yes")
+                        # Find medas in extended entity
+                        if 'media' in extended_entities:
+                            self.logger.info("---> media : yes")
 
-                        # Get list item base information
-                        id_str                 = item['id_str']
-                        user_name              = item['user']['name']
-                        user_screen_name       = item['user']['screen_name']
-                        user_profile_image_url = item['user']['profile_image_url']
-                        text                   = item['text']
+                            # Get list item base information
+                            id_str                 = item['id_str']
+                            user_name              = item['user']['name']
+                            user_screen_name       = item['user']['screen_name']
+                            user_profile_image_url = item['user']['profile_image_url']
+                            text                   = item['text']
 
-                        # Add current user information into users table to find out which is new user
-                        list_users[id_str] = dict(
-                            user_name              = user_name,
-                            user_screen_name       = user_screen_name,
-                            user_profile_image_url = user_profile_image_url
-                        )
-
-                        # Add current tweet information into tweets table to find out which is new tweet
-                        list_tweets[id_str] = dict(
-                            text             = text,
-                            user_screen_name = user_screen_name
-                        )
-
-                        # Find media in tweet
-                        for media in extended_entities['media']:
-                            media_id_str = media['id_str']
-                            media_url    = media['media_url']
-                            media_type   = media['type']
-
-                            # Add current media information into medias table to find out which is new media
-                            list_medias[media_id_str] = dict(
-                                tweet_id_str     = id_str,
-                                user_screen_name = user_screen_name,
-                                media_id_str     = media_id_str,
-                                media_url        = media_url,
-                                media_type       = media_type,
+                            # Add current user information into users table to find out which is new user
+                            list_users[id_str] = dict(
+                                user_name              = user_name,
+                                user_screen_name       = user_screen_name,
+                                user_profile_image_url = user_profile_image_url
                             )
 
-                sleep(1)
+                            # Add current tweet information into tweets table to find out which is new tweet
+                            list_tweets[id_str] = dict(
+                                text             = text,
+                                user_screen_name = user_screen_name
+                            )
 
-            # Add new user from users table
-            self.add_new_users(list_users)
+                            # Find media in tweet
+                            for media in extended_entities['media']:
+                                media_id_str = media['id_str']
+                                media_url    = media['media_url']
+                                media_type   = media['type']
 
-            # Add new tweet from tweets table
-            self.add_new_tweets(list_tweets)
+                                # Add current media information into medias table to find out which is new media
+                                list_medias[media_id_str] = dict(
+                                    tweet_id_str     = id_str,
+                                    user_screen_name = user_screen_name,
+                                    media_id_str     = media_id_str,
+                                    media_url        = media_url,
+                                    media_type       = media_type,
+                                )
 
-            # Add new media from medias table
-            self.add_new_medias(list_medias)
+                    sleep(1)
 
-            # Update new media hash id from database
-            self.update_new_media_hash_ids()
+                # Add new user from users table
+                self.add_new_users(list_users)
 
-            # Store last id into file
-            if lists_last_id:
-                f = open(self.twitter_list_last_id_filename, 'w+')
-                f.write(str(lists_last_id))
-                f.close()
+                # Add new tweet from tweets table
+                self.add_new_tweets(list_tweets)
+
+                # Add new media from medias table
+                self.add_new_medias(list_medias)
+
+                # Update new media hash id from database
+                self.update_new_media_hash_ids()
+
+                # Store last id into file
+                if lists_last_id:
+                    f = open(self.twitter_list_last_id_filename, 'w+')
+                    f.write(str(lists_last_id))
+                    f.close()
+
+            except ConnectionError, e:
+                self.logger.info("==> ConnectionError when connect to Twitter")
