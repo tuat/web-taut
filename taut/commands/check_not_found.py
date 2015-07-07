@@ -40,10 +40,10 @@ class CheckNotFound(BaseCommand):
             r = requests.head(media.media_url, timeout=3)
 
             if r.status_code != 200:
-                self.logger.debug("--> [{0}] - {1}".format(r.status_code, media.media_url))
+                self.logger.info("--> [{0}] - {1}".format(r.status_code, media.media_url))
                 self.not_found_ids.append(media.id)
         except:
-            self.logger.debug("--> Error - {0}".format(media.media_url))
+            self.logger.info("--> Error - {0}".format(media.media_url))
             self.not_found_ids.append(media.id)
 
         sleep(0.005)
