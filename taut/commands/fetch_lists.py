@@ -76,7 +76,7 @@ class FetchLists(BaseCommand):
                 else:
                     self.logger.info("---> screen_name: {0}, skipped".format(screen_name))
 
-            # db.session.commit()
+            db.session.commit()
 
     def add_new_tweets(self, list_tweets):
         self.logger.info("Add new tweets")
@@ -116,7 +116,7 @@ class FetchLists(BaseCommand):
                 else:
                     self.logger.info("--> id_str: {0}, skipped".format(id_str))
 
-            # db.session.commit()
+            db.session.commit()
 
     def add_new_medias(self, list_medias):
         self.logger.info("Add new medias")
@@ -172,7 +172,7 @@ class FetchLists(BaseCommand):
                 else:
                     self.logger.info("--> media id str: {0}, skipped".format(media_id_str))
 
-            # db.session.commit()
+            db.session.commit()
 
     def update_new_media_hash_ids(self):
         self.logger.info("Update new media hash ids")
@@ -186,7 +186,7 @@ class FetchLists(BaseCommand):
 
             db.session.add(list_media)
 
-        # db.session.commit()
+        db.session.commit()
 
     def make(self):
         # Set default query string table
