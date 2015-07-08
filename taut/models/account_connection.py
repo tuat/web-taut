@@ -13,7 +13,7 @@ class AccountConnection(db.Model, SessionMixin):
     profile_url      = db.Column(db.String(180))
     avatar_url       = db.Column(db.String(180))
     create_at        = db.Column(db.DateTime, default=datetime.utcnow)
-    update_at        = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    update_at        = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, **kwargs):
         if 'provider_name' not in kwargs:

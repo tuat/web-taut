@@ -9,7 +9,7 @@ class DropboxLog(db.Model, SessionMixin):
     list_media_id = db.Column(db.Integer, index=True)
     status        = db.Column(db.Enum('success', 'failed'), nullable=False, default='success')
     create_at     = db.Column(db.DateTime, default=datetime.utcnow)
-    update_at     = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    update_at     = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():

@@ -9,7 +9,7 @@ class ListUser(db.Model, SessionMixin):
     screen_name       = db.Column(db.String(120))
     profile_image_url = db.Column(db.String(180))
     create_at         = db.Column(db.DateTime, default=datetime.utcnow)
-    update_at         = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    update_at         = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():

@@ -9,7 +9,7 @@ class Comment(db.Model, SessionMixin):
     list_media_id = db.Column(db.Integer, nullable=False)
     content       = db.Column(db.Text)
     create_at     = db.Column(db.DateTime, default=datetime.utcnow)
-    update_at     = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    update_at     = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():

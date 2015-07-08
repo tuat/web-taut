@@ -8,7 +8,7 @@ class Developer(db.Model, SessionMixin):
     account_id = db.Column(db.Integer, index=True)
     api_key    = db.Column(db.String(120), index=True)
     create_at  = db.Column(db.DateTime, default=datetime.utcnow)
-    update_at  = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    update_at  = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():

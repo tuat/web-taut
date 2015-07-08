@@ -12,7 +12,7 @@ class Account(db.Model, SessionMixin):
     password      = db.Column(db.String(100), nullable=False)
     role          = db.Column(db.String(10), default='user')
     create_at     = db.Column(db.DateTime, default=datetime.utcnow)
-    update_at     = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    update_at     = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():

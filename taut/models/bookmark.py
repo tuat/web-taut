@@ -8,7 +8,7 @@ class Bookmark(db.Model, SessionMixin):
     account_id    = db.Column(db.Integer, index=True)
     list_media_id = db.Column(db.Integer, index=True)
     create_at     = db.Column(db.DateTime, default=datetime.utcnow)
-    update_at     = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    update_at     = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # Support for
     # - Account.query.get(1).bookmarks

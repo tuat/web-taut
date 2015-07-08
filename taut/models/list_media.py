@@ -17,7 +17,7 @@ class ListMedia(db.Model, SessionMixin):
     status        = db.Column(db.String(10), default="hide")
     hash_id       = db.Column(db.String(64))
     create_at     = db.Column(db.DateTime, default=datetime.utcnow)
-    update_at     = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    update_at     = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
