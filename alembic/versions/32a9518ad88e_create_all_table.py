@@ -44,7 +44,7 @@ def upgrade():
     sa.Column('list_tweet_id', sa.Integer(), nullable=True),
     sa.Column('id_str', sa.String(length=30), nullable=True),
     sa.Column('media_url', sa.String(length=180), nullable=True),
-    sa.Column('type', sa.String(length=10), nullable=True),
+    sa.Column('type', sa.String(length=20), nullable=True),
     sa.Column('status', sa.String(length=10), nullable=True),
     sa.Column('hash_id', sa.String(length=64), nullable=True),
     sa.Column('create_at', sa.DateTime(), nullable=True),
