@@ -33,6 +33,9 @@ thumb:
 postgres:
 	postgres -D /usr/local/var/postgres
 
+sqlite2pg:
+	alembic downgrade base && alembic upgrade head && cd etc && pgloader sqlite2pg.load && cd ..
+
 clean: clean-pyc
 
 clean-pyc:
