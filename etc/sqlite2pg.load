@@ -4,4 +4,6 @@ load database
 
  with include no drop, create no tables, create indexes
 
+excluding table names matching 'alembic_version'
+
 set work_mem to '16MB', maintenance_work_mem to '512 MB';
