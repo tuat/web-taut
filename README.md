@@ -21,6 +21,10 @@ Sync the tweets in specified twitter lists and output to the custom API interfac
 
     cp thumbor/loaders/twimg.py venv/lib/python2.7/site-packages/thumbor/loaders/twimg.py
 
+## Progres
+
+    brew install postgres
+
 ## Edit config file
 
 vim taut/configs/default.py

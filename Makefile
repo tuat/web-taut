@@ -30,6 +30,9 @@ thumb:
 	cp thumbor/loaders/twimg.py venv/lib/python2.7/site-packages/thumbor/loaders/twimg.py
 	thumbor -p 8888 -c ./taut/configs/thumbor.py
 
+postgres:
+	postgres -D /usr/local/var/postgres
+
 clean: clean-pyc
 
 clean-pyc:

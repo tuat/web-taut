@@ -12,6 +12,7 @@ API_SECRET_KEY             = "Your_API_Secret_Key"
 PREFERRED_URL_SCHEME       = "https"
 
 SQLALCHEMY_DATABASE_URI    = 'sqlite:///%s' % os.path.join(os.getcwd(), 'storage', 'default.sqlite')
+# SQLALCHEMY_DATABASE_URI    = 'postgresql+psycopg2://root:password@localhost:5432/web_taut'
 
 BABEL_DEFAULT_LOCALE       = "en"
 BABEL_DEFAULT_TIMEZONE     = "Asia/Hong_Kong"
