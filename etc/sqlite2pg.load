@@ -1,0 +1,5 @@
+load database
+    from '../storage/default.sqlite'
+    into postgresql:///web_taut
+
+set work_mem to '16MB', maintenance_work_mem to '512 MB';
