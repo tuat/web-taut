@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('list_user_id', sa.Integer(), nullable=True),
     sa.Column('list_media_id', sa.Integer(), nullable=True),
-    sa.Column('status', sa.Enum('success', 'failed'), nullable=False),
+    sa.Column('status', sa.Enum('success', 'failed', name="status_type"), nullable=False),
     sa.Column('create_at', sa.DateTime(), nullable=True),
     sa.Column('update_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
