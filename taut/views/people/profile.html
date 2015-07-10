@@ -49,20 +49,56 @@
             </ul>
         </div>
 
-        <div class="panel panel-default">
+        <div class="panel panel-default" id="latest-medias">
             <div class="panel-heading">Latest Medias</div>
             <div class="panel-body">
-                {% for list_media in list_medias %}
-                    <div class="col-xs-6 col-sm-2 col-md-2">
-                        <a class="thumbnail" rel="group" href="{{ url_for_media_detail(list_media) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
-                            <img src="{{ list_media.media_url | thumbor(150, 150) }}" alt="{{ list_media.user.name }}" class="tips" data-placement="bottom" title="{{ list_media.user.name }}" data-error-size="150x150">
-                        </a>
-                    </div>
+                {% if is_admin() %}
+                    {% for list_media in list_medias.items %}
+                        <div class="col-xs-6 col-sm-2 col-md-2">
+                            <a class="thumbnail" rel="group" href="{{ url_for_media_detail(list_media) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
+                                <img src="{{ list_media.media_url | thumbor(150, 150) }}" alt="{{ list_media.user.name }}" class="tips" data-placement="bottom" title="{{ list_media.user.name }}" data-error-size="150x150">
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="text-info">
+                            No any latest medias :(
+                        </div>
+                    {% endfor %}
+
+                    {% if list_medias.has_prev or list_medias.has_next %}
+                        <div class="col-md-12">
+                            <ul class="pager">
+                                {% if list_medias.has_prev %}
+                                    <li class="previous">
+                                        <a href="{{ url_for('people.profile', screen_name=list_user.screen_name, page=list_medias.prev_num, _anchor='latest-medias') }}">
+                                            Previous
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% if list_medias.has_next %}
+                                    <li class="next">
+                                        <a href="{{ url_for('people.profile', screen_name=list_user.screen_name, page=list_medias.next_num, _anchor='latest-medias') }}">
+                                            Next
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 {% else %}
-                    <div class="text-info">
-                        No any latest medias :(
-                    </div>
-                {% endfor %}
+                    {% for list_media in list_medias %}
+                        <div class="col-xs-6 col-sm-2 col-md-2">
+                            <a class="thumbnail" rel="group" href="{{ url_for_media_detail(list_media) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
+                                <img src="{{ list_media.media_url | thumbor(150, 150) }}" alt="{{ list_media.user.name }}" class="tips" data-placement="bottom" title="{{ list_media.user.name }}" data-error-size="150x150">
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="text-info">
+                            No any latest medias :(
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

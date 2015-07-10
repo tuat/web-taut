@@ -99,6 +99,12 @@ def register_jinja2(app):
 
     @app.context_processor
     def utility_processor():
+        def is_admin():
+            return g.user and g.user.role == 'admin'
+        return dict(is_admin=is_admin)
+
+    @app.context_processor
+    def utility_processor():
         return dict(url_for_media_detail=url_for_media_detail)
 
 def register_database(app):
