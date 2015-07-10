@@ -29,11 +29,11 @@
         });
 
         // Remove broken image in index page
-        $("img[src*=twimg]").one('error', function() {
-            $(this).closest('.panel').parent().fadeOut('fast', function() {
-                $(this).remove();
-            });
-        });
+        // $("img[src*=twimg]").one('error', function() {
+        //     $(this).closest('.panel').parent().fadeOut('fast', function() {
+        //         $(this).remove();
+        //     });
+        // });
 
         // Mixpanel tracker
         if (window.mixpanel !== undefined) {
