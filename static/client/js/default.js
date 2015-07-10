@@ -32,7 +32,7 @@
         $("img[src*=twimg]").one('error', function() {
             var size = $(this).data('errorSize');
 
-            $(this).prop('src', "http://placehold.it/" + size + "/FFF/000?text=Error");
+            $(this).prop('src', "https://placehold.it/" + size + "/FFF/000?text=Error");
         });
 
         // Mixpanel tracker
