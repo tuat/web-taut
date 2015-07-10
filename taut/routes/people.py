@@ -1,7 +1,7 @@
 from flask import Blueprint, g
 from flask import render_template, request
-from ..models import ListUser
-from ..helpers.value import force_integer
+from ..models import ListUser, ListTweet, ListMedia
+from ..helpers.value import force_integer, fill_with_list_users
 
 blueprint = Blueprint('people', __name__)
 
@@ -11,3 +11,16 @@ def index():
     list_users = ListUser.query.order_by(ListUser.create_at.desc()).paginate(page, 18)
 
     return render_template('people/index.html', list_users=list_users)
+
+@blueprint.route('/profile/<screen_name>')
+def profile(screen_name):
+    list_user   = ListUser.query.filter(ListUser.screen_name == screen_name).first_or_404()
+    list_tweets = ListTweet.query.filter(ListTweet.list_user_id == list_user.id).order_by(ListTweet.create_at.desc()).offset(0).limit(8).all()
+
+    list_medias = ListMedia.query.filter(
+        ListMedia.list_user_id == list_user.id,
+        ListMedia.status == 'show'
+    ).order_by(ListMedia.create_at.desc()).offset(0).limit(24).all()
+    list_medias = fill_with_list_users(list_medias)
+
+    return render_template('people/profile.html', list_user=list_user, list_tweets=list_tweets, list_medias=list_medias)

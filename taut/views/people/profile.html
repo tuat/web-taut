@@ -9,14 +9,14 @@
 {% block ogmeta %}
 <meta property="og:title" content="{{ list_user.name }}">
 <meta property="og:type" content="website">
-<meta property="og:url" content="{{ url_for('profile.index', screen_name=list_user.screen_name, _external=True) }}" />
+<meta property="og:url" content="{{ url_for('people.profile', screen_name=list_user.screen_name, _external=True) }}" />
 <meta property="og:image" content="{{ list_user.profile_image_url | replace('_normal', '') }}" />
 <meta property="og:description" content="{{ list_user.name | remove_url | remove_newline }} - {{ list_user.screen_name }} via Tautr" />
 <meta property="og:site_name" content="Tautr" />
 {% endblock %}
 
 {% block container %}
-    <div class="profile-index" data-mixpanel-page="Profile-Index" data-mixpanel-action="loaded">
+    <div class="people-profile" data-mixpanel-page="People-Profile" data-mixpanel-action="loaded">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="media">

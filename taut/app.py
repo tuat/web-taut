@@ -109,7 +109,7 @@ def register_cache(app):
     app.cache = FileSystemCache(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'storage/random_medias'))
 
 def register_route(app):
-    from .routes import index, settings, media, bookmark, developer, oauth, dropbox, profile, people
+    from .routes import index, settings, media, bookmark, developer, oauth, dropbox, people
     from .routes import admin, api
 
     app.register_blueprint(admin.account.blueprint, url_prefix='/admin/account')
@@ -120,7 +120,6 @@ def register_route(app):
     app.register_blueprint(api.media.blueprint, url_prefix='/api/media')
     app.register_blueprint(api.main.blueprint, url_prefix='/api')
     app.register_blueprint(people.blueprint, url_prefix='/people')
-    app.register_blueprint(profile.blueprint, url_prefix='/profile')
     app.register_blueprint(dropbox.blueprint, url_prefix='/dropbox')
     app.register_blueprint(oauth.blueprint, url_prefix='/oauth')
     app.register_blueprint(developer.blueprint, url_prefix='/developer')

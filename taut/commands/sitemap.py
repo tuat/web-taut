@@ -51,7 +51,7 @@ class Sitemap(BaseCommand):
 
         for list_user in list_users:
             media_pages.append({
-                'url'      : url_for('profile.index', screen_name=list_user.screen_name, _external=True),
+                'url'      : url_for('people.profile', screen_name=list_user.screen_name, _external=True),
                 'image'    : list_user.profile_image_url,
                 'create_at': list_user.create_at.replace(tzinfo=tz.tzlocal()).isoformat(),
             })

@@ -14,7 +14,7 @@
 {% block container %}
     <div class="media-detail" data-mixpanel-page="Media-Detail" data-mixpanel-action="loaded">
         <div class="page-header">
-            <h3>{{ list_user.name }} <small><a href="{{ url_for('profile.index', screen_name=list_user.screen_name) }}">@{{ list_user.screen_name }}</small></a></h3>
+            <h3>{{ list_user.name }} <small><a href="{{ url_for('people.profile', screen_name=list_user.screen_name) }}">@{{ list_user.screen_name }}</small></a></h3>
         </div>
         <div class="row">
             <div class="col-xs-12">
