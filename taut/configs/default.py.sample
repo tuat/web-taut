@@ -30,6 +30,11 @@ CELERY_IMPORTS               = (
     'taut.tasks.schedule',
     'taut.tasks.dropbox'
 )
+CELERY_ROUTES = {
+    'taut.tasks.schedule.create_sitemap': {
+        'queue': 'schedule'
+    }
+}
 CELERYBEAT_SCHEDULE          = {
     'fetch-lists-g': {
         'task': 'taut.tasks.schedule.fetch_lists',
