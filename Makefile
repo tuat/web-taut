@@ -17,8 +17,11 @@ database:
 redis:
 	redis-server /usr/local/etc/redis.conf
 
+scheduler:
+	celery worker -E -l INFO -n schedule -A taut.tasks.schedule -B
+
 schedule:
-	celery worker -E -l INFO -n task -A taut.tasks.schedule -Q schedule -B
+	celery worker -E -l INFO -n schedule -A taut.tasks.schedule -Q schedule
 
 task:
 	celery worker -E -l INFO -n task -A taut.tasks.dropbox -Q task
