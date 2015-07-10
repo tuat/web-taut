@@ -18,7 +18,7 @@
         <div class="row">
             {% for list_user in list_users %}
                 <div class="col-xs-12 col-sm-12 col-lg-4">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default panel-people">
                         <div class="panel-body">
                             <div class="media">
                                 <div class="media-left">
@@ -27,7 +27,7 @@
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <h5 class="media-heading">{{ list_user.name }}</h5>
+                                    <h5 class="media-heading truncate">{{ list_user.name }}</h5>
                                     <a href="{{ url_for('people.profile', screen_name=list_user.screen_name) }}">
                                         @{{ list_user.screen_name }}
                                     </a>

@@ -45,3 +45,14 @@ body {
     padding: 5px;
     margin-bottom: 0px;
 }
+
+.truncate {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.panel-people {
+    min-height: 80px;
+}
