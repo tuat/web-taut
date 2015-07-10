@@ -29,11 +29,11 @@
         });
 
         // Remove broken image in index page
-        // $("img[src*=twimg]").one('error', function() {
-        //     $(this).closest('.panel').parent().fadeOut('fast', function() {
-        //         $(this).remove();
-        //     });
-        // });
+        $("img[src*=twimg]").one('error', function() {
+            var size = $(this).data('errorSize');
+
+            $(this).prop('src', "http://placehold.it/" + size + "/FFF/000?text=Error");
+        });
 
         // Mixpanel tracker
         if (window.mixpanel !== undefined) {

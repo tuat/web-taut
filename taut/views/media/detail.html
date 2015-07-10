@@ -26,7 +26,7 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <div class="thumbnail">
-                    <img src="{{ list_media.media_url | thumbor(500, 500) }}" alt="{{ list_user.name }}">
+                    <img src="{{ list_media.media_url | thumbor(500, 500) }}" alt="{{ list_user.name }}" data-error-size="500x500">
                 </div>
                 {% include "share/addthis.html" %}
             </div>
@@ -80,7 +80,7 @@
                     {% for user_media in user_medias %}
                         <div class="col-xs-6 col-sm-3 col-md-3">
                             <a class="thumbnail" rel="group" href="{{ url_for_media_detail(user_media) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
-                                <img src="{{ user_media.media_url | thumbor(100, 146) }}" alt="{{ user_media.user.name }}" class="tips" data-placement="bottom" title="{{ user_media.user.name }}">
+                                <img src="{{ user_media.media_url | thumbor(100, 146) }}" alt="{{ user_media.user.name }}" class="tips" data-placement="bottom" title="{{ user_media.user.name }}" data-error-size="100x146">
                             </a>
                         </div>
                     {% endfor %}
@@ -96,7 +96,7 @@
                 {% for random_media in random_medias %}
                     <div class="col-xs-6 col-sm-2 col-md-2">
                         <a class="thumbnail" rel="group" href="{{ url_for_media_detail(random_media) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
-                            <img src="{{ random_media.media_url | thumbor(140, 140) }}" alt="{{ random_media.user.name }}" class="tips" data-placement="bottom" title="{{ random_media.user.name }}">
+                            <img src="{{ random_media.media_url | thumbor(140, 140) }}" alt="{{ random_media.user.name }}" class="tips" data-placement="bottom" title="{{ random_media.user.name }}" data-error-size="140x140">
                         </a>
                     </div>
                 {% endfor %}

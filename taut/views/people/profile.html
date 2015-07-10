@@ -55,7 +55,7 @@
                 {% for list_media in list_medias %}
                     <div class="col-xs-6 col-sm-2 col-md-2">
                         <a class="thumbnail" rel="group" href="{{ url_for_media_detail(list_media) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
-                            <img src="{{ list_media.media_url | thumbor(150, 150) }}" alt="{{ list_media.user.name }}" class="tips" data-placement="bottom" title="{{ list_media.user.name }}">
+                            <img src="{{ list_media.media_url | thumbor(150, 150) }}" alt="{{ list_media.user.name }}" class="tips" data-placement="bottom" title="{{ list_media.user.name }}" data-error-size="150x150">
                         </a>
                     </div>
                 {% else %}
