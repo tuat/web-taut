@@ -1,7 +1,11 @@
 {% macro navigation(current='home') %}
     <ul class="nav navbar-nav">
-        <li{% if current == 'home' %} class="active"{% endif %}><a href="{{ url_for('index.index') }}">Home</a></li>
-        <li{% if current == 'bookmark' %} class="active"{% endif %}><a href="{{ url_for('bookmark.index') }}">Bookmark</a></li>
+        <li{% if current == 'home' %} class="active"{% endif %}>
+            <a href="{{ url_for('index.index') }}"><i class="fa fa-home"></i> Home</a>
+        </li>
+        <li{% if current == 'bookmark' %} class="active"{% endif %}>
+            <a href="{{ url_for('bookmark.index') }}"><i class="fa fa-bookmark"></i> Bookmark</a>
+        </li>
     </ul>
 {% endmacro %}
 
