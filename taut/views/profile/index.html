@@ -1,5 +1,9 @@
 {% extends 'layout/frontend.html' %}
 
+{% block navbar %}
+    {{ navigation('people') }}
+{% endblock %}
+
 {% block subtitle %}{{ list_user.name | remove_url | remove_newline }} - {{ list_user.screen_name }}{% endblock %}
 
 {% block ogmeta %}
