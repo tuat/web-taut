@@ -6,6 +6,9 @@
         <li{% if current == 'bookmark' %} class="active"{% endif %}>
             <a href="{{ url_for('bookmark.index') }}"><i class="fa fa-bookmark"></i> Bookmark</a>
         </li>
+        <li{% if current == 'people' %} class="active"{% endif %}>
+            <a href="{{ url_for('people.index') }}"><i class="fa fa-user"></i> People</a>
+        </li>
     </ul>
 {% endmacro %}
 
