@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask import request, url_for, jsonify
-from ...models import ListMedia, ListUser, ListTweet, Comment
+from ...models import ListMedia, ListUser, ListTweet, Comment, db
 from ...helpers.value import force_integer, fill_with_list_users, fill_with_accounts
 from ...helpers.api import require_token, json_error
 
@@ -9,7 +9,13 @@ blueprint = Blueprint('api_media', __name__)
 @blueprint.route('/detail/<list_media_id>', methods=['GET', 'POST'])
 @require_token
 def index(list_media_id):
-    list_media = ListMedia.query.get(list_media_id)
+    list_media = ListMedia.query.filter(
+        db.or_(
+            ListMedia.id == list_media_id,
+            ListMedia.hash_id == list_media_id
+        )
+    ).first_or_404()
+
     list_user  = ListUser.query.get(list_media.list_user_id)
     list_tweet = ListTweet.query.filter_by(id=list_media.list_tweet_id).first()
 
