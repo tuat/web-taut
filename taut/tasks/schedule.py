@@ -2,7 +2,7 @@
 
 from celery.utils.log import get_task_logger
 from .base import create_celery_app
-from ..commands import FetchLists, Sitemap, CheckNotFound, UpdateProfile
+from ..commands import FetchLists, Sitemap, CheckNotFound, UpdateProfile, CheckUserMedia
 
 celery = create_celery_app()
 logger = get_task_logger(__name__)
@@ -30,3 +30,9 @@ def update_profile():
     logger.info("called schedule.update_profile")
 
     UpdateProfile(logger).make()
+
+@celery.task
+def check_user_media():
+    logger.info("called schedule.check_user_media")
+
+    CheckUserMedia().make()
