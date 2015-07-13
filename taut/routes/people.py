@@ -2,6 +2,7 @@ from flask import Blueprint, g
 from flask import render_template, request
 from ..models import ListUser, ListTweet, ListMedia, db
 from ..helpers.value import force_integer, fill_with_list_users
+from ..helpers.account import is_role
 
 blueprint = Blueprint('people', __name__)
 
@@ -17,7 +18,7 @@ def profile(screen_name):
     list_user   = ListUser.query.filter(ListUser.screen_name == screen_name).first_or_404()
     list_tweets = ListTweet.query.filter(ListTweet.list_user_id == list_user.id).order_by(ListTweet.create_at.desc()).offset(0).limit(8).all()
 
-    if g.user and g.user.role == 'admin':
+    if is_role('admin'):
         page        = force_integer(request.args.get('page', 1), 0)
         list_medias = ListMedia.query.filter(
             ListMedia.list_user_id == list_user.id,

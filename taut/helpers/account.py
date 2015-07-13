@@ -54,3 +54,6 @@ def require_role(role):
 
 require_admin = require_role('admin')
 require_user  = require_role('user')
+
+def is_role(role):
+    return g.user and g.user.role == role
