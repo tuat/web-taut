@@ -112,7 +112,7 @@ def register_database(app):
     db.app = app
 
 def register_cache(app):
-    app.cache = FileSystemCache(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'storage/random_medias'))
+    app.cache = FileSystemCache(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'storage/cache'))
 
 def register_route(app):
     from .routes import index, settings, media, bookmark, developer, oauth, dropbox, people

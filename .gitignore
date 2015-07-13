@@ -4,7 +4,7 @@
 venv
 storage/*.sqlite
 storage/celery-beat
-storage/random_medias/*
+storage/cache/*
 storage/dropbox/*
 taut/configs/default.py
 taut/configs/thumbor.py

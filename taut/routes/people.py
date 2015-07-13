@@ -1,5 +1,5 @@
 from flask import Blueprint, g
-from flask import render_template, request
+from flask import render_template, request, current_app
 from ..models import ListUser, ListTweet, ListMedia, db
 from ..helpers.value import force_integer, fill_with_list_users
 from ..helpers.account import is_role
@@ -12,7 +12,12 @@ def index():
         page       = force_integer(request.args.get('page', 1), 0)
         list_users = ListUser.query.order_by(ListUser.create_at.desc()).paginate(page, 15)
     else:
-        list_users = ListUser.query.order_by(db.func.random()).offset(0).limit(18).all()
+        list_users = current_app.cache.get('people_index_list_users')
+
+        if list_users is None:
+            list_users = ListUser.query.order_by(db.func.random()).offset(0).limit(18).all()
+
+            current_app.cache.set('people_index_list_users', list_users, timeout=5*60)
 
     return render_template('people/index.html', list_users=list_users)
 
