@@ -16,27 +16,61 @@
 {% block container %}
     <div class="people-index" data-mixpanel-page="People-Index" data-mixpanel-action="loaded">
         <div class="row">
-            {% for list_user in list_users %}
-                <div class="col-xs-12 col-sm-12 col-lg-4">
-                    <div class="panel panel-default panel-people">
-                        <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="#">
-                                        <img class="media-object img-rounded" src="{{ list_user.profile_image_url | replace('http://', 'https://') }}" data-error-size="48x48">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="media-heading truncate">{{ list_user.name }}</h5>
-                                    <a href="{{ url_for('people.profile', screen_name=list_user.screen_name) }}">
-                                        @{{ list_user.screen_name }}
-                                    </a>
+            {% if is_admin() %}
+                {% for list_user in list_users.items %}
+                    <div class="col-xs-12 col-sm-12 col-lg-4">
+                        <div class="panel panel-default panel-people">
+                            <div class="panel-body">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img class="media-object img-rounded" src="{{ list_user.profile_image_url | replace('http://', 'https://') }}" data-error-size="48x48">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading truncate">{{ list_user.name }}</h5>
+                                        <a href="{{ url_for('people.profile', screen_name=list_user.screen_name) }}">
+                                            @{{ list_user.screen_name }}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                {% endfor %}
+                <div class="col-md-12">
+                    <ul class="pager">
+                        {% if list_users.has_prev %}
+                            <li class="previous"><a href="{{ url_for('people.index', page=list_users.prev_num) }}">Previous</a></li>
+                        {% endif %}
+                        {% if list_users.has_next %}
+                            <li class="next"><a href="{{ url_for('people.index', page=list_users.next_num) }}">Next</a></li>
+                        {% endif %}
+                    </ul>
                 </div>
-            {% endfor %}
+            {% else %}
+                {% for list_user in list_users %}
+                    <div class="col-xs-12 col-sm-12 col-lg-4">
+                        <div class="panel panel-default panel-people">
+                            <div class="panel-body">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img class="media-object img-rounded" src="{{ list_user.profile_image_url | replace('http://', 'https://') }}" data-error-size="48x48">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading truncate">{{ list_user.name }}</h5>
+                                        <a href="{{ url_for('people.profile', screen_name=list_user.screen_name) }}">
+                                            @{{ list_user.screen_name }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

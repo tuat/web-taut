@@ -8,8 +8,11 @@ blueprint = Blueprint('people', __name__)
 
 @blueprint.route('/index')
 def index():
-    page       = force_integer(request.args.get('page', 1), 0)
-    list_users = ListUser.query.order_by(db.func.random()).offset(0).limit(18).all()
+    if is_role('admin'):
+        page       = force_integer(request.args.get('page', 1), 0)
+        list_users = ListUser.query.order_by(ListUser.create_at.desc()).paginate(page, 15)
+    else:
+        list_users = ListUser.query.order_by(db.func.random()).offset(0).limit(18).all()
 
     return render_template('people/index.html', list_users=list_users)
 
