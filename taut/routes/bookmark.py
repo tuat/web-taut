@@ -15,7 +15,7 @@ def index():
     # Get bookmarks
     if screen_name:
         list_user      = ListUser.query.filter(ListUser.screen_name == screen_name).first_or_404()
-        list_media_ids = ListMedia.query.with_entities(ListMedia.id).filter(ListMedia.list_user_id == list_user.id).subquery()
+        list_media_ids = ListMedia.query.with_entities(ListMedia.id).filter(ListMedia.list_user_id == list_user.id, ListMedia.status == 'show').subquery()
         bookmarks      = Bookmark.query.filter(Bookmark.account_id == g.user.id, Bookmark.list_media_id.in_(list_media_ids)).paginate(page)
     else:
         bookmarks      = Bookmark.query.filter_by(account_id=g.user.id).order_by(Bookmark.create_at.desc()).paginate(page)
@@ -30,7 +30,7 @@ def index():
     # Find bookmkared user from current bookmkared list
     bookmarked_list  = Bookmark.query.filter_by(account_id=g.user.id).order_by(Bookmark.create_at.desc()).all()
     bookmarked_ids   = [bookmarked.list_media_id for bookmarked in bookmarked_list]
-    distanct_medias  = ListMedia.query.distinct(ListMedia.list_user_id).filter(ListMedia.id.in_(bookmarked_ids)).all()
+    distanct_medias  = ListMedia.query.distinct(ListMedia.list_user_id, ListMedia.status == 'show').filter(ListMedia.id.in_(bookmarked_ids)).all()
     distanct_users   = [media.list_user_id for media in distanct_medias]
     bookmarked_users = ListUser.query.filter(ListUser.id.in_(distanct_users)).all()
 
