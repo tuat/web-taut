@@ -1,6 +1,6 @@
 from flask import Blueprint, g
 from flask import render_template, redirect, url_for, flash, request
-from ..models import ListMedia, Bookmark, ListUser
+from ..models import ListMedia, Bookmark, ListUser, Account
 from ..helpers.account import require_user
 from ..helpers.value import force_integer, fill_with_list_users
 
@@ -16,7 +16,7 @@ def index():
     if screen_name:
         list_user      = ListUser.query.filter(ListUser.screen_name == screen_name).first_or_404()
         list_media_ids = ListMedia.query.with_entities(ListMedia.id).filter(ListMedia.list_user_id == list_user.id).subquery()
-        bookmarks      = Bookmark.query.filter(Bookmark.list_media_id.in_(list_media_ids)).paginate(page)
+        bookmarks      = Bookmark.query.filter(Bookmark.account_id == g.user.id, Bookmark.list_media_id.in_(list_media_ids)).paginate(page)
     else:
         bookmarks      = Bookmark.query.filter_by(account_id=g.user.id).order_by(Bookmark.create_at.desc()).paginate(page)
 
