@@ -4,32 +4,47 @@
     {{ navigation('bookmark') }}
 {% endblock %}
 
-
 {% block container %}
     <div class="bookmark-index">
         <div class="row">
-            {% for list_media in list_medias %}
-                <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-body thumbnail thumbnail-no-border">
-                            <a href="{{ url_for_media_detail(list_media) }}">
-                                <img src="{{ list_media.media_url | thumbor(300, 300) }}" alt="{{ list_media.user.name }}">
-                            </a>
+            <div class="col-xs-12 col-sm-8 col-md-9">
+                {% for list_media in list_medias %}
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body thumbnail thumbnail-no-border">
+                                <a href="{{ url_for_media_detail(list_media) }}">
+                                    <img src="{{ list_media.media_url | thumbor(300, 300) }}" alt="{{ list_media.user.name }}">
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="col-md-12">
-            <ul class="pager">
-                {% if bookmarks.has_prev %}
-                    <li class="previous"><a href="{{ url_for('bookmark.index', page=bookmarks.prev_num) }}">Previous</a></li>
-                {% endif %}
+                {% endfor %}
+                <div class="col-md-12">
+                    <ul class="pager">
+                        {% if bookmarks.has_prev %}
+                            <li class="previous"><a href="{{ url_for('bookmark.index', page=bookmarks.prev_num, screen_name=screen_name) }}">Previous</a></li>
+                        {% endif %}
 
-                {% if bookmarks.has_next %}
-                    <li class="next"><a href="{{ url_for('bookmark.index', page=bookmarks.next_num) }}">Next</a></li>
-                {% endif %}
-            </ul>
+                        {% if bookmarks.has_next %}
+                            <li class="next"><a href="{{ url_for('bookmark.index', page=bookmarks.next_num, screen_name=screen_name) }}">Next</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Bookmarked Users
+                    </div>
+                    <div class="panel-body">
+                        {% for bookmarked_user in bookmarked_users %}
+                            <a href="{{ url_for('bookmark.index', page=page, screen_name=bookmarked_user.screen_name) }}" class="label label-default {% if screen_name == bookmarked_user.screen_name %}label-info{% endif %}">
+                                {{ bookmarked_user.name }}
+                            </a>&nbsp;
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
