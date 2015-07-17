@@ -38,7 +38,7 @@
                     </div>
                     <div class="panel-body">
                         {% for bookmarked_user in bookmarked_users %}
-                            <a href="{{ url_for('bookmark.index', page=page, screen_name=bookmarked_user.screen_name) }}" class="label label-default {% if screen_name == bookmarked_user.screen_name %}label-info{% endif %}">
+                            <a href="{{ url_for('bookmark.index', screen_name=bookmarked_user.screen_name) }}" class="label label-default {% if screen_name == bookmarked_user.screen_name %}label-info{% endif %}">
                                 {{ bookmarked_user.name }}
                             </a>&nbsp;
                         {% endfor %}
