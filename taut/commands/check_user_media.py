@@ -26,7 +26,7 @@ class CheckUserMedia(BaseCommand):
             self.logger.info("--> {0} - [Exception]".format(url))
             self.not_found_urls.append(url)
 
-        sleep(0.005)
+        sleep(0.015)
 
     def make(self):
         # Group the media urls by user id
