@@ -26,7 +26,13 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <div class="thumbnail">
-                    <img src="{{ list_media.media_url | thumbor(500, 500) }}" alt="{{ list_user.name }}" data-error-size="500x500">
+                    {% if is_admin() %}
+                        <a href="{{ list_media.media_url }}" target="_blank">
+                            <img src="{{ list_media.media_url | thumbor(500, 500) }}" alt="{{ list_user.name }}" data-error-size="500x500">
+                        </a>
+                    {% else %}
+                        <img src="{{ list_media.media_url | thumbor(500, 500) }}" alt="{{ list_user.name }}" data-error-size="500x500">
+                    {% endif %}
                 </div>
                 {% include "share/addthis.html" %}
             </div>
