@@ -83,6 +83,8 @@ THUMBOR_SECURITY_KEY = '______YOUR_SECRET_KEY______'
 GOOGLE_ANALYTICS    = ''
 GOOGLE_ANALYTICS_DC = False
 
+ZOPIM_TOKEN = ''
+
 ADDTHIS = {
     'enable'   : True,
     'facebook' : True,
