@@ -67,5 +67,4 @@ class CheckUserMedia(BaseCommand):
             media.status = "lost"
 
             db.session.add(media)
-
-        db.session.commit()
+            db.session.commit()
