@@ -33,6 +33,13 @@ def gensitemap():
     Sitemap().make(0, 10000)
 
 @manager.command
+def genrobots():
+    """Generate robots.txt"""
+    from taut.commands.robots import Robots
+
+    Robots().make()
+
+@manager.command
 def testcommands(name=None, list_id=None, slug=None):
     """Test commands"""
     if name == 'fetchlists':
