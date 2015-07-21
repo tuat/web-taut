@@ -13,8 +13,8 @@ class Robots(BaseCommand):
 
     def make(self):
         sitemaps = (
-            "{0}sitemap-media.xml".format(url_for('index.index', _external=True)),
-            "{0}sitemap-profile.xml".format(url_for('index.index', _external=True))
+            "{0}static/sitemap-media.xml".format(url_for('index.index', _external=True)),
+            "{0}static/sitemap-profile.xml".format(url_for('index.index', _external=True))
         )
 
         robots    = render_template('robots.txt', sitemaps=sitemaps)
