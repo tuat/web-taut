@@ -18,7 +18,7 @@ def index():
         list_media_ids = ListMedia.query.with_entities(ListMedia.id).filter(ListMedia.list_user_id == list_user.id, ListMedia.status == 'show').subquery()
         bookmarks      = Bookmark.query.filter(Bookmark.account_id == g.user.id, Bookmark.list_media_id.in_(list_media_ids)).paginate(page)
     else:
-        bookmarks      = Bookmark.query.filter_by(account_id=g.user.id).order_by(Bookmark.create_at.desc()).paginate(page)
+        bookmarks      = Bookmark.query.filter(Bookmark.account_id == g.user.id).order_by(Bookmark.create_at.desc()).paginate(page)
 
     # Create list media ids by bookmarked records
     list_media_ids = [item.list_media_id for item in bookmarks.items]
