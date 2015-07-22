@@ -13,7 +13,7 @@ from flask.ext.assets import Environment, Bundle
 from flask.ext.oauthlib.client import OAuth
 from .models import db
 from .helpers.account import load_current_user
-from .helpers.value import thumb, human_time, url_for_media_detail
+from .helpers.value import thumb, human_time, url_for_media_detail, url_for_bookmark_create, url_for_bookmark_remove
 
 def create_app(config=None, enable_route=True):
     app = Flask(__name__, template_folder='views')
@@ -105,7 +105,11 @@ def register_jinja2(app):
 
     @app.context_processor
     def utility_processor():
-        return dict(url_for_media_detail=url_for_media_detail)
+        return dict(
+            url_for_media_detail=url_for_media_detail,
+            url_for_bookmark_create=url_for_bookmark_create,
+            url_for_bookmark_remove=url_for_bookmark_remove
+        )
 
 def register_database(app):
     db.init_app(app)

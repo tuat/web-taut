@@ -2,20 +2,15 @@ from flask import Blueprint, g
 from flask import render_template, redirect, url_for, flash, current_app
 from ..models import ListMedia, ListTweet, ListUser, Comment, db
 from ..forms import CommentForm
-from ..helpers.value import fill_with_list_users, fill_with_accounts
+from ..helpers.value import fill_with_list_users, fill_with_accounts, get_media_hash_id_where_sql
 from ..helpers.account import require_user
 
 blueprint = Blueprint('media', __name__)
 
 @blueprint.route('/detail/<list_media_id>', methods=['GET', 'POST'])
 def detail(list_media_id):
-    form       = CommentForm()
-    is_hash_id = current_app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL')
-
-    if is_hash_id:
-        where_sql = ListMedia.hash_id == list_media_id
-    else:
-        where_sql = ListMedia.id == list_media_id
+    form      = CommentForm()
+    where_sql = get_media_hash_id_where_sql(list_media_id)
 
     if form.validate_on_submit():
         @require_user

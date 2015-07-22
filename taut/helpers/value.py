@@ -113,3 +113,27 @@ def url_for_media_detail(media, **kwargs):
         return url_for('media.detail', list_media_id=media.hash_id, **kwargs)
     else:
         return url_for('media.detail', list_media_id=media.id, **kwargs)
+
+def url_for_bookmark_create(media, **kwargs):
+    if current_app.config['USE_MEDIA_DETAIL_HASH_ID_IN_URL']:
+        return url_for('bookmark.create', list_media_id=media.hash_id, **kwargs)
+    else:
+        return url_for('bookmark.create', list_media_id=media.id, **kwargs)
+
+def url_for_bookmark_remove(media, **kwargs):
+    if current_app.config['USE_MEDIA_DETAIL_HASH_ID_IN_URL']:
+        return url_for('bookmark.remove', list_media_id=media.hash_id, **kwargs)
+    else:
+        return url_for('bookmark.remove', list_media_id=media.id, **kwargs)
+
+def get_media_hash_id_where_sql(list_media_id):
+    from ..models import ListMedia
+
+    is_hash_id = current_app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL')
+
+    if is_hash_id:
+        where_sql = ListMedia.hash_id == list_media_id
+    else:
+        where_sql = ListMedia.id == list_media_id
+
+    return where_sql

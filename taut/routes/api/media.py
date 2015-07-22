@@ -1,7 +1,7 @@
 from flask import Blueprint, current_app
 from flask import request, url_for, jsonify
 from ...models import ListMedia, ListUser, ListTweet, Comment, db
-from ...helpers.value import force_integer, fill_with_list_users, fill_with_accounts
+from ...helpers.value import force_integer, fill_with_list_users, fill_with_accounts, get_media_hash_id_where_sql
 from ...helpers.api import require_token, json_error
 
 blueprint = Blueprint('api_media', __name__)
@@ -9,12 +9,7 @@ blueprint = Blueprint('api_media', __name__)
 @blueprint.route('/detail/<list_media_id>', methods=['GET', 'POST'])
 @require_token
 def index(list_media_id):
-    is_hash_id = current_app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL')
-
-    if is_hash_id:
-        where_sql = ListMedia.hash_id == list_media_id
-    else:
-        where_sql = ListMedia.id == list_media_id
+    where_sql  = get_media_hash_id_where_sql(list_media_id)
 
     list_media = ListMedia.query.filter(where_sql).first_or_404()
 

@@ -2,7 +2,7 @@ from flask import Blueprint, g
 from flask import render_template, redirect, url_for, flash, request
 from ..models import ListMedia, Bookmark, ListUser, Account
 from ..helpers.account import require_user
-from ..helpers.value import force_integer, fill_with_list_users
+from ..helpers.value import force_integer, fill_with_list_users, url_for_media_detail, get_media_hash_id_where_sql
 
 blueprint = Blueprint('bookmark', __name__)
 
@@ -39,26 +39,28 @@ def index():
 @blueprint.route('/create/<list_media_id>')
 @require_user
 def create(list_media_id):
-    list_media = ListMedia.query.get_or_404(list_media_id)
-    bookmark   = Bookmark.query.filter_by(list_media_id=list_media_id, account_id=g.user.id).first()
+    where_sql  = get_media_hash_id_where_sql(list_media_id)
+    list_media = ListMedia.query.filter(where_sql).first_or_404()
+    bookmark   = Bookmark.query.filter_by(list_media_id=list_media.id, account_id=g.user.id).first()
 
     if bookmark:
         flash('The media already bookmarked', 'error')
     else:
         Bookmark(
-            list_media_id = list_media_id,
+            list_media_id = list_media.id,
             account_id    = g.user.id
         ).save()
 
         flash('The media was bookmarked', 'success')
 
-    return redirect(url_for('media.detail', list_media_id=list_media_id))
+    return redirect(url_for_media_detail(list_media))
 
 @blueprint.route('/remove/<list_media_id>')
 @require_user
 def remove(list_media_id):
-    list_media = ListMedia.query.get_or_404(list_media_id)
-    bookmark   = Bookmark.query.filter_by(list_media_id=list_media_id, account_id=g.user.id).first()
+    where_sql  = get_media_hash_id_where_sql(list_media_id)
+    list_media = ListMedia.query.filter(where_sql).first_or_404()
+    bookmark   = Bookmark.query.filter_by(list_media_id=list_media.id, account_id=g.user.id).first()
 
     if not bookmark:
         flash('You are not created bookmark on this media', 'error')
@@ -67,4 +69,4 @@ def remove(list_media_id):
 
         flash('The media was removed from bookmark', 'success')
 
-    return redirect(url_for('media.detail', list_media_id=list_media_id))
+    return redirect(url_for_media_detail(list_media))
