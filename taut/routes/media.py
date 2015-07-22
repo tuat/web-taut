@@ -9,17 +9,18 @@ blueprint = Blueprint('media', __name__)
 
 @blueprint.route('/detail/<list_media_id>', methods=['GET', 'POST'])
 def detail(list_media_id):
-    form = CommentForm()
+    form       = CommentForm()
+    is_hash_id = current_app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL')
+
+    if is_hash_id:
+        where_sql = ListMedia.hash_id == list_media_id
+    else:
+        where_sql = ListMedia.id == list_media_id
 
     if form.validate_on_submit():
         @require_user
         def save_form():
-            list_media = ListMedia.query.filter(
-                db.or_(
-                    ListMedia.id == list_media_id,
-                    ListMedia.hash_id == list_media_id
-                )
-            ).first_or_404()
+            list_media = ListMedia.query.filter(where_sql).first_or_404()
 
             comment = form.save(list_media.id, g.user)
             flash('Your comment created', 'success')
@@ -28,12 +29,8 @@ def detail(list_media_id):
 
         return save_form()
     else:
-        list_media = ListMedia.query.filter(
-            db.or_(
-                ListMedia.id == list_media_id,
-                ListMedia.hash_id == list_media_id
-            )
-        ).first_or_404()
+        print ListMedia.query.filter(where_sql)
+        list_media = ListMedia.query.filter(where_sql).first_or_404()
 
         list_user  = ListUser.query.get_or_404(list_media.list_user_id)
         list_tweet = ListTweet.query.filter_by(id=list_media.list_tweet_id).first()

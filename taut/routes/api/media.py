@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, current_app
 from flask import request, url_for, jsonify
 from ...models import ListMedia, ListUser, ListTweet, Comment, db
 from ...helpers.value import force_integer, fill_with_list_users, fill_with_accounts
@@ -9,12 +9,14 @@ blueprint = Blueprint('api_media', __name__)
 @blueprint.route('/detail/<list_media_id>', methods=['GET', 'POST'])
 @require_token
 def index(list_media_id):
-    list_media = ListMedia.query.filter(
-        db.or_(
-            ListMedia.id == list_media_id,
-            ListMedia.hash_id == list_media_id
-        )
-    ).first_or_404()
+    is_hash_id = current_app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL')
+
+    if is_hash_id:
+        where_sql = ListMedia.hash_id == list_media_id
+    else:
+        where_sql = ListMedia.id == list_media_id
+
+    list_media = ListMedia.query.filter(where_sql).first_or_404()
 
     list_user  = ListUser.query.get(list_media.list_user_id)
     list_tweet = ListTweet.query.filter_by(id=list_media.list_tweet_id).first()
