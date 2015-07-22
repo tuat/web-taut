@@ -3,6 +3,8 @@
 from concurrent import futures
 import requests
 from time import sleep
+from urlparse import urlparse
+from flask import current_app
 from .base import BaseCommand
 from ..models import db, ListMedia
 
@@ -29,11 +31,21 @@ class CheckUserMedia(BaseCommand):
         sleep(0.015)
 
     def make(self):
+        # Find database uri scheme
+        sqlalchemy_database_uri    = current_app.config.get('SQLALCHEMY_DATABASE_URI')
+        sqlalchemy_database_scheme = urlparse(sqlalchemy_database_uri).scheme.split('+')[0]
+
+        # Pick supported method for target database
+        if sqlalchemy_database_scheme == "postgresql":
+            group_concat_method = db.func.string_agg
+        else:
+            group_concat_method = db.func.group_concat
+
         # Group the media urls by user id
         media_table = ListMedia.query.order_by(ListMedia.create_at.desc()).subquery()
         list_medias = db.session.query(
             media_table.c.list_user_id,
-            db.func.group_concat(media_table.c.media_url).label('media_urls'),
+            group_concat_method(media_table.c.media_url, ',').label('media_urls'),
         ).group_by(media_table.c.list_user_id)
 
         # Check 100 media in each user is or not found
