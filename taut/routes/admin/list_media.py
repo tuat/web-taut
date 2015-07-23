@@ -18,26 +18,28 @@ def index(status):
 @require_admin
 def search():
     if request.method == 'POST':
-        media_id = request.form['media_id']
+        keyword = request.form['keyword']
+        type    = request.form['type']
 
-        return redirect(url_for('admin_list_media.search', media_id=media_id))
+        return redirect(url_for('admin_list_media.search', keyword=keyword, type=type))
     else:
-        media_id = request.args.get('media_id')
+        keyword = request.args.get('keyword')
+        type    = request.args.get('type')
 
-        if media_id:
-            media = ListMedia.query.filter(
-                (ListMedia.id == media_id) |
-                (ListMedia.hash_id == media_id) |
-                (ListMedia.media_url.like("%{0}%".format(media_id)))
-            ).first()
+        if keyword and type:
+            media = ListMedia.query
+            media = media.filter(ListMedia.id == force_integer(keyword, 0)) if type == "media-id" else media
+            media = media.filter(ListMedia.hash_id == keyword) if type == "hash-id" else media
+            media = media.filter(ListMedia.media_url.like("%{0}%".format(keyword))) if type == "photo-file-name" else media
+            media = media.first()
 
             if media:
                 media = fill_with_list_users([media])[0]
         else:
-            media_id = ""
-            media    = ""
+            keyword = ""
+            media   = ""
 
-        return render_template('admin/list_media/search.html', media_id=media_id, media=media)
+        return render_template('admin/list_media/search.html', keyword=keyword, type=type, media=media)
 
 @blueprint.route('/ajax/index')
 @require_admin

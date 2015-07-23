@@ -12,20 +12,27 @@
     <div class="content">
         <div class="box">
             <div class="box-body">
-                <form method="post" action="{{ url_for('admin_list_media.search') }}">
-                    <div class="input-group input-group-sm">
-                        <input type="text" name="media_id" class="form-control" placeholder="Media Id, Hash Id, Photo file name" value="{{ media_id }}">
-                        <span class="input-group-btn">
-                            <input type="submit" class="btn btn-info btn-flat" value="Search">
-                            <a class="btn btn-danger btn-flat" href="{{ url_for('admin_list_media.search') }}">Clear</a>
-                        </span>
+                <form method="post" action="{{ url_for('admin_list_media.search') }}" class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="keyword">Keyword</label>
+                        <input type="text" name="keyword" class="form-control" placeholder="Media Id, Hash Id, Photo file name" value="{{ keyword }}">
                     </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="keyword">Type</label>
+                        <select name="type" class="form-control">
+                            <option value="media-id"{% if type == "media-id" %} selected="selected"{% endif %}>Media Id</option>
+                            <option value="hash-id"{% if type == "hash-id" %} selected="selected"{% endif %}>Hash Id</option>
+                            <option value="photo-file-name"{% if type == "photo-file-name" %} selected="selected"{% endif %}>Photo file name</option>
+                        </select>
+                    </div>
+                    <input type="submit" class="btn btn-info btn-flat" value="Search">
+                    <a class="btn btn-danger btn-flat" href="{{ url_for('admin_list_media.search') }}">Clear</a>
                 </form>
             </div>
         </div>
 
         {% if media %}
-            <div class="row medias"
+            <div class="medias"
                 data-status-control-href="{{ url_for('admin_list_media.ajax_status_control') }}">
                 <div class="box">
                     <div class="box-header text-center">
@@ -35,12 +42,21 @@
                         <a href="{{ media.media_url }}" target="_blank"><img src="{{ media.media_url | thumbor(300, 300) }}"></a>
                     </div>
                     <div class="box-footer text-center">
-                        <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="show" class="btn btn-primary btn-xs status-control"{% if media.status == 'show' %} disabled="disabled"{% endif %}>Show</a>
-                        <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="hide" class="btn btn-success btn-xs status-control"{% if media.status == 'hide' %} disabled="disabled"{% endif %}>Hide</a>
-                        <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="trash" class="btn btn-danger btn-xs status-control"{% if media.status == 'trash' %} disabled="disabled"{% endif %}>Trash</a>
-                        <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="lost" class="btn btn-default btn-xs status-control"{% if media.status == 'lost' %} disabled="disabled"{% endif %}>Lost</a>
+                        {% if config.USE_MEDIA_DETAIL_HASH_ID_IN_URL %}
+                            <a href="javascript:void(0)" data-id="{{ media.hash_id }}" data-status="show" class="btn btn-primary btn-xs status-control"{% if media.status == 'show' %} disabled="disabled"{% endif %}>Show</a>
+                            <a href="javascript:void(0)" data-id="{{ media.hash_id }}" data-status="hide" class="btn btn-success btn-xs status-control"{% if media.status == 'hide' %} disabled="disabled"{% endif %}>Hide</a>
+                            <a href="javascript:void(0)" data-id="{{ media.hash_id }}" data-status="trash" class="btn btn-danger btn-xs status-control"{% if media.status == 'trash' %} disabled="disabled"{% endif %}>Trash</a>
+                            <a href="javascript:void(0)" data-id="{{ media.hash_id }}" data-status="lost" class="btn btn-default btn-xs status-control"{% if media.status == 'lost' %} disabled="disabled"{% endif %}>Lost</a>
 
-                        <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="page" class="btn btn-info btn-xs page-control">Page</a>
+                            <a href="javascript:void(0)" data-id="{{ media.hash_id }}" data-status="page" class="btn btn-info btn-xs page-control">Page</a>
+                        {% else %}
+                            <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="show" class="btn btn-primary btn-xs status-control"{% if media.status == 'show' %} disabled="disabled"{% endif %}>Show</a>
+                            <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="hide" class="btn btn-success btn-xs status-control"{% if media.status == 'hide' %} disabled="disabled"{% endif %}>Hide</a>
+                            <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="trash" class="btn btn-danger btn-xs status-control"{% if media.status == 'trash' %} disabled="disabled"{% endif %}>Trash</a>
+                            <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="lost" class="btn btn-default btn-xs status-control"{% if media.status == 'lost' %} disabled="disabled"{% endif %}>Lost</a>
+
+                            <a href="javascript:void(0)" data-id="{{ media.id }}" data-status="page" class="btn btn-info btn-xs page-control">Page</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
