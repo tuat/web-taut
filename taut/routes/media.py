@@ -24,7 +24,6 @@ def detail(list_media_id):
 
         return save_form()
     else:
-        print ListMedia.query.filter(where_sql)
         list_media = ListMedia.query.filter(where_sql).first_or_404()
 
         list_user  = ListUser.query.get_or_404(list_media.list_user_id)
