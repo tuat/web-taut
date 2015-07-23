@@ -6,7 +6,6 @@ import hmac
 import rollbar
 import rollbar.contrib.flask
 from hashlib import sha1
-from multiprocessing.util import register_after_fork
 from werkzeug.contrib.cache import FileSystemCache
 from flask import Flask, g, got_request_exception, render_template
 from flask.ext.babel import Babel, format_datetime
@@ -121,9 +120,6 @@ def register_jinja2(app):
 def register_database(app):
     db.init_app(app)
     db.app = app
-
-    # try to fix SSL SYSCALL error
-    register_after_fork(db.engine, db.engine.dispose)
 
 def register_cache(app):
     app.cache = FileSystemCache(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'storage/cache'))
