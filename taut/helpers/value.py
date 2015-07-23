@@ -142,4 +142,7 @@ def get_media_hash_id_where_sql(list_media_id):
         else:
             where_sql = ListMedia.id == list_media_id
 
+    if current_app.config.get('BACKPORT_MEDIA_DETAIL_ID_IN_URL') and not isinstance(list_media_id, list) and list_media_id.isdigit():
+        where_sql = ListMedia.id == force_integer(list_media_id, 0)
+
     return where_sql
