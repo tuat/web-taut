@@ -7,7 +7,7 @@ import rollbar
 import rollbar.contrib.flask
 from hashlib import sha1
 from werkzeug.contrib.cache import FileSystemCache
-from flask import Flask, g, got_request_exception
+from flask import Flask, g, got_request_exception, render_template
 from flask.ext.babel import Babel, format_datetime
 from flask.ext.assets import Environment, Bundle
 from flask.ext.oauthlib.client import OAuth
@@ -31,6 +31,7 @@ def create_app(config=None, enable_route=True):
         app.config.from_pyfile(os.path.abspath(config))
 
     register_hook(app)
+    register_error(app)
     register_babel(app)
     register_assets(app)
     register_oauth(app)
@@ -58,6 +59,11 @@ def register_hook(app):
     @app.before_request
     def current_user():
         g.user = load_current_user()
+
+def register_error(app):
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('error/404.html'), 404
 
 def register_babel(app):
     babel = Babel(app)
