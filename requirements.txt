@@ -16,6 +16,7 @@ hashids==1.1.0
 TwitterAPI==2.3.3
 dropbox==2.2.0
 celery==3.1.18
+threadpool==1.2.7
 redis==2.10.3
 thumbor==5.0.5
 python-dateutil==2.4.2
