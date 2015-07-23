@@ -22,7 +22,8 @@ def index():
 
     # Create list media ids by bookmarked records
     list_media_ids = [item.list_media_id for item in bookmarks.items]
-
+    print list_media_ids
+    print ListMedia.query.filter(ListMedia.id.in_(list_media_ids))
     # Find all medias by bookmarks.list_media_id
     list_medias = ListMedia.query.filter(ListMedia.id.in_(list_media_ids)).all()
     list_medias = fill_with_list_users(list_medias)

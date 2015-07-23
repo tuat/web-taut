@@ -132,8 +132,14 @@ def get_media_hash_id_where_sql(list_media_id):
     is_hash_id = current_app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL')
 
     if is_hash_id:
-        where_sql = ListMedia.hash_id == list_media_id
+        if isinstance(list_media_id, list):
+            where_sql = ListMedia.hash_id.in_(list_media_id)
+        else:
+            where_sql = ListMedia.hash_id == list_media_id
     else:
-        where_sql = ListMedia.id == list_media_id
+        if isinstance(list_media_id, list):
+            where_sql = ListMedia.id.in_(list_media_id)
+        else:
+            where_sql = ListMedia.id == list_media_id
 
     return where_sql

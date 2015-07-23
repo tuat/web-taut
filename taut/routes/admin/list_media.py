@@ -1,8 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint, current_app
 from flask import render_template, request, abort, flash, redirect, url_for, jsonify
 from ...models import ListMedia
 from ...helpers.account import require_admin
-from ...helpers.value import force_integer, fill_with_list_users
+from ...helpers.value import force_integer, fill_with_list_users, get_media_hash_id_where_sql
 
 blueprint = Blueprint('admin_list_media', __name__)
 
@@ -58,22 +58,24 @@ def ajax_index():
         next_page  = url_for('admin_list_media.ajax_index', page=page+1) if list_medias.has_next else None
 
         return jsonify(
-            medias = [media.to_admin_json(media.user) for media in list_medias.items],
-            prev   = prev_page,
-            next   = next_page,
-            count  = list_medias.total
+            medias      = [media.to_admin_json(media.user) for media in list_medias.items],
+            prev        = prev_page,
+            next        = next_page,
+            count       = list_medias.total,
         )
 
 @blueprint.route('/ajax/status-control')
 @require_admin
 def ajax_status_control():
-    media_id = force_integer(request.args.get('id', 0), 0)
+    media_id = request.args.get('id', "")
     status   = request.args.get('status', 'hide')
 
     if status not in ['hide', 'show', 'trash', 'lost']:
         return abort(403)
     else:
-        media = ListMedia.query.get(media_id)
+        where_sql = get_media_hash_id_where_sql(media_id)
+
+        media = ListMedia.query.filter(where_sql).first_or_404()
         media.status = status
         media.save()
 
@@ -87,7 +89,8 @@ def ajax_status_control():
 def ajax_trash_all():
     media_ids = request.form.getlist('ids[]')
 
-    medias = ListMedia.query.filter(ListMedia.id.in_(media_ids)).all()
+    where_sql = get_media_hash_id_where_sql(media_ids)
+    medias    = ListMedia.query.filter(where_sql).all()
 
     for media in medias:
         media.status = 'trash'

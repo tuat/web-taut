@@ -3,6 +3,7 @@
 from datetime import datetime
 from sqlalchemy.sql import exists
 from sqlalchemy.ext.hybrid import hybrid_method
+from flask import current_app
 from .base import SessionMixin, db
 from .bookmark import Bookmark
 from ..helpers.value import thumb
@@ -60,8 +61,7 @@ class ListMedia(db.Model, SessionMixin):
         height = 500
 
         return {
-            'id'       : self.hash_id,
-            'hash_id'  : self.hash_id,
+            'id'       : self.hash_id if current_app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL') else self.hash_id,
             'media_url': thumb(self.media_url, width, height),
             'width'    : width,
             'height'   : height,
@@ -74,8 +74,7 @@ class ListMedia(db.Model, SessionMixin):
         height = 300
 
         return {
-            'id'        : self.id,
-            'hash_id'   : self.hash_id,
+            'id'        : self.hash_id if current_app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL') else self.hash_id,
             'media_url' : self.media_url,
             'thumb_url' : thumb(self.media_url, width, height),
             'user'      : list_user.to_admin_json(),
