@@ -30,13 +30,13 @@ def create_app(config=None, enable_route=True):
     elif config:
         app.config.from_pyfile(os.path.abspath(config))
 
+    register_database(app)
     register_hook(app)
     register_error(app)
     register_babel(app)
     register_assets(app)
     register_oauth(app)
     register_jinja2(app)
-    register_database(app)
     register_cache(app)
 
     if enable_route is True:
