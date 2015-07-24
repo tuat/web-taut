@@ -44,6 +44,13 @@ def create_app(config=None, enable_route=True):
 
     return app
 
+def register_database(app):
+    db.init_app(app)
+    db.app = app
+
+    if "USE_PSYCOGREEN" in os.environ:
+        db.engine.pool._use_threadlocal = True
+
 def register_hook(app):
     @app.before_first_request
     def init_rollbar():
@@ -119,10 +126,6 @@ def register_jinja2(app):
             url_for_bookmark_create=url_for_bookmark_create,
             url_for_bookmark_remove=url_for_bookmark_remove
         )
-
-def register_database(app):
-    db.init_app(app)
-    db.app = app
 
 def register_cache(app):
     app.cache = FileSystemCache(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'storage/cache'))

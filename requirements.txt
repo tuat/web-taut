@@ -11,7 +11,10 @@ alembic==0.7.7
 yuicompressor==2.4.8
 closure==20150315
 hashids==1.1.0
-# psycopg2==2.6.1
+
+psycopg2==2.6.1
+psycogreen==1.0
+gevent==1.0.2
 
 TwitterAPI==2.3.3
 dropbox==2.2.0
