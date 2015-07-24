@@ -60,6 +60,9 @@ def register_hook(app):
     def current_user():
         g.user = load_current_user()
 
+        # fix SSL SYSCALL error
+        db.engine.dispose()
+
 def register_error(app):
     @app.errorhandler(404)
     def page_not_found(e):
