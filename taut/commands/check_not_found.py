@@ -38,16 +38,19 @@ class CheckNotFound(BaseCommand):
 
         flush_count = 0
         for media in page_query(db.session.query(ListMedia).filter(ListMedia.id.in_(self.not_found_ids))):
-            media.status = "hide"
+            media.status = "lost"
 
             db.session.add(media)
 
             if flush_count % 1000 == 0:
+                self.logger.info("--> Flush - flush added data")
                 db.session.flush()
 
             flush_count = flush_count + 1
 
         db.session.commit()
+
+        self.logger.info("--> Finished")
 
     def check(self, media):
         try:
