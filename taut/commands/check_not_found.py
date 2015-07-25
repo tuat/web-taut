@@ -3,10 +3,11 @@
 import requests
 from os import path
 from time import sleep
+from itertools import izip_longest
 from multiprocessing import cpu_count
 from multiprocessing.dummy import Pool
 from .base import BaseCommand
-from ..models import db, ListMedia
+from ..models import db, page_query, ListMedia
 from ..helpers.watcher import Watcher
 
 class CheckNotFound(BaseCommand):
@@ -18,20 +19,33 @@ class CheckNotFound(BaseCommand):
 
         self.logger.info("CheckNotFound")
 
-    def make(self):
-        medias = ListMedia.query.filter_by(status="show").all()
+    def grouper(self, n, iterable, fillvalue=None):
+        "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx"
 
+        args = [iter(iterable)] * n
+        return izip_longest(fillvalue=fillvalue, *args)
+
+    def make(self):
         Watcher()
+
         pool = Pool(cpu_count())
-        pool.map(self.check, medias)
+
+        for media in self.grouper(100, page_query(db.session.query(ListMedia))):
+            pool.map(self.check, media)
+
         pool.close()
         pool.join()
 
-        for media_id in self.not_found_ids:
-            media = ListMedia.query.get(media_id)
-            media.status = "lost"
+        flush_count = 0
+        for media in page_query(db.session.query(ListMedia).filter(ListMedia.id.in_(self.not_found_ids))):
+            media.status = "hide"
 
             db.session.add(media)
+
+            if flush_count % 1000 == 0:
+                db.session.flush()
+
+            flush_count = flush_count + 1
 
         db.session.commit()
 

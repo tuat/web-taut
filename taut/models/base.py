@@ -11,6 +11,22 @@ if "USE_PSYCOGREEN" in os.environ:
     patch_all()
     patch_psycopg()
 
+def page_query(query, limit_size=1000):
+    offset = 0
+
+    while True:
+        r = False
+
+        for element in query.offset(offset).limit(limit_size):
+            r = True
+
+            yield element
+
+        offset += 1000
+
+        if not r:
+            break
+
 class SessionMixin(object):
     def save(self):
         db.session.add(self)

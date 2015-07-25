@@ -1,4 +1,4 @@
-from .base import SessionMixin, db
+from .base import SessionMixin, db, page_query
 from .list_user import ListUser
 from .list_tweet import ListTweet
 from .list_media import ListMedia
