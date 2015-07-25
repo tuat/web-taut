@@ -41,6 +41,10 @@ def genrobots():
 
 @manager.command
 def testcommands(name=None, list_id=None, slug=None):
+    from taut.models.base import db
+
+    db.engine.dispose()
+
     """Test commands"""
     if name == 'fetchlists':
         from taut.commands.fetch_lists import FetchLists
