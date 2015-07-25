@@ -3,7 +3,6 @@
 from __future__ import absolute_import
 import os
 from dropbox import client, rest
-# from celery import task
 from celery.utils.log import get_task_logger
 from .base import create_celery_app
 from ..helpers.dropbox import download_image

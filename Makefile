@@ -18,7 +18,7 @@ redis:
 	redis-server /usr/local/etc/redis.conf
 
 scheduler:
-	celery worker -E -l INFO -n schedule -A taut.tasks.schedule -B
+	celery beat -l INFO -A taut.tasks.schedule
 
 schedule:
 	celery worker -E -l INFO -n schedule -A taut.tasks.schedule -Q schedule

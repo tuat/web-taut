@@ -64,5 +64,12 @@ def genhashid2media():
 
     HashIdToMedia().make()
 
+@manager.command
+def callsitemaptask():
+    from taut.tasks.base import create_celery_app
+
+    celery = create_celery_app(app)
+    celery.send_task("taut.tasks.schedule.create_sitemap", args=(0, 1000))
+
 if __name__ == '__main__':
     manager.run()
