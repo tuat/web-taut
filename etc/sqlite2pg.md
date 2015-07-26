@@ -21,6 +21,10 @@
 
     brew install freetds
 
+## Copy script and edit configuation
+
+    cp sqlite2pg.load.sample sqlite2pg.load
+
 ## Ran the pgloader to convert sqlite
 
     pgloader sqlite2pg.load
