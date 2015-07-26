@@ -5,6 +5,8 @@ import logging
 class BaseCommand(object):
 
     def get_logger(self):
+        logging.getLogger("requests").setLevel(logging.WARNING)
+
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.DEBUG)
 
