@@ -20,6 +20,8 @@ class CheckOldMedia(BaseCommand):
         self.logger.info("CheckOldMedia")
 
     def make(self, offset_size=0, limit_size=1000):
+        self.logger.info("---> offset: {0}, limit: {1}".format(offset_size, limit_size))
+
         list_medias = ListMedia.query.order_by(ListMedia.create_at.desc()).offset(offset_size).limit(limit_size).all()
 
         for media in list_medias:
