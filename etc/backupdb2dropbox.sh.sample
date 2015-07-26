@@ -35,11 +35,17 @@ rm -rf $BACKUP_FOLDER
 
 # Put to dropbox
 PUT_CMD="bash dropbox_uploader.sh upload $BACKUP_FOLDER.tar.gz $DROPBOX_PATH/$TIMESTAMP.tar.gz"
-echo $PUT_CMD && `$PUT_CMD`
+echo $PUT_CMD && eval "$PUT_CMD"
 
-# # Remove from dropbox (expire 6 day files)
-DELETE_CMD="bash dropbox_uploader.sh delete $DROPBOX_PATH/$(date -v -6d +'%F').tar.gz"
-echo $DELETE_CMD && `$DELETE_CMD`
+# Remove from dropbox (expire 6 day files)
+EXPIRE_DAY=$(date --date='6 days ago' +'%F')
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    EXPIRE_DAY=$(date -v -6d +'%F')
+fi
+
+DELETE_CMD="bash dropbox_uploader.sh delete $DROPBOX_PATH/$EXPIRE_DAY.tar.gz"
+echo $DELETE_CMD && eval "$DELETE_CMD"
 
 # Remove backup zip file
 rm -rf $BACKUP_FOLDER.tar.gz
