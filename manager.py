@@ -49,9 +49,9 @@ def testcommands(name=None, list_id=None, slug=None):
     if name == 'fetchlists':
         from taut.commands.fetch_lists import FetchLists
         FetchLists(list_id, slug).make()
-    elif name == 'checknotfound':
-        from taut.commands.check_not_found import CheckNotFound
-        CheckNotFound().make()
+    elif name == 'checkoldmedia':
+        from taut.commands.check_old_media import CheckOldMedia
+        CheckOldMedia().make()
     elif name == 'updateprofile':
         from taut.commands.update_profile import UpdateProfile
         UpdateProfile().make()
@@ -59,7 +59,7 @@ def testcommands(name=None, list_id=None, slug=None):
         from taut.commands.check_user_media import CheckUserMedia
         CheckUserMedia().make()
     else:
-        print("Usage: python manager.py testcommands -n [fetchlists | checknotfound | updateprofile | checkusermedia]")
+        print("Usage: python manager.py testcommands -n [fetchlists | checkoldmedia | updateprofile | checkusermedia]")
 
 @manager.command
 def genhashid2media():

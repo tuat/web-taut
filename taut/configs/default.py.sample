@@ -49,8 +49,8 @@ CELERYBEAT_SCHEDULE          = {
         # 'schedule': timedelta(seconds=5), # For testing only, every 5 seconds
         'args': (0, 10000)
     },
-    'check-not-found': {
-        'task': 'taut.tasks.schedule.check_not_found',
+    'check-old-media': {
+        'task': 'taut.tasks.schedule.check_old_media',
         'schedule': crontab(minute=0, hour='*/12'), # every twelve hours
         'args': None
     },

@@ -2,7 +2,7 @@
 
 from celery.utils.log import get_task_logger
 from .base import create_celery_app
-from ..commands import FetchLists, Sitemap, CheckNotFound, UpdateProfile, CheckUserMedia
+from ..commands import FetchLists, Sitemap, CheckOldMedia, UpdateProfile, CheckUserMedia
 
 celery = create_celery_app()
 logger = get_task_logger(__name__)
@@ -20,10 +20,10 @@ def create_sitemap(offset, limit):
     Sitemap(logger).make(offset, limit)
 
 @celery.task
-def check_not_found():
-    logger.info("called schedule.check_not_found")
+def check_old_media():
+    logger.info("called schedule.check_user_media")
 
-    CheckNotFound().make()
+    CheckOldMedia().make()
 
 @celery.task
 def update_profile():
