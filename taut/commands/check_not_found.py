@@ -8,7 +8,6 @@ from time import sleep
 from itertools import izip_longest
 from .base import BaseCommand
 from ..models import db, page_query, ListMedia
-from ..helpers.watcher import Watcher
 
 class CheckNotFound(BaseCommand):
 
@@ -20,7 +19,6 @@ class CheckNotFound(BaseCommand):
         self.logger.info("CheckNotFound")
 
     def make(self):
-        Watcher()
         for i in range(5):
             t = threading.Thread(target=self.worker)
             t.daemon = True
