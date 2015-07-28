@@ -121,6 +121,11 @@ MIXPANEL = {
     'access_token': ''
 }
 
+OPTIMIZELY = {
+    'enable'    : False,
+    'project_id': ''
+}
+
 DROPBOX = {
     'consumer_key'        : 'Your_Dropbox_Consumer_Key',
     'consumer_secret'     : 'Your_Dropbox_Consumer_Secret',
