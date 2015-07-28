@@ -56,7 +56,7 @@ class CheckOldMedia(BaseCommand):
                         'link': media.media_url
                     })
             except DatabaseError as e:
-                self.logger.info('--->---> Failed - {0}', e)
+                self.logger.info('--->---> Failed - {0}'.format(e))
                 self.logger.info('--->---> Redo method again')
                 self.make()
                 return None
@@ -101,7 +101,7 @@ class CheckOldMedia(BaseCommand):
 
                         db.session.commit()
                 except DatabaseError as e:
-                    self.logger.info('--->---> Failed - {0}', e)
+                    self.logger.info('--->---> Failed - {0}'.format(e))
                     self.logger.info('--->---> Redo method again')
                     self.make()
                     return None
