@@ -2,13 +2,11 @@
 
 import requests
 from os import path
-from multiprocessing import cpu_count
-from multiprocessing.dummy import Pool
+from concurrent import futures
 from time import sleep
 from flask import current_app
 from .base import BaseCommand
 from ..models import db, page_query, ListMedia
-from ..helpers.watcher import Watcher
 
 class CheckOldMedia(BaseCommand):
 
@@ -65,11 +63,21 @@ class CheckOldMedia(BaseCommand):
                 # Make check action
                 self.logger.info("---> Doing check status action")
 
-                Watcher()
-                pool = Pool(cpu_count())
-                pool.map(self.check, self.media_urls)
-                pool.close()
-                pool.join()
+
+                with futures.ThreadPoolExecutor(max_workers=5) as executor:
+                    future_to_media_url = {
+                        executor.submit(self.check, media_url, 60): media_url for media_url in self.media_urls
+                    }
+
+                    for future in futures.as_completed(future_to_media_url):
+                        media_url = future_to_media_url[future]
+
+                        try:
+                            data = future.result()
+                        except Exception as exc:
+                            self.logger.info('--->---> {0} generated an exception: {1}'.format(media_url['id'], exc))
+                        else:
+                            self.logger.info('--->---> {0} fetched'.format(media_url['id']))
 
                 # Update media stauts
                 self.logger.info("---> Updating media status to lost")
@@ -89,9 +97,9 @@ class CheckOldMedia(BaseCommand):
 
                 self.make()
 
-    def check(self, media_url):
+    def check(self, media_url, timeout):
         try:
-            r = requests.head(media_url['link'], timeout=3)
+            r = requests.head(media_url['link'], timeout=timeout)
 
             if r.status_code != 200:
                 self.logger.info("--> [{0}] - {1: >8} - {2}".format(r.status_code, media_url['id'], media_url['link']))
