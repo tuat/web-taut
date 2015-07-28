@@ -32,6 +32,11 @@ class CheckOldMedia(BaseCommand):
         else:
             return None
 
+    def write_offset(self, offset_size):
+        f = open(self.chekc_old_media_offset_filename, 'w+')
+        f.write(str(offset_size))
+        f.close()
+
     def make(self):
         offset_size = self.get_offset()
 
@@ -44,6 +49,7 @@ class CheckOldMedia(BaseCommand):
 
             if not list_medias:
                 self.logger.info("---> Finished")
+                self.write_offset(0)
 
                 return None
             else:
@@ -76,12 +82,7 @@ class CheckOldMedia(BaseCommand):
 
                 # Update offset
                 self.logger.info("---> Writing offset value to file")
-
-                offset_size = int(offset_size) + 1000
-
-                f = open(self.chekc_old_media_offset_filename, 'w+')
-                f.write(str(offset_size))
-                f.close()
+                self.write_offset(int(offset_size) + 1000)
 
                 # Call again
                 self.logger.info("---> Enter to next round")
