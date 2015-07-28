@@ -9,6 +9,7 @@ storage/dropbox/*
 taut/configs/default.py
 taut/configs/thumbor.py
 storage/twitter-list-last-id.txt
+storage/check-old-media-offset.txt
 static/sitemap*.xml
 static/.webassets-cache/
 static/assets/

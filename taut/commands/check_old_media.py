@@ -5,7 +5,7 @@ from os import path
 from multiprocessing import cpu_count
 from multiprocessing.dummy import Pool
 from time import sleep
-from itertools import izip_longest
+from flask import current_app
 from .base import BaseCommand
 from ..models import db, page_query, ListMedia
 from ..helpers.watcher import Watcher
@@ -17,40 +17,76 @@ class CheckOldMedia(BaseCommand):
         self.media_urls     = []
         self.lost_media_ids = []
 
+        self.chekc_old_media_offset_filename = current_app.config.get('CHEKC_OLD_MEDIA_OFFSET_FILENAME')
+
         self.logger.info("CheckOldMedia")
 
-    def make(self, offset_size=0, limit_size=1000):
-        self.logger.info("---> offset: {0}, limit: {1}".format(offset_size, limit_size))
+    def get_offset(self):
+        if path.exists(self.chekc_old_media_offset_filename):
+            offset = open(self.chekc_old_media_offset_filename).read().strip()
 
-        list_medias = ListMedia.query.filter(ListMedia.status == "show").order_by(ListMedia.create_at.desc()).offset(offset_size).limit(limit_size).all()
+            if len(offset) > 0:
+                return offset
+            else:
+                return None
+        else:
+            return None
 
-        for media in list_medias:
-            self.media_urls.append({
-                'id'  : media.id,
-                'link': media.media_url
-            })
+    def make(self):
+        offset_size = self.get_offset()
 
-        Watcher()
-        pool = Pool(cpu_count())
-        pool.map(self.check, self.media_urls)
-        pool.close()
-        pool.join()
+        if not offset_size:
+            self.logger.error("Can not found the offset from file")
+        else:
+            self.logger.info("---> offset: {0}".format(offset_size))
 
-        flush_count = 0
-        for media in page_query(db.session.query(ListMedia).filter(ListMedia.id.in_(self.lost_media_ids))):
-            media.status = "lost"
+            list_medias = ListMedia.query.filter(ListMedia.status == "show").order_by(ListMedia.create_at.desc()).offset(offset_size).limit(1000)
 
-            db.session.add(media)
+            if not list_medias:
+                self.logger.info("---> Finished")
 
-            if flush_count % 1000 == 0:
-                self.logger.info("--> Flush - flush added data")
-                db.session.flush()
+                return None
+            else:
+                # Create urls
+                self.logger.info("---> Creating medial urls")
 
-            flush_count = flush_count + 1
+                for media in list_medias:
+                    self.media_urls.append({
+                        'id'  : media.id,
+                        'link': media.media_url
+                    })
 
-        db.session.commit()
+                # Make check action
+                self.logger.info("---> Doing check status action")
 
-        self.logger.info("--> Finished")
+                Watcher()
+                pool = Pool(cpu_count())
+                pool.map(self.check, self.media_urls)
+                pool.close()
+                pool.join()
+
+                # Update media stauts
+                self.logger.info("---> Updating media status to lost")
+
+                for media in ListMedia.query.filter(ListMedia.id.in_(self.lost_media_ids)):
+                    media.status = "lost"
+                    db.session.add(media)
+
+                db.session.commit()
+
+                # Update offset
+                self.logger.info("---> Writing offset value to file")
+
+                offset_size = int(offset_size) + 1000
+
+                f = open(self.chekc_old_media_offset_filename, 'w+')
+                f.write(str(offset_size))
+                f.close()
+
+                # Call again
+                self.logger.info("---> Enter to next round")
+
+                self.make()
 
     def check(self, media_url):
         try:
