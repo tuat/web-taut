@@ -66,7 +66,8 @@ CELERYBEAT_SCHEDULE          = {
     },
 }
 
-TWITTER_LIST_LAST_ID_FILENAME = os.path.join(os.getcwd(), 'storage/twitter-list-last-id.txt')
+CHEKC_OLD_MEDIA_OFFSET_FILENAME = os.path.join(os.getcwd(), 'storage/check-old-media-offset.txt')
+TWITTER_LIST_LAST_ID_FILENAME   = os.path.join(os.getcwd(), 'storage/twitter-list-last-id.txt')
 
 TWITTER = {
     'consumer_key'       : None,
