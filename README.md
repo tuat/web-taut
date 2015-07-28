@@ -21,6 +21,9 @@ Sync the tweets in specified twitter lists and output to the custom API interfac
 
     cp thumbor/loaders/twimg.py venv/lib/python2.7/site-packages/thumbor/loaders/twimg.py
 
+    cp storage/check-old-media-offset.txt.sample storage/check-old-media-offset.txt
+    cp storage/twitter-list-last-id.txt.sample storage/twitter-list-last-id.txt
+
 ## Progres
 
     brew install postgres
