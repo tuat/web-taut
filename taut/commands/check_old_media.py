@@ -5,6 +5,7 @@ from os import path
 from concurrent import futures
 from time import sleep
 from flask import current_app
+from sqlalchemy.exc import DatabaseError
 from .base import BaseCommand
 from ..models import db, page_query, ListMedia
 
@@ -82,19 +83,34 @@ class CheckOldMedia(BaseCommand):
                 # Update media stauts
                 self.logger.info("---> Updating media status to lost")
 
-                for media in ListMedia.query.filter(ListMedia.id.in_(self.lost_media_ids)):
-                    media.status = "lost"
-                    db.session.add(media)
+                try:
+                    if not self.lost_media_ids:
+                        self.logger.info("--->---> Skipped")
+                    else:
+                        self.logger.info("--->---> Updating")
 
-                db.session.commit()
+                        for media in ListMedia.query.filter(ListMedia.id.in_(self.lost_media_ids)):
+                            media.status = "lost"
+                            db.session.add(media)
+
+                        db.session.commit()
+                except DatabaseError as e:
+                    self.logger.info('--->---> Failed - {0} - {1}', e.errno, e.strerror)
+                    self.logger.info('--->---> Redo previous action')
+                    self.make()
+                    return None
 
                 # Update offset
                 self.logger.info("---> Writing offset value to file")
                 self.write_offset(int(offset_size) + 1000)
 
+                # reset the list media ids and media urls to empty when updated
+                self.logger.info("---> Reset media urls and lost media ids")
+                self.media_urls     = []
+                self.lost_media_ids = []
+
                 # Call again
                 self.logger.info("---> Enter to next round")
-
                 self.make()
 
     def check(self, media_url, timeout):
@@ -102,10 +118,10 @@ class CheckOldMedia(BaseCommand):
             r = requests.head(media_url['link'], timeout=timeout)
 
             if r.status_code != 200:
-                self.logger.info("--> [{0}] - {1: >8} - {2}".format(r.status_code, media_url['id'], media_url['link']))
+                self.logger.info("---> [{0}] - {1: >8} - {2}".format(r.status_code, media_url['id'], media_url['link']))
                 self.lost_media_ids.append(media_url['id'])
         except:
-            self.logger.info("--> [Err] - {0: >8} - {1}".format(media_url['id'], media_url['link']))
+            self.logger.info("---> [Err] - {0: >8} - {1}".format(media_url['id'], media_url['link']))
             self.lost_media_ids.append(media_url['id'])
 
         sleep(0.005)
