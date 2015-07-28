@@ -49,11 +49,17 @@ class CheckOldMedia(BaseCommand):
             # Create urls
             self.logger.info("---> Creating medial urls")
 
-            for media in list_medias:
-                self.media_urls.append({
-                    'id'  : media.id,
-                    'link': media.media_url
-                })
+            try:
+                for media in list_medias:
+                    self.media_urls.append({
+                        'id'  : media.id,
+                        'link': media.media_url
+                    })
+            except DatabaseError as e:
+                self.logger.info('--->---> Failed - {0} - {1}', e.errno, e.strerror)
+                self.logger.info('--->---> Redo method again')
+                self.make()
+                return None
 
             # Check media is or not ended
             if not self.media_urls:
@@ -96,7 +102,7 @@ class CheckOldMedia(BaseCommand):
                         db.session.commit()
                 except DatabaseError as e:
                     self.logger.info('--->---> Failed - {0} - {1}', e.errno, e.strerror)
-                    self.logger.info('--->---> Redo previous action')
+                    self.logger.info('--->---> Redo method again')
                     self.make()
                     return None
 
