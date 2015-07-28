@@ -46,24 +46,24 @@ class CheckOldMedia(BaseCommand):
 
             list_medias = ListMedia.query.filter(ListMedia.status == "show").order_by(ListMedia.create_at.desc()).offset(offset_size).limit(1000)
 
-            if not list_medias:
-                self.logger.info("---> Finished")
+            # Create urls
+            self.logger.info("---> Creating medial urls")
+
+            for media in list_medias:
+                self.media_urls.append({
+                    'id'  : media.id,
+                    'link': media.media_url
+                })
+
+            # Check media is or not ended
+            if not self.media_urls:
+                self.logger.info("---> Finished, Not found any more medial url")
                 self.write_offset(0)
 
                 return None
             else:
-                # Create urls
-                self.logger.info("---> Creating medial urls")
-
-                for media in list_medias:
-                    self.media_urls.append({
-                        'id'  : media.id,
-                        'link': media.media_url
-                    })
-
                 # Make check action
                 self.logger.info("---> Doing check status action")
-
 
                 with futures.ThreadPoolExecutor(max_workers=5) as executor:
                     future_to_media_url = {
