@@ -7,7 +7,7 @@ import rollbar
 import rollbar.contrib.flask
 from hashlib import sha1
 from werkzeug.contrib.cache import FileSystemCache
-from flask import Flask, g, got_request_exception, render_template
+from flask import Flask, g, got_request_exception, render_template, jsonify, request
 from flask.ext.babel import Babel, format_datetime
 from flask.ext.assets import Environment, Bundle
 from flask.ext.oauthlib.client import OAuth
@@ -73,7 +73,10 @@ def register_hook(app):
 def register_error(app):
     @app.errorhandler(404)
     def page_not_found(e):
-        return render_template('error/404.html'), 404
+        if request.is_xhr or request.path.startswith('/api'):
+            return jsonify(status=404, message="Page not found")
+        else:
+            return render_template('error/404.html'), 404
 
 def register_babel(app):
     babel = Babel(app)
