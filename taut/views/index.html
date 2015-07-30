@@ -10,15 +10,17 @@
 {% endblock %}
 
 {% block container %}
-    <div class="index" data-mixpanel-page="Index" data-mixpanel-action="loaded">
+    <div class="index" data-mixpanel-page="Index" data-mixpanel-action="loaded" itemscope itemtype="http://schema.org/Thing">
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-9">
                 {% for list_media in list_medias.items %}
                     <div class="col-md-3">
                         <div class="panel panel-default">
                             <div class="panel-body thumbnail thumbnail-no-border">
-                                <a href="{{ url_for_media_detail(list_media) }}" data-mixpanel-page="home" data-mixpanel-action="view-media-detail">
+                                <a href="{{ url_for_media_detail(list_media) }}" data-mixpanel-page="home" data-mixpanel-action="view-media-detail" itemscope itemtype="http://schema.org/ImageObject">
                                     <img src="{{ list_media.media_url | thumbor(300, 300) }}" alt="{{ list_media.user.name }}" data-error-size="300x300">
+                                    <meta itemprop="caption" content="{{ list_media.user.name }}" />
+                                    <meta itemprop="thumbnail" content="{{ list_media.media_url | thumbor(300, 300) }}" />
                                 </a>
                             </div>
                         </div>
