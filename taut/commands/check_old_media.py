@@ -37,6 +37,8 @@ class CheckOldMedia(BaseCommand):
         f.close()
 
     def make(self):
+        db.session.remove()
+
         offset_size = self.get_offset()
 
         if not offset_size:
