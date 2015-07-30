@@ -1,13 +1,13 @@
 {% macro navigation(current='home') %}
     <ul class="nav navbar-nav">
-        <li{% if current == 'home' %} class="active"{% endif %}>
-            <a href="{{ url_for('index.index') }}"><i class="fa fa-home"></i> Home</a>
+        <li itemprop="url"{% if current == 'home' %} class="active"{% endif %}>
+            <a href="{{ url_for('index.index') }}" itemprop="name"><i class="fa fa-home"></i> Home</a>
         </li>
-        <li{% if current == 'bookmark' %} class="active"{% endif %}>
-            <a href="{{ url_for('bookmark.index') }}"><i class="fa fa-bookmark"></i> Bookmark</a>
+        <li itemprop="url"{% if current == 'bookmark' %} class="active"{% endif %}>
+            <a href="{{ url_for('bookmark.index') }}" itemprop="name"><i class="fa fa-bookmark"></i> Bookmark</a>
         </li>
-        <li{% if current == 'people' %} class="active"{% endif %}>
-            <a href="{{ url_for('people.index') }}"><i class="fa fa-user"></i> People</a>
+        <li itemprop="url"{% if current == 'people' %} class="active"{% endif %}>
+            <a href="{{ url_for('people.index') }}" itemprop="name"><i class="fa fa-user"></i> People</a>
         </li>
     </ul>
 {% endmacro %}

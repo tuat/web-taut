@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="{{ ASSET_URL }}">
 {% endassets %}
 </head>
-<body>
-    <div class="navbar navbar-default" role="navigation">
+<body itemscope itemtype="http://schema.org/WebPage">
+    <div class="navbar navbar-default" role="navigation" itemscope itemtype="http://schema.org/WPHeader">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -30,9 +30,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('index.index') }}">Tautr</a>
+                <a class="navbar-brand" href="{{ url_for('index.index') }}">
+                    <span itemprop="headline">Tautr</span>
+                </a>
             </div>
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement">
                 {% block navbar %}
                     {{ navigation() }}
                 {% endblock %}
@@ -44,24 +46,24 @@
                                 {{ g.user.username }} <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ url_for('settings.profile') }}">Profile</a></li>
+                                <li itemprop="url"><a href="{{ url_for('settings.profile') }}" itemprop="name">Profile</a></li>
+                                <li itemprop="url" class="divider"></li>
+                                <li itemprop="url"><a href="{{ url_for('developer.index') }}" itemprop="name">Developer</a></li>
                                 <li class="divider"></li>
-                                <li><a href="{{ url_for('developer.index') }}">Developer</a></li>
-                                <li class="divider"></li>
-                                <li><a href="{{ url_for('index.logout') }}">Sign Out</a></li>
+                                <li itemprop="url"><a href="{{ url_for('index.logout') }}" itemprop="name">Sign Out</a></li>
                             </ul>
                         </li>
                     </ul>
                 {% else %}
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ url_for('index.login') }}">Sign In</a></li>
-                        <li><a href="{{ url_for('index.register') }}">Sign Up</a></li>
+                        <li itemprop="url"><a href="{{ url_for('index.login') }}" itemprop="name">Sign In</a></li>
+                        <li itemprop="url"><a href="{{ url_for('index.register') }}" itemprop="name">Sign Up</a></li>
                     </ul>
                 {% endif %}
             </div>
         </div>
     </div>
-    <div id="wrapper">
+    <div id="wrapper" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/WebPageElement">
         <div class="container">
 
                 <div class="col-md-12">
