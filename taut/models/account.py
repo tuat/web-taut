@@ -22,7 +22,7 @@ class Account(db.Model, SessionMixin):
             self.password = self.password_hash(kwargs.pop('password'))
 
     def __str__(self):
-        return self.media_url
+        return self.email
 
     def __repr__(self):
         return '<Account: %s>' % self.id
