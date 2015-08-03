@@ -71,7 +71,7 @@ Fix decoder jpeg not available
 Fix assets tag not found
 
     apt-get install openjdk-7-jre
-
+	
 # Issue
 
 Case 1
