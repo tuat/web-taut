@@ -1,5 +1,6 @@
 from flask import Blueprint, current_app
 from flask import request, url_for, jsonify
+from flask.ext.jwt import jwt_required
 from ...models import ListMedia, ListUser, ListTweet, Comment, db
 from ...helpers.value import force_integer, fill_with_list_users, fill_with_accounts, get_media_hash_id_where_sql
 from ...helpers.api import require_token, json_error
@@ -27,3 +28,9 @@ def index(list_media_id):
         medias   = [media.to_json(list_user, list_tweet) for media in user_medias],
         comments = [comment.to_json(comment.user) for comment in comments]
     )
+
+@blueprint.route('/detail/protected')
+@require_token
+@jwt_required()
+def protected():
+    return "this is a protected testing"

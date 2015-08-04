@@ -11,7 +11,8 @@ from flask import Flask, g, got_request_exception, render_template, jsonify, req
 from flask.ext.babel import Babel, format_datetime
 from flask.ext.assets import Environment, Bundle
 from flask.ext.oauthlib.client import OAuth
-from .models import db
+from flask.ext.jwt import JWT
+from .models import db, Account
 from .helpers.account import load_current_user
 from .helpers.value import thumb, human_time, url_for_media_detail, url_for_bookmark_create, url_for_bookmark_remove
 
@@ -31,6 +32,7 @@ def create_app(config=None, enable_route=True):
         app.config.from_pyfile(os.path.abspath(config))
 
     register_database(app)
+    register_jwt(app)
     register_hook(app)
     register_error(app)
     register_babel(app)
@@ -50,6 +52,26 @@ def register_database(app):
 
     if "USE_PSYCOGREEN" in os.environ:
         db.engine.pool._use_threadlocal = True
+
+def register_jwt(app):
+    jwt = JWT(app)
+
+    # curl -X POST -H "Content-Type: application/json" -d '{"username":"<USERNAME>","password":"<PASSWORD>"}' http://localhost:5000/api/auth
+    @jwt.authentication_handler
+    def authenticate(username, password):
+        if '@' in username:
+            user = Account.query.filter_by(email=username).first()
+        else:
+            user = Account.query.filter_by(username=username).first()
+
+        if user and user.password_verify(password):
+            return user
+
+    # curl -H "Authorization: Bearer <JWT_TOKEN>" http://localhost:5000/api/media/detail/protected?token=<TOKEN>
+    @jwt.user_handler
+    def load_user(payload):
+        if 'user_id' in payload:
+            return Account.query.get(payload['user_id'])
 
 def register_hook(app):
     @app.before_first_request
