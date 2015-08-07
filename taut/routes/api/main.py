@@ -26,29 +26,3 @@ def index():
         next  = next_age,
         count = list_medias.total
     )
-
-@blueprint.route('/logout')
-@require_token
-@require_user
-def logout():
-    logout_user()
-    return jsonify(
-        status = 200
-    )
-
-@blueprint.route('/login', methods=['POST'])
-@require_token
-def login():
-    form = SigninForm(csrf_enabled=False)
-
-    if form.validate_on_submit():
-        user = login_user(form.user, form.permanent.data)
-        return jsonify(user.to_json())
-    else:
-        if form and form.errors:
-            for field, errors in form.errors.items():
-                for error in errors:
-                    return jsonify(
-                        error = error
-                    )
-                    break;
