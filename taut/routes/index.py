@@ -4,7 +4,8 @@ from datetime import datetime
 from pytz import timezone, utc
 from random import choice
 from flask import Blueprint
-from flask import render_template, request, redirect, url_for, flash, send_from_directory, current_app
+from flask import render_template, request, redirect, url_for, flash, send_from_directory, current_app, jsonify
+from flask.ext.swagger import swagger
 from ..models import ListMedia, db
 from ..forms import SigninForm, SignupForm
 from ..helpers.account import logout_user, login_user, require_user
@@ -58,3 +59,12 @@ def register():
 @blueprint.route('/robots.txt')
 def send_specific_file():
     return send_from_directory(current_app.static_folder, request.path[1:])
+
+@blueprint.route("/spec")
+def spec():
+    swag = swagger(current_app)
+
+    swag['info']['version'] = "0.1.0"
+    swag['info']['title']   = "The Taut API Spec"
+
+    return jsonify(swag)
