@@ -84,7 +84,6 @@ def index():
                     count:
                         type: number
                         description: total number of medias
-
     """
 
     page        = force_integer(request.args.get('page', 1), 0)
