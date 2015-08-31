@@ -89,8 +89,11 @@ def register_hook(app):
     def current_user():
         g.user = load_current_user()
 
-        # fix SSL SYSCALL error
+    @app.after_request
+    def close_db(response):
+        db.session.close()
         db.engine.dispose()
+        return response
 
 def register_error(app):
     @app.errorhandler(404)
