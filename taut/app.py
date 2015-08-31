@@ -7,7 +7,7 @@ import rollbar
 import rollbar.contrib.flask
 from hashlib import sha1
 from werkzeug.contrib.cache import FileSystemCache
-from flask import Flask, g, got_request_exception, render_template, jsonify, request
+from flask import Flask, g, got_request_exception, render_template, jsonify, request, flash, redirect
 from flask.ext.babel import Babel, format_datetime
 from flask.ext.assets import Environment, Bundle
 from flask.ext.oauthlib.client import OAuth
@@ -102,6 +102,17 @@ def register_error(app):
             return jsonify(status=404, message="Page not found")
         else:
             return render_template('error/404.html'), 404
+
+    @app.errorhandler(500)
+    def internet_server_error(e):
+        referrer_url = request.referrer
+
+        if referrer_url:
+            flash('Somthing went wrong, Please make action again', 'error')
+
+            return redirect(request.referrer)
+        else:
+            return render_template('error/500.html'), 500;
 
 def register_babel(app):
     babel = Babel(app)
