@@ -140,6 +140,10 @@ DROPBOX = {
     'authorize_url'       : 'https://www.dropbox.com/1/oauth2/authorize',
 }
 
+EXTERNAL_LINKS = {
+    # 'name': "url"
+}
+
 # Show or hide the media detail original id in the url
 # Support use id to access url
 USE_MEDIA_DETAIL_HASH_ID_IN_URL = False
