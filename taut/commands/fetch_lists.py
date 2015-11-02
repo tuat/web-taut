@@ -192,8 +192,9 @@ class FetchLists(BaseCommand):
     def make(self):
         # Set default query string table
         default_query_strings = dict(
-            slug     = self.slug,
-            list_id  = self.list_id
+            slug             = self.slug,
+            list_id          = self.list_id,
+            retweeted_status = 0 # remove retweets (retweeted_status) from twitter list
         )
 
         # Check since id is or not eixsts before ran other action
