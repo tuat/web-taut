@@ -6,7 +6,7 @@ env:
 	virtualenv-2.7 --no-site-package venv
 
 deps:
-	source venv/bin/activate && pip install -r requirements.txt
+	source venv/bin/activate && CFLAGS='-std=c99' pip install -r requirements.txt
 
 server:
 	python manager.py runserver
