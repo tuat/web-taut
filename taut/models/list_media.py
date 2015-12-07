@@ -76,7 +76,7 @@ class ListMedia(db.Model, SessionMixin):
         return {
             'id'        : self.hash_id if current_app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL') else self.hash_id,
             'media_url' : self.media_url,
-            'thumb_url' : thumb(self.media_url, width, height),
+            'thumb_url' : thumb(self.media_url, width, height, fill_in_fit=True),
             'user'      : list_user.to_admin_json(),
             'is_hide'   : self.is_hide,
             'is_show'   : self.is_show,
