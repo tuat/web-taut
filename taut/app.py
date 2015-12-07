@@ -140,7 +140,7 @@ def register_jinja2(app):
         return format_datetime(_datetime, format)
 
     @app.template_filter('thumbor')
-    def thumbor(url, width, height, fill_in_fit=True, unsafe=False):
+    def thumbor(url, width, height, fill_in_fit=False, unsafe=False):
         return thumb(url, width, height, fill_in_fit, unsafe)
 
     @app.template_filter('remove_url')
