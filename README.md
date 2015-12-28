@@ -57,6 +57,22 @@ Run from the celery cli bin
 
     make task-celery-bin
 
+# Install OpenCV
+
+OpenCV
+
+    apt-get install python-opencv
+
+NumPy
+
+    source venv/bin/activate
+
+    pip install numpy
+
+Link OpenCV to virtualenv
+
+    ln -s /usr/lib/pymodules/python2.7/cv* /home/zeuxis/tautapp.zeuik.com/venv/lib/python2.7/site-packages
+
 # Problem
 
 Fix curl-config not found
@@ -71,7 +87,7 @@ Fix decoder jpeg not available
 Fix assets tag not found
 
     apt-get install openjdk-7-jre
-	
+
 # Issue
 
 Case 1
@@ -82,3 +98,11 @@ Case 1
     # Fix
     apt-get install libffi-dev libssl-dev
     pip install pyopenssl ndg-httpsclient pyasn1
+
+Case 2
+
+    # Problem
+    libdc1394 error: Failed to initialize libdc1394
+
+    # Fix
+    sudo ln /dev/null /dev/raw1394
