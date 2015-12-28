@@ -77,9 +77,9 @@ def thumb(url, width, height, fill_in_fit=True, unsafe=False):
         url = url.replace("http://pbs.twimg.com/media/","")
 
     if fill_in_fit is False:
-        url_parts = "{0}x{1}/{2}".format(width, height, url)
+        url_parts = "{0}x{1}/smart/{2}".format(width, height, url)
     else:
-        url_parts = "fit-in/{0}x{1}/filters:fill(white)/{2}".format(width, height, url)
+        url_parts = "fit-in/{0}x{1}/smart/filters:fill(white)/{2}".format(width, height, url)
 
     if unsafe:
         return "{0}/unsafe/{1}".format(current_app.config.get('THUMBOR_BASE_URL'), url_parts)
