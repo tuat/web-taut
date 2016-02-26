@@ -27,7 +27,7 @@ def authorized_callback(response, provider_name, kind):
         provider_class   = getattr(provider_modules, '{0}Provider'.format(provider_name.capitalize()))
 
         provider              = provider_class(access_token)
-        provider_user_id      = provider.user_id()
+        provider_user_id      = str(provider.user_id())
         provider_display_name = provider.display_name()
         provider_email        = provider.email()
 
