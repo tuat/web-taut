@@ -16,7 +16,7 @@
                                     {% if log.media.hash_id %}
                                         Page link is <a href="{{ url_for_media_detail(log.media) }}">{{ url_for_media_detail(log.media) }}</a>&nbsp;
                                     {% else %}
-                                        Page link is <a href="{{ log.media.media_url }}">here</a>&nbsp;
+                                        <span class="text-muted">Meida is lost or deleted</span>
                                     {% endif %}
                                     <small class="text-muted">({{ log.create_at | timeago }})</small>
                                 </span>
@@ -28,7 +28,7 @@
                                     {% if log.media.hash_id %}
                                         Page link is <a href="{{ url_for_media_detail(log.media) }}">{{ url_for_media_detail(log.media) }}</a>&nbsp;
                                     {% else %}
-                                        Page link is <a href="{{ log.media.media_url }}">here</a>&nbsp;
+                                        <span class="text-muted">Meida is lost or deleted</span>
                                     {% endif %}
                                     <small class="text-muted">({{ log.create_at | timeago }})</small>
                                 </span>
