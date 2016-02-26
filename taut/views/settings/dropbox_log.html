@@ -13,7 +13,11 @@
                                     <span class="glyphicon glyphicon-ok"></span>&nbsp;
                                     The {{ log.user.screen_name }} image was synchronized&nbsp;
                                     <span class="glyphicon glyphicon-arrow-right"></span>&nbsp;
-                                    Page link is <a href="{{ url_for_media_detail(log.media) }}">{{ url_for_media_detail(log.media) }}</a>&nbsp;
+                                    {% if log.media.hash_id %}
+                                        Page link is <a href="{{ url_for_media_detail(log.media) }}">{{ url_for_media_detail(log.media) }}</a>&nbsp;
+                                    {% else %}
+                                        Page link is <a href="{{ log.media.media_url }}">here</a>&nbsp;
+                                    {% endif %}
                                     <small class="text-muted">({{ log.create_at | timeago }})</small>
                                 </span>
                             {% else %}
@@ -21,7 +25,11 @@
                                     <span class="glyphicon glyphicon-remove"></span>&nbsp;
                                     The {{ log.user.screen_name }} image could not be synchronized&nbsp;
                                     <span class="glyphicon glyphicon-arrow-right"></span>&nbsp;
-                                    Page link is <a href="{{ url_for_media_detail(log.media) }}">{{ url_for_media_detail(log.media) }}</a>&nbsp;
+                                    {% if log.media.hash_id %}
+                                        Page link is <a href="{{ url_for_media_detail(log.media) }}">{{ url_for_media_detail(log.media) }}</a>&nbsp;
+                                    {% else %}
+                                        Page link is <a href="{{ log.media.media_url }}">here</a>&nbsp;
+                                    {% endif %}
                                     <small class="text-muted">({{ log.create_at | timeago }})</small>
                                 </span>
                             {% endif %}
