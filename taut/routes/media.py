@@ -29,7 +29,7 @@ def detail(list_media_id):
         list_user  = ListUser.query.get_or_404(list_media.list_user_id)
         list_tweet = ListTweet.query.filter_by(id=list_media.list_tweet_id).first()
 
-        user_medias = ListMedia.query.filter_by(list_user_id=list_media.list_user_id, status='show').order_by(ListMedia.create_at.desc()).offset(0).limit(12).all()
+        user_medias = ListMedia.query.filter_by(list_user_id=list_media.list_user_id, status='show').order_by(ListMedia.create_at.desc()).offset(0).limit(16).all()
         user_medias = fill_with_list_users(user_medias)
 
         random_medias = current_app.cache.get('media_detail_random_medias')
