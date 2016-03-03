@@ -28,10 +28,10 @@
                 <div class="thumbnail">
                     {% if is_admin() %}
                         <a href="{{ list_media.media_url }}" target="_blank">
-                            <img src="{{ list_media.media_url | thumbor(500, 500) }}" alt="{{ list_user.name }}" data-error-size="500x500">
+                            <img src="{{ list_media.media_url | thumbor(450, 600) }}" alt="{{ list_user.name }}" data-error-size="450x600">
                         </a>
                     {% else %}
-                        <img src="{{ list_media.media_url | thumbor(500, 500) }}" alt="{{ list_user.name }}" data-error-size="500x500">
+                        <img src="{{ list_media.media_url | thumbor(450, 600) }}" alt="{{ list_user.name }}" data-error-size="450x600">
                     {% endif %}
                 </div>
                 {% include "share/addthis.html" %}
@@ -59,7 +59,7 @@
                             </a>
                         {% endif %}
 
-                        <a href="{{ list_media.media_url | thumbor(500, 500) }}" class="btn btn-info" download="{{ list_media.media_url }}">
+                        <a href="{{ list_media.media_url | thumbor(450, 600) }}" class="btn btn-info" download="{{ list_media.media_url }}">
                             <div class="hidden-xs">
                                 <i class="glyphicon glyphicon-download-alt"></i> Download
                             </div>
@@ -86,7 +86,7 @@
                     {% for user_media in user_medias %}
                         <div class="col-xs-6 col-sm-3 col-md-3">
                             <a class="thumbnail" rel="group" href="{{ url_for_media_detail(user_media) }}" data-mixpanel-page="media" data-mixpanel-action="view-related-media">
-                                <img src="{{ user_media.media_url | thumbor(100, 146) }}" alt="{{ user_media.user.name }}" class="tips" data-placement="bottom" title="{{ user_media.user.name }}" data-error-size="100x146">
+                                <img src="{{ user_media.media_url | thumbor(100, 150) }}" alt="{{ user_media.user.name }}" class="tips" data-placement="bottom" title="{{ user_media.user.name }}" data-error-size="100x150">
                             </a>
                         </div>
                     {% endfor %}
