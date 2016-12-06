@@ -6,6 +6,7 @@ from dateutil import tz
 from time import sleep
 from werkzeug.routing import BuildError
 from flask import g, current_app, url_for, render_template
+from sqlalchemy import or_
 from ..models import ListMedia, ListUser
 from ..helpers.value import thumb, url_for_media_detail
 from .base import BaseCommand
@@ -20,7 +21,13 @@ class Sitemap(BaseCommand):
     def generate_media(self, offset, limit):
         self.logger.info("# Generate media ({0}, {1})".format(offset, limit))
 
-        list_medias = ListMedia.query.filter(ListMedia.status == 'show').order_by(ListMedia.create_at.desc()).offset(offset).limit(limit).all()
+        list_medias = ListMedia.query.filter(
+            or_(
+                ListMedia.status == 'show',
+                ListMedia.status == 'hide',
+            )
+        ).order_by(ListMedia.create_at.desc()).offset(offset).limit(limit).all()
+
         media_pages = []
 
         for list_media in list_medias:
