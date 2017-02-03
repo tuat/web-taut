@@ -28,3 +28,5 @@ rollbar==0.13.10
 blinker==1.4
 # jinja2 >= 2.8
 -e git+https://github.com/mitsuhiko/jinja2.git#egg=Jinja-dev
+
+opencv-python
