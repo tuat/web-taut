@@ -12,7 +12,8 @@ SECRET_KEY                 = "Your_Secret_Key"
 API_SECRET_KEY             = "Your_API_Secret_Key"
 PREFERRED_URL_SCHEME       = "https"
 
-SQLALCHEMY_DATABASE_URI    = 'sqlite:///%s' % os.path.join(os.getcwd(), 'storage', 'default.sqlite')
+SQLALCHEMY_DATABASE_URI        = 'sqlite:///%s' % os.path.join(os.getcwd(), 'storage', 'default.sqlite')
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 # SQLALCHEMY_DATABASE_URI    = 'postgresql+psycopg2://root:password@localhost:5432/web_taut?sslmode=prefer' # if SSL SYSCALL error can change to "disable"
 
 BABEL_DEFAULT_LOCALE       = "en"
