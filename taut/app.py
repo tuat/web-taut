@@ -8,10 +8,10 @@ import rollbar.contrib.flask
 from hashlib import sha1
 from werkzeug.contrib.cache import FileSystemCache
 from flask import Flask, g, got_request_exception, render_template, jsonify, request, flash, redirect
-from flask.ext.babel import Babel, format_datetime
-from flask.ext.assets import Environment, Bundle
-from flask.ext.oauthlib.client import OAuth
-from flask.ext.jwt import JWT
+from flask_babel import Babel, format_datetime
+from flask_assets import Environment, Bundle
+from flask_oauthlib.client import OAuth
+from flask_jwt import JWT
 from .models import db, Account
 from .helpers.account import load_current_user
 from .helpers.value import thumb, human_time, url_for_media_detail, url_for_bookmark_create, url_for_bookmark_remove
@@ -54,10 +54,7 @@ def register_database(app):
         db.engine.pool._use_threadlocal = True
 
 def register_jwt(app):
-    jwt = JWT(app)
-
     # curl -X POST -H "Content-Type: application/json" -d '{"username":"<USERNAME>","password":"<PASSWORD>"}' http://localhost:5000/api/auth
-    @jwt.authentication_handler
     def authenticate(username, password):
         if '@' in username:
             user = Account.query.filter_by(email=username).first()
@@ -68,10 +65,12 @@ def register_jwt(app):
             return user
 
     # curl -H "Authorization: Bearer <JWT_TOKEN>" http://localhost:5000/api/media/detail/protected?token=<TOKEN>
-    @jwt.user_handler
-    def load_user(payload):
+    def identity(payload):
         if 'user_id' in payload:
             return Account.query.get(payload['user_id'])
+
+    #
+    jwt = JWT(app, authenticate, identity)
 
 def register_hook(app):
     @app.before_first_request

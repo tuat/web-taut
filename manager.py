@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from flask_script import Manager, Server
-from flask.ext.assets import ManageAssets
+from flask_assets import ManageAssets
 from taut.app import create_app
 
 app = create_app()
@@ -21,7 +21,7 @@ def createdb():
 def genpw(password):
     """Genernate password"""
 
-    from flask.ext.bcrypt import Bcrypt
+    from flask_bcrypt import Bcrypt
 
     print(Bcrypt(app).generate_password_hash(password))
 

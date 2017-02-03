@@ -2,7 +2,7 @@
 
 import hashlib
 from datetime import datetime
-from flask.ext.bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt
 from .base import SessionMixin, db
 
 class Account(db.Model, SessionMixin):

@@ -13,3 +13,4 @@ storage/check-old-media-offset.txt
 static/sitemap*.xml
 static/.webassets-cache/
 static/assets/
+celerybeat.pid

@@ -29,7 +29,7 @@ CELERY_RESULT_SERIALIZER     = 'json'
 CELERY_LOG_LEVEL             = 'INFO'
 # CELERYD_LOG_FILE             = os.path.join(os.getcwd(), 'storage/celeryd.log')
 CELERY_TIMEZONE              = 'Asia/Hong_Kong'
-CELERYD_POOL                 = "celery.concurrency.threads.TaskPool" # default: "celery.concurrency.prefork:TaskPool" to fix SSL SYSCALL error
+CELERYD_POOL                 = "celery.concurrency.prefork:TaskPool"
 CELERYBEAT_SCHEDULE_FILENAME = os.path.join(os.getcwd(), 'storage/celery-beat')
 CELERY_IMPORTS               = (
     'taut.tasks.schedule',

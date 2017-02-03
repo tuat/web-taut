@@ -2,7 +2,7 @@
 
 import os
 import datetime
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 if "USE_PSYCOGREEN" in os.environ:
     from gevent.monkey import patch_all

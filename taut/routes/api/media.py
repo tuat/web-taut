@@ -1,6 +1,6 @@
 from flask import Blueprint, current_app
 from flask import request, url_for, jsonify
-from flask.ext.jwt import jwt_required
+from flask_jwt import jwt_required
 from ...models import ListMedia, ListUser, ListTweet, Comment, db
 from ...helpers.value import force_integer, fill_with_list_users, fill_with_accounts, get_media_hash_id_where_sql
 from ...helpers.api import require_token, json_error

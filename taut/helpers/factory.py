@@ -3,9 +3,9 @@ import rollbar
 import rollbar.contrib.flask
 from werkzeug.contrib.cache import FileSystemCache
 from flask import g, got_request_exception
-from flask.ext.babel import Babel, format_datetime
-from flask.ext.assets import Environment
-from flask.ext.oauthlib.client import OAuth
+from flask_babel import Babel, format_datetime
+from flask_assets import Environment
+from flask_oauthlib.client import OAuth
 from ..models import db
 from ..routes import index, settings, media, bookmark, developer, oauth, sync_dropbox
 from ..routes import admin, api
