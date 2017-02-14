@@ -3,6 +3,7 @@ Disallow: /admin/
 Disallow: /login
 Disallow: /logout
 Disallow: /bookmark
+Disallow: /dropbox
 {% for sitemap in sitemaps -%}
 Sitemap: {{ sitemap }}
 {% endfor %}
