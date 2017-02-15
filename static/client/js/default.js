@@ -35,6 +35,31 @@
             $(this).prop('src', "https://placehold.it/" + size + "/FFF/000?text=Error");
         });
 
+        //
+        $(".load-image-container").each(function() {
+            var self        = this;
+            var imageUrl    = $(this).data('imageUrl');
+            var imageWidth  = $(this).data('imageWidth');
+            var imageHeight = $(this).data('imageHeight');
+            var imageAlt    = $(this).data('imageAlt');
+
+            var loadingImage = loadImage(imageUrl, function(img) {
+                $(self).append(
+                    $(img)
+                        .addClass('img-responsive load-image')
+                        .prop('alt', imageAlt)
+                );
+            }, {
+                maxWidth: imageWidth,
+                maxHeight: imageHeight,
+                canvas: false
+            });
+
+            loadingImage.onerror = function() {
+                this.src = "https://placehold.it/" + imageWidth + "x" + imageHeight + "/FFF/000?text=Error";
+            }
+        });
+
         // Mixpanel tracker
         if (window.mixpanel !== undefined) {
             // Click event

@@ -46,6 +46,13 @@ body {
     margin-bottom: 0px;
 }
 
+.thumbnail-container {
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .truncate {
     width: 250px;
     white-space: nowrap;

@@ -16,11 +16,19 @@
                 {% for list_media in list_medias.items %}
                     <div class="col-md-3">
                         <div class="panel panel-default">
-                            <div class="panel-body thumbnail thumbnail-no-border">
-                                <a href="{{ url_for_media_detail(list_media) }}" data-mixpanel-page="home" data-mixpanel-action="view-media-detail" itemscope itemtype="http://schema.org/ImageObject">
-                                    <img src="{{ list_media.media_url | thumbor(300, 300) }}" alt="{{ list_media.user.name }}" data-error-size="300x300">
+                            <div class="panel-body thumbnail thumbnail-no-border thumbnail-container">
+                                <a href="{{ url_for_media_detail(list_media) }}"
+                                    class="load-image-container"
+                                    data-image-url="{{ list_media.media_url | proxy_media_url }}"
+                                    data-image-width="250"
+                                    data-image-height="250"
+                                    data-image-alt="{{ list_media.user.name }}"
+                                    data-mixpanel-page="home"
+                                    data-mixpanel-action="view-media-detail"
+                                    itemscope
+                                    itemtype="http://schema.org/ImageObject">
                                     <meta itemprop="caption" content="{{ list_media.user.name }}" />
-                                    <meta itemprop="thumbnail" content="{{ list_media.media_url | thumbor(300, 300) }}" />
+                                    <meta itemprop="thumbnail" content="{{ list_media.media_url | proxy_media_url }}" />
                                 </a>
                             </div>
                         </div>
@@ -56,8 +64,13 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a class="thumbnail thumbnail-no-border" href="{{ url_for_media_detail(random_media) }}">
-                                        <img src="{{ random_media.media_url | thumbor(230, 300) }}" class="tips" data-placement="bottom" data-error-size="230x300">
+                                    <a
+                                        class="thumbnail thumbnail-no-border load-image-container"
+                                        href="{{ url_for_media_detail(random_media) }}"
+                                        data-image-url="{{ random_media.media_url | proxy_media_url }}"
+                                        data-image-width="250"
+                                        data-image-height="300"
+                                        >
                                     </a>
                                 </div>
                             </div>

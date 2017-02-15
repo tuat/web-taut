@@ -85,6 +85,9 @@ GRAVATAR_EXTRA    = ''
 THUMBOR_BASE_URL     = 'http://localhost:8888'
 THUMBOR_SECURITY_KEY = '______YOUR_SECRET_KEY______'
 
+PROXY_MEDIA_ENABLE   = False
+PROXY_MEDIA_BASE_URL = 'https://pimg.tautr.com'
+
 GOOGLE_ANALYTICS    = ''
 GOOGLE_ANALYTICS_DC = False
 

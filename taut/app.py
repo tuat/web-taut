@@ -142,6 +142,14 @@ def register_jinja2(app):
     def thumbor(url, width, height, fill_in_fit=False, unsafe=False):
         return thumb(url, width, height, fill_in_fit, unsafe)
 
+    @app.template_filter('proxy_media_url')
+    def proxy_media_url(url):
+        if app.config.get('PROXY_MEDIA_ENABLE') is True:
+            url = url.replace("http://pbs.twimg.com", app.config.get('PROXY_MEDIA_BASE_URL'))
+            url = url.replace("https://pbs.twimg.com", app.config.get('PROXY_MEDIA_BASE_URL'))
+
+        return url
+
     @app.template_filter('remove_url')
     def remove_url(text):
         import re
