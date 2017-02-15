@@ -2,6 +2,21 @@ var renderTemplate = function(selector, context) {
     return Handlebars.compile($(selector).html())(context);
 };
 
+var loadImageContainer = function() {
+    $(".load-image-container").each(function() {
+        var self     = this;
+        var imageUrl = $(this).data("imageUrl");
+
+        var loadingImage = loadImage(imageUrl, function(img) {
+            $(self).append($(img).addClass('img-responsive'));
+        }, {
+            maxWidth: 250,
+            maxHeight: 200,
+            canvas: false
+        });
+    });
+}
+
 var fetchMedias = function(url) {
     var $trashAll = $(".trash-all"),
         oldValue = $trashAll.text();
@@ -19,18 +34,7 @@ var fetchMedias = function(url) {
             scrollTop: 0
         }, "fast");
 
-        $(".load-image-container").each(function() {
-            var self     = this;
-            var imageUrl = $(this).data("imageUrl");
-
-            var loadingImage = loadImage(imageUrl, function(img) {
-                $(self).append($(img).addClass('img-responsive'));
-            }, {
-                maxWidth: 250,
-                maxHeight: 200,
-                canvas: false
-            });
-        });
+        loadImageContainer();
     });
 };
 
@@ -94,6 +98,8 @@ var fetchMedias = function(url) {
 
     $(function() {
         fetchMedias($(".medias").data('mediasHref'));
+
+        loadImageContainer();
     });
 
 })(jQuery);
