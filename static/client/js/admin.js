@@ -94,16 +94,6 @@ var fetchMedias = function(url) {
 
     $(function() {
         fetchMedias($(".medias").data('mediasHref'));
-
-        var loadContainer = $(".load-image-container");
-        var imageUrl      = loadContainer.data("imageUrl");
-        var loadingImage  = loadImage(imageUrl, function(img) {
-            loadContainer.append($(img).addClass('img-responsive'));
-        }, {
-            maxWidth: 250,
-            maxHeight: 200,
-            canvas: false
-        });
     });
 
 })(jQuery);
