@@ -88,6 +88,13 @@ def thumb(url, width, height, fill_in_fit=True, unsafe=False):
 
         return "{0}/{1}/{2}".format(current_app.config.get('THUMBOR_BASE_URL'), sign_code, url_parts)
 
+def proxy_media_url(url):
+    if current_app.config.get('PROXY_MEDIA_ENABLE') is True:
+        url = url.replace("http://pbs.twimg.com", current_app.config.get('PROXY_MEDIA_BASE_URL'))
+        url = url.replace("https://pbs.twimg.com", current_app.config.get('PROXY_MEDIA_BASE_URL'))
+
+    return url
+
 def human_time(value):
     now = datetime.utcnow()
     delta = now - value

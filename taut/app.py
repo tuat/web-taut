@@ -14,7 +14,7 @@ from flask_oauthlib.client import OAuth
 from flask_jwt import JWT
 from .models import db, Account
 from .helpers.account import load_current_user
-from .helpers.value import thumb, human_time, url_for_media_detail, url_for_bookmark_create, url_for_bookmark_remove
+from .helpers.value import thumb, proxy_media_url, human_time, url_for_media_detail, url_for_bookmark_create, url_for_bookmark_remove
 
 def create_app(config=None, enable_route=True):
     app = Flask(__name__, template_folder='views')
@@ -144,11 +144,7 @@ def register_jinja2(app):
 
     @app.template_filter('proxy_media_url')
     def proxy_media_url(url):
-        if app.config.get('PROXY_MEDIA_ENABLE') is True:
-            url = url.replace("http://pbs.twimg.com", app.config.get('PROXY_MEDIA_BASE_URL'))
-            url = url.replace("https://pbs.twimg.com", app.config.get('PROXY_MEDIA_BASE_URL'))
-
-        return url
+        return proxy_media_url(url)
 
     @app.template_filter('remove_url')
     def remove_url(text):
