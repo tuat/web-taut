@@ -8,7 +8,7 @@ from werkzeug.routing import BuildError
 from flask import g, current_app, url_for, render_template
 from sqlalchemy import or_
 from ..models import ListMedia, ListUser
-from ..helpers.value import thumb, url_for_media_detail
+from ..helpers.value import thumb, proxy_media_url_domain, url_for_media_detail
 from .base import BaseCommand
 
 class Sitemap(BaseCommand):
@@ -34,7 +34,7 @@ class Sitemap(BaseCommand):
             if list_media.hash_id:
                 media_pages.append({
                     'url'      : url_for_media_detail(list_media, _external=True),
-                    'image'    : thumb(list_media.media_url, 500, 500),
+                    'image'    : proxy_media_url_domain(list_media.media_url), #thumb(list_media.media_url, 500, 500),
                     'create_at': list_media.create_at.replace(tzinfo=tz.tzlocal()).isoformat(),
                 })
 
@@ -59,7 +59,7 @@ class Sitemap(BaseCommand):
         for list_user in list_users:
             media_pages.append({
                 'url'      : url_for('people.profile', screen_name=list_user.screen_name, _external=True),
-                'image'    : list_user.profile_image_url,
+                'image'    : proxy_media_url_domain(list_user.profile_image_url),
                 'create_at': list_user.create_at.replace(tzinfo=tz.tzlocal()).isoformat(),
             })
 
