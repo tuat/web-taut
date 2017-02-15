@@ -60,6 +60,20 @@ body {
     justify-content: center;
 }
 
+.thumbor-container-media-random {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thumbor-container-bookmark {
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .truncate {
     width: 250px;
     white-space: nowrap;

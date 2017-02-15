@@ -11,9 +11,13 @@
                 {% for list_media in list_medias %}
                     <div class="col-md-3">
                         <div class="panel panel-default">
-                            <div class="panel-body thumbnail thumbnail-no-border">
-                                <a href="{{ url_for_media_detail(list_media) }}">
-                                    <img src="{{ list_media.media_url | thumbor(300, 300) }}" alt="{{ list_media.user.name }}">
+                            <div class="panel-body thumbnail thumbnail-no-border thumbor-container-bookmark">
+                                <a href="{{ url_for_media_detail(list_media) }}"
+                                    class="load-image-container"
+                                    data-image-url="{{ list_media.media_url | proxy_media_url }}"
+                                    data-image-width="300"
+                                    data-image-height="300"
+                                    data-image-alt="{{ list_media.user.name }}">
                                 </a>
                             </div>
                         </div>
