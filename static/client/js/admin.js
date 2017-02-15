@@ -96,7 +96,7 @@ var fetchMedias = function(url) {
         fetchMedias($(".medias").data('mediasHref'));
 
         var loadContainer = $(".load-image-container");
-        var imageUrl      = loadImageContainer.data("imageUrl");
+        var imageUrl      = loadContainer.data("imageUrl");
         var loadingImage  = loadImage(imageUrl, function(img) {
             loadContainer.append($(img).addClass('img-responsive'));
         }, {
