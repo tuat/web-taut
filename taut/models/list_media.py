@@ -6,7 +6,7 @@ from sqlalchemy.ext.hybrid import hybrid_method
 from flask import current_app
 from .base import SessionMixin, db
 from .bookmark import Bookmark
-from ..helpers.value import thumb, proxy_media_url
+from ..helpers.value import thumb, proxy_media_url_domain
 
 class ListMedia(db.Model, SessionMixin):
     id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -62,7 +62,7 @@ class ListMedia(db.Model, SessionMixin):
 
         return {
             'id'       : self.hash_id if current_app.config.get('USE_MEDIA_DETAIL_HASH_ID_IN_URL') else self.hash_id,
-            'media_url': proxy_media_url(self.media_url), # 'media_url': thumb(self.media_url, width, height),
+            'media_url': proxy_media_url_domain(self.media_url), # 'media_url': thumb(self.media_url, width, height),
             'width'    : width,
             'height'   : height,
             'user'     : list_user.to_json(),
