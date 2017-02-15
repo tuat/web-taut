@@ -19,10 +19,17 @@ var fetchMedias = function(url) {
             scrollTop: 0
         }, "fast");
 
-        $("img.lazy").lazyload({
-            threshold : 200,
-            effect : "fadeIn",
-            failure_limit: 3
+        $(".load-image-container").each(function() {
+            var self     = this;
+            var imageUrl = $(this).data("imageUrl");
+
+            var loadingImage = loadImage(imageUrl, function(img) {
+                $(self).append($(img).addClass('img-responsive'));
+            }, {
+                maxWidth: 250,
+                maxHeight: 200,
+                canvas: false
+            });
         });
     });
 };

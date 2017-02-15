@@ -39,7 +39,7 @@
                         <a href="http://twitter.com/{{ media.user.screen_name }}" target="_blank"><strong>{{ media.user.screen_name }}</strong></a>
                     </div>
                     <div class="box-body text-center">
-                        <a href="{{ media.media_url }}" target="_blank"><img src="{{ media.media_url | thumbor(300, 300) }}"></a>
+                        <a href="{{ media.media_url }}" target="_blank" class="load-image-container" data-image-url="{{ media.media_url }}">
                     </div>
                     <div class="box-footer text-center">
                         {% if config.USE_MEDIA_DETAIL_HASH_ID_IN_URL %}
