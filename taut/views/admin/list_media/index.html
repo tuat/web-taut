@@ -29,7 +29,9 @@
                         <a href="http://twitter.com/{{ user.screen_name }}" target="_blank"><strong>{{ user.screen_name }}</strong></a>
                     </div>
                     <div class="box-body text-center">
-                        <a href="{{ media_url }}" target="_blank"><img class="lazy" src="/static/vendor/adminlte/img/ajax-loader1.gif" data-original="{{ thumb_url }}"></a>
+                        <a href="{{ media_url }}" target="_blank" class="load-image-container" data-image-url="{{ media_url }}">
+                            <!--Holder, wait for javascript render image tag-->
+                        </a>
                     </div>
                     <div class="box-footer text-center">
                         {{#if is_hide }}
