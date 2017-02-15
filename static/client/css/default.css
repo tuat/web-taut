@@ -46,8 +46,15 @@ body {
     margin-bottom: 0px;
 }
 
-.thumbnail-container {
+.thumbnail-container-home {
     min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thumbnail-container-media {
+    min-height: 160px;
     display: flex;
     align-items: center;
     justify-content: center;

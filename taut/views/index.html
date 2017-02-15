@@ -16,7 +16,7 @@
                 {% for list_media in list_medias.items %}
                     <div class="col-md-3">
                         <div class="panel panel-default">
-                            <div class="panel-body thumbnail thumbnail-no-border thumbnail-container">
+                            <div class="panel-body thumbnail thumbnail-no-border thumbnail-container-home">
                                 <a href="{{ url_for_media_detail(list_media) }}"
                                     class="load-image-container"
                                     data-image-url="{{ list_media.media_url | proxy_media_url }}"
