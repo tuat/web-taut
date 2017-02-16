@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6">
-                <div class="thumbnail">
+                <div class="thumbnail thumbnail-container-media-current">
                     {% if is_admin() %}
                         <a href="{{ list_media.media_url }}" target="_blank"
                             class="load-image-container"
@@ -94,7 +94,7 @@
                 <div class="row">
                     {% for user_media in user_medias %}
                         <div class="col-xs-6 col-sm-3 col-md-3">
-                            <div class="thumbnail thumbnail-container-media">
+                            <div class="thumbnail thumbnail-container-media-related">
                                 <a class="load-image-container"
                                     href="{{ url_for_media_detail(user_media) }}"
                                     rel="group"
