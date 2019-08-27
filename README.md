@@ -71,7 +71,7 @@ NumPy
 
 Link OpenCV to virtualenv
 
-    ln -s /usr/lib/pymodules/python2.7/cv* /home/zeuxis/tautapp.zeuik.com/venv/lib/python2.7/site-packages
+    ln -s /usr/lib/pymodules/python2.7/cv* /home/user/domain.com/venv/lib/python2.7/site-packages
 
 # Problem
 
