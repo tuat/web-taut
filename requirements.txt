@@ -29,5 +29,5 @@ blinker==1.4
 # jinja2 >= 2.8
 -e git+https://github.com/mitsuhiko/jinja2.git#egg=Jinja-dev
 
-opencv-python==3.2.0.6
+opencv-python==3.4.7.28
 gunicorn==19.6.0
